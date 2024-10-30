@@ -1,0 +1,77 @@
+db:
+  username: ${username.value:postgres}
+  password: ${PASSWORD_ENV:root}
+  driver: PostgresDriver
+  url: postgres:5432
+  hosts: 192.168.100.13,localhost
+  properties:
+    first: 123
+    second: 567
+    third.value: Third
+  pool:
+    size: 12
+    timeout: 10
+  pools:
+    - size: 1
+      timeout: 1
+    - size: 2
+      timeout: 2
+    - size: 3
+      timeout: 3
+
+
+
+#spring.profiles.active: qa
+logging:
+  level:
+    root: info
+    com.dmdev.spring.database.pool: info
+    org.springframework.jdbc.core: trace
+  file:
+    name: dmdev.log
+    path: /
+spring:
+  mvc:
+    format:
+      date: iso
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+  datasource:
+    url: jdbc:postgresql://192.168.100.13/test4
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties.hibernate:
+      show_sql: true
+      format_sql: true
+      hbm2ddl.auto: validate
+
+    open-in-view: false
+
+  jackson:
+    deserialization:
+      read-date-timestamps-as-nanoseconds: false
+
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 332774868260-df19as06mb58pmmho08c0vpf2cfhv8gc.apps.googleusercontent.com
+            clientSecret: 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
+            redirectUri: http://localhost:8080/login/oauth2/code/google
+            authorization-grant-type: authorization_code
+            scope:
+              - openid
+              - email
+              - profile
+springdoc:
+  swagger-ui:
+    oauth:
+      client-id: 332774868260-df19as06mb58pmmho08c0vpf2cfhv8gc.apps.googleusercontent.com
+      client-secret: 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
+      scopes: openid,email,profile
+    oauth2-redirect-url: http://localhost:8080/swagger-ui/oauth2-redirect.html
