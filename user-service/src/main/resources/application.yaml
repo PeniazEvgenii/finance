@@ -20,23 +20,29 @@ db:
       timeout: 3
 
 
-
-#spring.profiles.active: qa
 logging:
   level:
     root: info
-    com.dmdev.spring.database.pool: info
+#    com.dmdev.spring.database.pool: info
     org.springframework.jdbc.core: trace
   file:
     name: dmdev.log
     path: /
+
+scheduler:
+  core.pool: 3
+  init.delay: 0
+  period: 3
+
+
+
 spring:
-  mvc:
-    format:
-      date: iso
-    view:
-      prefix: /WEB-INF/jsp/
-      suffix: .jsp
+#  mvc:
+#    format:
+#      date: iso
+#    view:
+#      prefix: /WEB-INF/jsp/
+#      suffix: .jsp
   datasource:
     url: jdbc:postgresql://192.168.100.13/test4
     username: postgres
@@ -47,31 +53,43 @@ spring:
       show_sql: true
       format_sql: true
       hbm2ddl.auto: validate
-
     open-in-view: false
+
+  mail:
+    host: ${ENV_MAIL_HOST:smtp.mail.ru}
+    port: ${ENV_MAIL_PORT:465}
+    username: ${ENV_MAIL_USERNAME:genia-genius-91@mail.ru}
+    password: ${ENV_MAIL_PASSWORD:6Pp2xaceETZ57gM9hkx8}
+    test-connection: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
 
   jackson:
     deserialization:
       read-date-timestamps-as-nanoseconds: false
 
 
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            clientId: 332774868260-df19as06mb58pmmho08c0vpf2cfhv8gc.apps.googleusercontent.com
-            clientSecret: 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
-            redirectUri: http://localhost:8080/login/oauth2/code/google
-            authorization-grant-type: authorization_code
-            scope:
-              - openid
-              - email
-              - profile
-springdoc:
-  swagger-ui:
-    oauth:
-      client-id: 332774868260-df19as06mb58pmmho08c0vpf2cfhv8gc.apps.googleusercontent.com
-      client-secret: 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
-      scopes: openid,email,profile
-    oauth2-redirect-url: http://localhost:8080/swagger-ui/oauth2-redirect.html
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          google:
+#            clientId: 332774868260-df19as06mb58pmmho08c0vpf2cfhv8gc.apps.googleusercontent.com
+#            clientSecret: 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
+#            redirectUri: http://localhost:8080/login/oauth2/code/google
+#            authorization-grant-type: authorization_code
+#            scope:
+#              - openid
+#              - email
+#              - profile
+#springdoc:
+#  swagger-ui:
+#    oauth:
+#      client-id: 332774868260-df19as06mb58pmmho08c0vpf2cfhv8gc.apps.googleusercontent.com
+#      client-secret: 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
+#      scopes: openid,email,profile
+#    oauth2-redirect-url: http://localhost:8080/swagger-ui/oauth2-redirect.html
