@@ -5,12 +5,12 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 @Data
-public class UserRegistrationDto {
+public class UserRigistrationDto {
     @UniqueMail
     @Email(message = "Некорректный формат электронной почты. Email должен иметь формат user@example.com")
-    @NotBlank(message = "Электронная почта обязательна")
     private final String mail;
 
     @NotNull(message = "ФИО обязателен")
@@ -18,6 +18,7 @@ public class UserRegistrationDto {
     private final String fio;
 
     @NotNull(message = "Пароль обязателен")
-    @NotBlank(message = "Пароль должен быть не пустой")          //min можно добавить
+    @NotBlank(message = "Пароль должен быть не пустой")
+    @Length(min = 4, message = "Длина пароля должна быть не менне 4 цифр")
     private final String password;
 }

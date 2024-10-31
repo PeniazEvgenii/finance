@@ -4,6 +4,7 @@ import by.it_academy.jd2.service.validation.UniqueMail;
 import by.it_academy.jd2.service.validation.group.CreateAction;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 @Data
 @AllArgsConstructor
@@ -25,5 +26,6 @@ public class UserCreateDto {
 
     @NotNull(message = "Пароль обязателен")
     @NotBlank(message = "Пароль должен быть не пустой")
+    @Length(min = 4, message = "Длина пароля должна быть не менне 4 цифр")
     private final String password;
 }
