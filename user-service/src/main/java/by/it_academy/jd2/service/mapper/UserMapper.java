@@ -1,9 +1,8 @@
 package by.it_academy.jd2.service.mapper;
 
 import by.it_academy.jd2.repository.entity.UserEntity;
-import by.it_academy.jd2.service.dto.UserCreateDto;
-import by.it_academy.jd2.service.dto.UserReadDto;
-import by.it_academy.jd2.service.dto.UserUpdateDto;
+import by.it_academy.jd2.service.dto.*;
+import by.it_academy.jd2.service.mapper.api.IUserMapper;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,7 +23,7 @@ public class UserMapper implements IUserMapper {
     @Override
     public UserEntity mapCreate(UserCreateDto object) {
         return UserEntity.builder()
-                .mail(object.getMail())
+                .mail(object.getMail().toLowerCase())
                 .fio(object.getFio())
                 .role(object.getRole())
                 .status(object.getStatus())
@@ -38,6 +37,15 @@ public class UserMapper implements IUserMapper {
         return toObject;
     }
 
+    public UserEntity mapRegistration(UserRegistrationDto object) {
+        return UserEntity.builder()
+                .mail(object.getMail().toLowerCase())
+                .fio(object.getFio())
+                .role(UserRole.USER)
+                .status(UserStatus.WAITING_ACTIVATION)
+                .password(object.getPassword())
+                .build();
+    }
 
     private void copy(UserUpdateDto userDto, UserEntity user) {
         user.setMail(userDto.getMail());

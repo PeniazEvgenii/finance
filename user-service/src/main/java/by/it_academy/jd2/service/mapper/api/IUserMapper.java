@@ -1,4 +1,4 @@
-package by.it_academy.jd2.service.mapper;
+package by.it_academy.jd2.service.mapper.api;
 
 import by.it_academy.jd2.repository.entity.UserEntity;
 import by.it_academy.jd2.service.dto.UserCreateDto;
