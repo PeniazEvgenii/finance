@@ -1,6 +1,6 @@
 package by.it_academy.jd2.controller;
 
-import by.it_academy.jd2.exception.IdNotFoundException;
+import by.it_academy.jd2.service.exception.IdNotFoundException;
 import by.it_academy.jd2.page.PageOf;
 import by.it_academy.jd2.service.IUserService;
 import by.it_academy.jd2.service.dto.*;
