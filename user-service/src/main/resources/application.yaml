@@ -44,7 +44,7 @@ spring:
 #      prefix: /WEB-INF/jsp/
 #      suffix: .jsp
   datasource:
-    url: jdbc:postgresql://192.168.100.13/test4
+    url: jdbc:postgresql://192.168.100.13/test4        #продублировать на переменные среды
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
@@ -53,6 +53,7 @@ spring:
       show_sql: true
       format_sql: true
       hbm2ddl.auto: validate
+      default_schema: public                 #поменять схему
     open-in-view: false
 
   mail:

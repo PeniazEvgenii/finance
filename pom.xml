@@ -12,8 +12,7 @@
     <modules>
         <module>common-lib</module>
         <module>user-service</module>
-        <!--        <module>user-service</module>-->
-<!--        <module>classifier-service</module>-->
+        <module>classifier-service</module>
 <!--        <module>account-service</module>-->
 <!--        <module>audit-service</module>-->
     </modules>
