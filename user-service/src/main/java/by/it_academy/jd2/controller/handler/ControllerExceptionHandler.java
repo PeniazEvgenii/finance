@@ -1,4 +1,4 @@
-package by.it_academy.jd2.controller;
+package by.it_academy.jd2.controller.handler;
 
 import by.it_academy.jd2.error.EError;
 import by.it_academy.jd2.error.ErrorResponse;
@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
 
@@ -62,6 +63,14 @@ public class ControllerExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR,
                 "Зарос содержит некорректные данные. Проверьте и повторите запрос");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(List.of(errorResponse));
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<List<ErrorResponse>> onNoResourceFoundException() {
+        ErrorResponse errorResponse = new ErrorResponse(EError.ERROR,
+                "Введен неверный URL");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(List.of(errorResponse));
     }
 
