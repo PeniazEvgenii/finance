@@ -2,7 +2,7 @@ package by.it_academy.jd2.service;
 
 import by.it_academy.jd2.service.exception.IdNotFoundException;
 import by.it_academy.jd2.service.exception.UpdateTimeMismatchException;
-import by.it_academy.jd2.page.PageOf;
+import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.IUserRepository;
 import by.it_academy.jd2.repository.entity.UserEntity;
 import by.it_academy.jd2.service.dto.*;

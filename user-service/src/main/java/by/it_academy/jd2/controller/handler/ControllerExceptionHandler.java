@@ -1,9 +1,9 @@
 package by.it_academy.jd2.controller.handler;
 
-import by.it_academy.jd2.error.EError;
-import by.it_academy.jd2.error.ErrorResponse;
-import by.it_academy.jd2.error.StructuredError;
-import by.it_academy.jd2.error.StructuredErrorResponse;
+import by.it_academy.jd2.commonlib.error.EError;
+import by.it_academy.jd2.commonlib.error.ErrorResponse;
+import by.it_academy.jd2.commonlib.error.StructuredError;
+import by.it_academy.jd2.commonlib.error.StructuredErrorResponse;
 import by.it_academy.jd2.service.exception.EmailSendException;
 import by.it_academy.jd2.service.exception.IdNotFoundException;
 import by.it_academy.jd2.service.exception.UpdateTimeMismatchException;
