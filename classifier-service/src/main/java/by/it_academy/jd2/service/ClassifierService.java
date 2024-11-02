@@ -1,6 +1,6 @@
 package by.it_academy.jd2.service;
 
-import by.it_academy.jd2.page.PageOf;
+import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.ICurrencyRepository;
 import by.it_academy.jd2.repository.IOperationCategoryRepository;
 import by.it_academy.jd2.service.dto.*;
@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Validated
@@ -88,4 +89,18 @@ public class ClassifierService implements IClassifierService {
         return operationCategoryRepository.findByTitle(title)
                 .map(operationCategoryMapper::mapRead);
     }
+
+    @Override
+    public Optional<CurrencyReadDto> findCurrencyById(UUID id) {
+        return currencyRepository.findById(id)
+                .map(currencyMapper::mapRead);
+    }
+
+    @Override
+    public Optional<OperationCategoryReadDto> findCategoryById(UUID id) {
+        return operationCategoryRepository.findById(id)
+                .map(operationCategoryMapper::mapRead);
+    }
+
+
 }

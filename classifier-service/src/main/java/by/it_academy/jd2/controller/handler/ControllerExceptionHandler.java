@@ -1,22 +1,21 @@
 package by.it_academy.jd2.controller.handler;
 
-import by.it_academy.jd2.error.EError;
-import by.it_academy.jd2.error.ErrorResponse;
-import by.it_academy.jd2.error.StructuredError;
-import by.it_academy.jd2.error.StructuredErrorResponse;
+import by.it_academy.jd2.commonlib.error.EError;
+import by.it_academy.jd2.commonlib.error.ErrorResponse;
+import by.it_academy.jd2.commonlib.error.StructuredError;
+import by.it_academy.jd2.commonlib.error.StructuredErrorResponse;
+import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.NoHandlerFoundException;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
 
-@RestControllerAdvice
+@RestControllerAdvice(basePackages = {"by.it_academy.jd2.controller.ClassifierController"})
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -53,6 +52,13 @@ public class ControllerExceptionHandler {
                 .body(structuredErrorResponse);
     }
 
+    @ExceptionHandler(IdNotFoundException.class)
+    public ResponseEntity<List<ErrorResponse>> onIdNotFoundException(
+            IdNotFoundException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(EError.ERROR, "Запрос содержит некорректный ID. Измените запрос и отправьте его ещё раз");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
+    }
+
     //HttpMessageNotReadableException     когда в теле ничего не передано
 
     @ExceptionHandler(NoResourceFoundException.class)
@@ -62,6 +68,10 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(List.of(errorResponse));
     }
+
+
+
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<List<ErrorResponse>> onException(Exception exception) {

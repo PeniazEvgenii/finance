@@ -19,7 +19,7 @@ ALTER TABLE IF EXISTS classifier.currencies
     OWNER to postgres;
 
 --changeset Evgenii:2
-CREATE TABLE classifier.operation_categories
+CREATE TABLE IF NOT EXISTS classifier.operation_categories
 (
     id uuid,
     title character varying NOT NULL,

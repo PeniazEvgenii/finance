@@ -1,7 +1,7 @@
 package by.it_academy.jd2.configuration;
 
-import by.it_academy.jd2.jackson.InstantToMicrosecondsSerializer;
-import by.it_academy.jd2.jackson.MicrosecondsToInstantConverter;
+import by.it_academy.jd2.commonlib.jackson.InstantToMicrosecondsSerializer;
+import by.it_academy.jd2.commonlib.jackson.MicrosecondsToInstantConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
