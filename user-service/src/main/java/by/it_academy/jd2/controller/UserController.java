@@ -22,7 +22,7 @@ public class UserController {
     private final IUserService userService;
 
     @PostMapping
-    @ResponseStatus(value = HttpStatus.CREATED, reason = "Пользователь добавлен")
+    @ResponseStatus(value = HttpStatus.CREATED)
     public void create(@RequestBody @Validated(CreateAction.class) UserCreateDto userCreateDto) {
         userService.create(userCreateDto);
     }
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @PutMapping("/{uuid}/dt_update/{dt_update}")
-    @ResponseStatus(value = HttpStatus.OK, reason = "Пользователь обновлён")
+    @ResponseStatus(value = HttpStatus.OK)
     public void update(@PathVariable("uuid") UUID id,
                        @PathVariable("dt_update") Instant dtUpdate,
                        @RequestBody @Validated(UpdateAction.class) UserCreateDto userCreateDto) {

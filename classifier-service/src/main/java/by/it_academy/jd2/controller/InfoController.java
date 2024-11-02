@@ -18,15 +18,15 @@ public class InfoController {
 
     private final IClassifierService classifierService;
 
-    @GetMapping("/currency/{id}")
-    public CurrencyReadDto findCurrencyById(@PathVariable("id") UUID id) {
+    @GetMapping("/currency/{uuid}")
+    public CurrencyReadDto findCurrencyById(@PathVariable("uuid") UUID id) {
         return classifierService.findCurrencyById(id)
                   .orElseThrow(IdNotFoundException::new);          // это внутри  между  сервисами, может так что возвращать. или
                // .orElse(null);                                                                   // либо просто null
     }
 
-    @GetMapping("/category/{id}")
-    public OperationCategoryReadDto findCategoryById(@PathVariable("id") UUID id) {
+    @GetMapping("/category/{uuid}")
+    public OperationCategoryReadDto findCategoryById(@PathVariable("uuid") UUID id) {
         return classifierService.findCategoryById(id)
                 .orElseThrow(IdNotFoundException::new);           // это внутри  между  сервисами, может так что возвращать. или
              // .orElse(null);                                                                   // либо просто null
