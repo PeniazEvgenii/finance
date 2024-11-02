@@ -26,6 +26,6 @@ public class UserCreateDto {
 
     @NotNull(message = "Пароль обязателен")
     @NotBlank(message = "Пароль должен быть не пустой")
-    @Length(min = 4, message = "Длина пароля должна быть не менне 4 цифр")
+    @Length(min = 4, message = "Длина пароля должна быть не менне 4 символов")
     private final String password;
 }
