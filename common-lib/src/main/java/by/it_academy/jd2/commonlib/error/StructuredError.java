@@ -1,4 +1,4 @@
-package by.it_academy.jd2.error;
+package by.it_academy.jd2.commonlib.error;
 
 public class StructuredError {
     private final String message;

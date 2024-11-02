@@ -1,4 +1,4 @@
-package by.it_academy.jd2.jackson;
+package by.it_academy.jd2.commonlib.jackson;
 
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;

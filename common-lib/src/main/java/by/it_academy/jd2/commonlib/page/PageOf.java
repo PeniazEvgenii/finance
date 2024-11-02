@@ -1,4 +1,4 @@
-package by.it_academy.jd2.page;
+package by.it_academy.jd2.commonlib.page;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-import static by.it_academy.jd2.page.PageOf.Fields.*;
+import static by.it_academy.jd2.commonlib.page.PageOf.Fields.*;
 
 @FieldNameConstants
 @JsonPropertyOrder({number, size, totalPages, totalElement, first, numberOfElements, last, content})

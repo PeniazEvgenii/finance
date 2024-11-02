@@ -1,4 +1,4 @@
-package by.it_academy.jd2.jackson;
+package by.it_academy.jd2.commonlib.jackson;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
