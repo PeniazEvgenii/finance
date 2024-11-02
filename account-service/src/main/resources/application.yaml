@@ -1,0 +1,28 @@
+logging:
+  level:
+    root: info
+    #    com.dmdev.spring.database.pool: info
+    org.springframework.jdbc.core: trace
+  file:
+    name: dmdev.log
+    path: /
+
+spring:
+  application:
+    name: account-service
+  datasource:
+    url: jdbc:postgresql://192.168.100.13/test4
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties.hibernate:
+      show_sql: true
+      format_sql: true
+      hbm2ddl.auto: validate
+      default_schema: account
+    open-in-view: false
+
+  jackson:
+    deserialization:
+      read-date-timestamps-as-nanoseconds: false
