@@ -6,7 +6,6 @@ logging:
   file:
     name: dmdev.log
     path: /
-
 spring:
   application:
     name: classifier-service
