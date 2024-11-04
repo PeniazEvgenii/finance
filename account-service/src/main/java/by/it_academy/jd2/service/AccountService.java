@@ -76,4 +76,8 @@ public class AccountService implements IAccountService {
                 .map(accountRepository::saveAndFlush)
                 .orElseThrow();
     }
+
+    public Optional<AccountEntity> findEntityById(UUID id) {
+        return accountRepository.findById(id);
+    }
 }

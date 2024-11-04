@@ -22,14 +22,18 @@ ALTER TABLE IF EXISTS account.accounts
     OWNER to postgres;
 
 --changeset Evgenii:2
-CREATE TABLE IF NOT EXISTS classifier.operation_categories
+CREATE TABLE IF NOT EXISTS account.operations
 (
     id uuid,
-    title character varying NOT NULL,
     dt_create timestamp without time zone NOT NULL,
     dt_update timestamp without time zone NOT NULL,
-    CONSTRAINT currencies_pkey PRIMARY KEY (id),
-    CONSTRAINT title_category_unique UNIQUE (title)
+    date timestamp without time zone NOT NULL,
+    description character varying NOT NULL,
+    category_id uuid NOT NULL,
+    value numeric NOT NULL,
+    account_id uuid NOT NULL,
+    CONSTRAINT operations_pkey PRIMARY KEY (id),
+    CONSTRAINT fk_operations FOREIGN KEY (account_id) REFERENCES account.accounts (id)
 );
 
 ALTER TABLE IF EXISTS classifier.operation_categories

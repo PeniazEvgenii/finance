@@ -1,6 +1,7 @@
 package by.it_academy.jd2.service.api;
 
 import by.it_academy.jd2.commonlib.page.PageOf;
+import by.it_academy.jd2.repository.entity.AccountEntity;
 import by.it_academy.jd2.service.dto.AccountCreateDto;
 import by.it_academy.jd2.service.dto.AccountReadDto;
 import by.it_academy.jd2.service.dto.AccountUpdateDto;
@@ -19,4 +20,6 @@ public interface IAccountService {
     Optional<AccountReadDto> findById(UUID id);
 
     void update(@Valid AccountUpdateDto updateDto);
+
+    Optional<AccountEntity> findEntityById(UUID id);
 }
