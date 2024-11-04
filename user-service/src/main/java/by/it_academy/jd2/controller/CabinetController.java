@@ -16,13 +16,13 @@ public class CabinetController {
     private final ICabinetService cabinetService;
 
     @PostMapping("/registration")
-    @ResponseStatus(value = HttpStatus.CREATED, reason = "Пользователь зарегистрирован")
+    @ResponseStatus(value = HttpStatus.CREATED)
     public void registration(@RequestBody @Valid UserRegistrationDto userRegistrationDto) {
         cabinetService.registration(userRegistrationDto);
     }
 
     @GetMapping("/verification")
-    @ResponseStatus(value = HttpStatus.OK, reason = "Пользователь верифицирован")
+    @ResponseStatus(value = HttpStatus.OK)
     public void verification(@RequestParam("code") String code,
                              @RequestParam("mail") String mail) {
 
