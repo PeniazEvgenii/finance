@@ -5,14 +5,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Slf4j
 @SpringBootApplication
+@EnableScheduling
 @ConfigurationPropertiesScan
-public class ApplicationRunner {
+public class ApplicationUserRunner {
     public static void main(String[] args) {
 
-        ConfigurableApplicationContext context = SpringApplication.run(ApplicationRunner.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(ApplicationUserRunner.class, args);
         log.info("Количество бинов в beanDefinitions = {}",context.getBeanDefinitionCount());
 
     }
