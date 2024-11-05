@@ -2,6 +2,7 @@ package by.it_academy.jd2.service;
 
 import by.it_academy.jd2.repository.IUserRepository;
 import by.it_academy.jd2.repository.entity.UserEntity;
+import by.it_academy.jd2.service.api.ICabinetService;
 import by.it_academy.jd2.service.dto.UserRegistrationDto;
 import by.it_academy.jd2.service.dto.UserStatus;
 import by.it_academy.jd2.service.dto.VerificationDto;
@@ -37,11 +38,11 @@ public class CabinetService implements ICabinetService {
     @Transactional
     public void verify(@Valid VerificationDto verificationDto) {
          if(verificationService.checkCode(verificationDto)) {                             //могу и ENTITY передать, -1 запрос НО передаю с
-             UserEntity userEntity = userRepository.findByMail(verificationDto.getMail())
+             UserEntity userEntity = userRepository.findByMailIgnoreCase(verificationDto.getMail())
                      .orElseThrow(IdNotFoundException::new);
              userEntity.setStatus(UserStatus.ACTIVATED);
              Optional.of(userEntity)
-                     .map(userRepository::saveAndFlush)
+                     .map(userRepository::saveAndFlush)                                  //будем аудит отправлять
                      .orElseThrow();
          } else {
              throw new VerificationException();

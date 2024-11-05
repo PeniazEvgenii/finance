@@ -1,5 +1,6 @@
 package by.it_academy.jd2.service;
 
+import by.it_academy.jd2.service.api.IUserService;
 import by.it_academy.jd2.service.exception.IdNotFoundException;
 import by.it_academy.jd2.service.exception.UpdateTimeMismatchException;
 import by.it_academy.jd2.commonlib.page.PageOf;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,9 +32,13 @@ public class UserService implements IUserService {
 
     @Override
     public PageOf<UserReadDto> findAll(@Valid PageDto pageDto) {
-        Sort.TypedSort<Instant> sortUsers = Sort.sort(UserReadDto.class).by(UserReadDto::getDtCreate);
-        PageRequest pageRequest = PageRequest.of(pageDto.getPage(), pageDto.getSize(), sortUsers);
-
+        Sort sortUsers = Sort.sort(UserReadDto.class)
+                .by(UserReadDto::getDtCreate)
+                .descending();
+        PageRequest pageRequest = PageRequest.of(
+                pageDto.getPage(),
+                pageDto.getSize(),
+                sortUsers);
         Page<UserReadDto> page = userRepository.findAll(pageRequest)
                 .map(userMapper::mapRead);
         return PageOf.of(page);
@@ -70,8 +74,9 @@ public class UserService implements IUserService {
                 .orElseThrow();
     }
 
+    @Override
     public Optional<UserReadDto> findByMail(String mail) {
-         return userRepository.findByMail(mail)
+         return userRepository.findByMailIgnoreCase(mail)
                 .map(userMapper::mapRead);
     }
 

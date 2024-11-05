@@ -2,7 +2,7 @@ package by.it_academy.jd2.controller;
 
 import by.it_academy.jd2.service.exception.IdNotFoundException;
 import by.it_academy.jd2.commonlib.page.PageOf;
-import by.it_academy.jd2.service.IUserService;
+import by.it_academy.jd2.service.api.IUserService;
 import by.it_academy.jd2.service.dto.*;
 import by.it_academy.jd2.service.validation.group.CreateAction;
 import by.it_academy.jd2.service.validation.group.UpdateAction;
@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/users")
+@RequestMapping("/users")
 public class UserController {
 
     private final IUserService userService;

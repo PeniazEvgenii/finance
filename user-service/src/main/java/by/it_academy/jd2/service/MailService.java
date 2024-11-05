@@ -1,5 +1,6 @@
 package by.it_academy.jd2.service;
 
+import by.it_academy.jd2.service.api.IMailService;
 import by.it_academy.jd2.service.exception.EmailSendException;
 import by.it_academy.jd2.service.dto.MailDto;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MailService implements IMailService{
+public class MailService implements IMailService {
 
     private final JavaMailSender javaMailSender;
 

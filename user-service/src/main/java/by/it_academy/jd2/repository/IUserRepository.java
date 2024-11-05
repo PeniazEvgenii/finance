@@ -13,7 +13,7 @@ import java.util.UUID;
 public interface IUserRepository extends JpaRepository<UserEntity, UUID>,
                                             QuerydslPredicateExecutor<UserEntity> {
 
-    Optional<UserEntity> findByMail(String mail);
+    Optional<UserEntity> findByMailIgnoreCase(String mail);
 
     @Query("select u FROM UserEntity u LEFT JOIN CodeEntity c on u.id = c.user.id where u.status = :userStatus and c.user.id is NULL")
     List<UserEntity> findByStatusWithoutCode(UserStatus userStatus);
