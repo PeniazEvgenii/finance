@@ -5,6 +5,7 @@ import by.it_academy.jd2.commonlib.error.ErrorResponse;
 import by.it_academy.jd2.commonlib.error.StructuredError;
 import by.it_academy.jd2.commonlib.error.StructuredErrorResponse;
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
+import by.it_academy.jd2.controller.ClassifierController;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
 
-@RestControllerAdvice(basePackages = {"by.it_academy.jd2.controller.ClassifierController"})
+@RestControllerAdvice(basePackageClasses = ClassifierController.class)
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

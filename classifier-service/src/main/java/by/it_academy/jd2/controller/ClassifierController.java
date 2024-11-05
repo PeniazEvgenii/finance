@@ -1,7 +1,8 @@
 package by.it_academy.jd2.controller;
 
 import by.it_academy.jd2.commonlib.page.PageOf;
-import by.it_academy.jd2.service.IClassifierService;
+import by.it_academy.jd2.service.api.ICurrencyService;
+import by.it_academy.jd2.service.api.IOperationCategoryService;
 import by.it_academy.jd2.service.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -10,16 +11,17 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/classifier")
+@RequestMapping("/classifier")
 public class ClassifierController {
 
-    private final IClassifierService classifierService;
+    private final ICurrencyService currencyService;
+    private final IOperationCategoryService operationCategoryService;
 
     @PostMapping("/currency")
     @ResponseStatus(value = HttpStatus.CREATED)
     public void createCurrency(@RequestBody @Valid CurrencyCreateDto currencyCreateDto) {
 
-        classifierService.createCurrency(currencyCreateDto);
+        currencyService.create(currencyCreateDto);
     }
 
     @GetMapping("/currency")
@@ -27,14 +29,14 @@ public class ClassifierController {
     public PageOf<CurrencyReadDto> findAllCurrency(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                                    @RequestParam(value = "size", defaultValue = "20") Integer size) {
 
-        return classifierService.findAllCurrency(new PageDto(page, size));
+        return currencyService.findAll(new PageDto(page, size));
     }
 
     @PostMapping("/operation/category")
     @ResponseStatus(value = HttpStatus.CREATED)                                                                         //опред может валид все на сервис
     public void createOperationCategory(@RequestBody @Valid OperationCategoryCreateDto operationCategoryCreateDto) {
 
-        classifierService.createOperationCategory(operationCategoryCreateDto);
+        operationCategoryService.create(operationCategoryCreateDto);
     }
 
     @GetMapping("/operation/category")
@@ -42,6 +44,6 @@ public class ClassifierController {
     public PageOf<OperationCategoryReadDto> findAllOperationCategory(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                                                      @RequestParam(value = "size", defaultValue = "20") Integer size) {
 
-        return classifierService.findAllOperationCategory(new PageDto(page, size));
+        return operationCategoryService.findAll(new PageDto(page, size));
     }
 }

@@ -9,10 +9,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 @Slf4j
 @SpringBootApplication
 @ConfigurationPropertiesScan
-public class ApplicationRunner {
+public class ApplicationClassifierRunner {
     public static void main(String[] args) {
 
-        ConfigurableApplicationContext context = SpringApplication.run(ApplicationRunner.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(ApplicationClassifierRunner.class, args);
         log.info("Количество бинов в beanDefinitions = {}",context.getBeanDefinitionCount());
 
     }
