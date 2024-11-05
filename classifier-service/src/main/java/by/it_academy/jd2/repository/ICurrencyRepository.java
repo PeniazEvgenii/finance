@@ -8,5 +8,5 @@ import java.util.UUID;
 
 public interface ICurrencyRepository extends JpaRepository<CurrencyEntity, UUID> {
 
-    Optional<CurrencyEntity> findByTitle(String title);
+    Optional<CurrencyEntity> findByTitleIgnoreCase(String title);
 }

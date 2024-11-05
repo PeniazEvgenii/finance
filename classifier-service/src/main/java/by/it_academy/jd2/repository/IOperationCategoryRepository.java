@@ -8,5 +8,5 @@ import java.util.UUID;
 
 public interface IOperationCategoryRepository extends JpaRepository<OperationCategoryEntity, UUID> {
 
-    Optional<OperationCategoryEntity> findByTitle(String title);
+    Optional<OperationCategoryEntity> findByTitleIgnoreCase(String title);
 }

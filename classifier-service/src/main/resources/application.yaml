@@ -10,18 +10,19 @@ spring:
   application:
     name: classifier-service
   datasource:
-    url: jdbc:postgresql://192.168.100.13/test4
+    url: jdbc:postgresql://192.168.100.13:5432/classifier
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
+  liquibase:
+    liquibase-schema: public               #пока в паблик схему ???
   jpa:
     properties.hibernate:
       show_sql: true
       format_sql: true
       hbm2ddl.auto: validate
-      default_schema: classifier
+      default_schema: app
     open-in-view: false
-
   jackson:
     deserialization:
       read-date-timestamps-as-nanoseconds: false
