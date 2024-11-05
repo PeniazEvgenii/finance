@@ -1,22 +1,9 @@
-logging:
-  level:
-    root: info
-#    by.it_academy.jd2: debug
-    org.springframework.jdbc.core: trace
-  file:
-    name: dmdev.log
-    path: /
-
 scheduler:
-  core.pool: 3
-  init.delay: 0
   period: 3
-
-
 
 spring:
   datasource:
-    url: jdbc:postgresql://192.168.100.13/test4        #продублировать на переменные среды
+    url: jdbc:postgresql://192.168.100.13/user        #продублировать на переменные среды ???
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
@@ -25,9 +12,10 @@ spring:
       show_sql: true
       format_sql: true
       hbm2ddl.auto: validate
-      default_schema: public                 #поменять схему
+      default_schema: app                 #поменять схему ???
     open-in-view: false
-
+  liquibase:
+    liquibase-schema: app               #пока в одну схему ???
   mail:
     host: ${ENV_MAIL_HOST:smtp.mail.ru}
     port: ${ENV_MAIL_PORT:465}
@@ -40,29 +28,19 @@ spring:
           auth: true
           ssl:
             enable: true
-
+  task:
+    scheduling:
+      pool:
+        size: 3
   jackson:
     deserialization:
       read-date-timestamps-as-nanoseconds: false
 
-
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-#          google:
-#            clientId: 332774868260-df19as06mb58pmmho08c0vpf2cfhv8gc.apps.googleusercontent.com
-#            clientSecret: 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
-#            redirectUri: http://localhost:8080/login/oauth2/code/google
-#            authorization-grant-type: authorization_code
-#            scope:
-#              - openid
-#              - email
-#              - profile
-#springdoc:
-#  swagger-ui:
-#    oauth:
-#      client-id: 332774868260-df19as06mb58pmmho08c0vpf2cfhv8gc.apps.googleusercontent.com
-#      client-secret: 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
-#      scopes: openid,email,profile
-#    oauth2-redirect-url: http://localhost:8080/swagger-ui/oauth2-redirect.html
+logging:
+  level:
+    root: info
+    #    by.it_academy.jd2: debug
+    org.springframework.jdbc.core: trace
+  file:
+    name: dmdev.log
+    path: /

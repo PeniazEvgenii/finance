@@ -14,8 +14,6 @@ CREATE TABLE IF NOT EXISTS app.users
     fio character varying NOT NULL,
     role character varying NOT NULL,
     status character varying NOT NULL,
-    create_by character varying,
-    update_by character varying,
     CONSTRAINT users_pkey PRIMARY KEY (id),
     CONSTRAINT mail_unique UNIQUE (mail)
 );
@@ -29,12 +27,10 @@ CREATE TABLE app.codes
     id bigserial,
     user_id uuid NOT NULL,
     code character varying NOT NULL,
+    dt_create  timestamp without time zone NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT fk_user_id FOREIGN KEY (user_id)
-        REFERENCES public.users (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-        NOT VALID
+        REFERENCES app.users (id)
 );
 
 ALTER TABLE IF EXISTS app.codes
