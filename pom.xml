@@ -14,11 +14,11 @@
         <module>user-service</module>
         <module>classifier-service</module>
         <module>account-service</module>
-<!--        <module>audit-service</module>-->
+        <module>audit-service</module>
     </modules>
 
     <properties>
-        <spring.boot.version>3.3.4</spring.boot.version>
+        <spring.boot.version>3.3.5</spring.boot.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
