@@ -1,7 +1,6 @@
 package by.it_academy.jd2.controller;
 
-import by.it_academy.jd2.service.ICabinetService;
-import by.it_academy.jd2.service.MailService;
+import by.it_academy.jd2.service.api.ICabinetService;
 import by.it_academy.jd2.service.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/cabinet")
+@RequestMapping("/cabinet")
 @RequiredArgsConstructor
 public class CabinetController {
 
@@ -26,7 +25,7 @@ public class CabinetController {
     public void verification(@RequestParam("code") String code,
                              @RequestParam("mail") String mail) {
 
-        cabinetService.verify(new VerificationDto(code, mail.toLowerCase()));
+        cabinetService.verify(new VerificationDto(code, mail));
     }
 
     @PostMapping("/login")

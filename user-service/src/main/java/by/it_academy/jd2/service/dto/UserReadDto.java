@@ -1,6 +1,7 @@
 package by.it_academy.jd2.service.dto;
 
 
+import by.it_academy.jd2.commonlib.dto.UserRole;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;

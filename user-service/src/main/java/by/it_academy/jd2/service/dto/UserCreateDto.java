@@ -1,5 +1,6 @@
 package by.it_academy.jd2.service.dto;
 
+import by.it_academy.jd2.commonlib.dto.UserRole;
 import by.it_academy.jd2.service.validation.UniqueMail;
 import by.it_academy.jd2.service.validation.group.CreateAction;
 import jakarta.validation.constraints.*;

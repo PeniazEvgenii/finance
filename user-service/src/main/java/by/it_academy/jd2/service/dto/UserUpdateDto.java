@@ -1,10 +1,8 @@
 package by.it_academy.jd2.service.dto;
 
+import by.it_academy.jd2.commonlib.dto.UserRole;
 import by.it_academy.jd2.service.validation.MailUpdate;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 

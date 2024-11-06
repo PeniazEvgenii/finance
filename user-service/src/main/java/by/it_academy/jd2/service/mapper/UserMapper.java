@@ -1,5 +1,6 @@
 package by.it_academy.jd2.service.mapper;
 
+import by.it_academy.jd2.commonlib.dto.UserRole;
 import by.it_academy.jd2.repository.entity.UserEntity;
 import by.it_academy.jd2.service.dto.*;
 import by.it_academy.jd2.service.mapper.api.IUserMapper;

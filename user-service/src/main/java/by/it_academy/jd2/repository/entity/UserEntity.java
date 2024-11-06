@@ -1,6 +1,6 @@
 package by.it_academy.jd2.repository.entity;
 
-import by.it_academy.jd2.service.dto.UserRole;
+import by.it_academy.jd2.commonlib.dto.UserRole;
 import by.it_academy.jd2.service.dto.UserStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
