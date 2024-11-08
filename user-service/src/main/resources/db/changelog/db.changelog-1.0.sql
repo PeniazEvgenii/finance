@@ -1,8 +1,7 @@
 --liquibase formatted sql
 
 --changeset Evgenii:1
-create SCHEMA IF NOT EXISTS app
-    AUTHORIZATION postgres;
+create SCHEMA IF NOT EXISTS app;
 
 CREATE TABLE IF NOT EXISTS app.users
 (
@@ -18,8 +17,6 @@ CREATE TABLE IF NOT EXISTS app.users
     CONSTRAINT mail_unique UNIQUE (mail)
 );
 
-ALTER TABLE IF EXISTS app.users
-    OWNER to postgres;
 
 --changeset Evgenii:2
 CREATE TABLE app.codes
@@ -33,5 +30,3 @@ CREATE TABLE app.codes
         REFERENCES app.users (id)
 );
 
-ALTER TABLE IF EXISTS app.codes
-    OWNER to postgres;

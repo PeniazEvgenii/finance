@@ -41,6 +41,7 @@ public class AuditEntity {
     private String text;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private EssenceType type;
 
     @Column(name = "essence_id", nullable = false)

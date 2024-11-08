@@ -1,8 +1,7 @@
 --liquibase formatted sql
 
 --changeset Evgenii:1
-create SCHEMA IF NOT EXISTS app
-    AUTHORIZATION postgres;
+create SCHEMA IF NOT EXISTS app;
 
 CREATE TABLE IF NOT EXISTS app.currencies
 (
@@ -15,8 +14,7 @@ CREATE TABLE IF NOT EXISTS app.currencies
     CONSTRAINT title_currency_unique UNIQUE (title)
 );
 
-ALTER TABLE IF EXISTS app.currencies
-    OWNER to postgres;
+
 
 --changeset Evgenii:2
 CREATE TABLE IF NOT EXISTS app.operation_categories
@@ -29,5 +27,3 @@ CREATE TABLE IF NOT EXISTS app.operation_categories
     CONSTRAINT title_category_unique UNIQUE (title)
 );
 
-ALTER TABLE IF EXISTS app.operation_categories
-    OWNER to postgres;

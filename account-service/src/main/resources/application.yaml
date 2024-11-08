@@ -1,19 +1,8 @@
-logging:
-  level:
-    root: info
-    #    com.dmdev.spring.database.pool: info
-    org.springframework.jdbc.core: trace
-  file:
-    name: dmdev.log
-    path: /
-server:
-  port: 8081
-
 spring:
   application:
     name: account-service
   datasource:
-    url: jdbc:postgresql://192.168.100.13/test4
+    url: jdbc:postgresql://192.168.100.13:5432/account
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
@@ -22,9 +11,19 @@ spring:
       show_sql: true
       format_sql: true
       hbm2ddl.auto: validate
-      default_schema: account
+      default_schema: app
     open-in-view: false
-
+  liquibase:
+    liquibase-schema: public               #пока в паблик схему ???
   jackson:
     deserialization:
       read-date-timestamps-as-nanoseconds: false
+
+logging:
+  level:
+    root: info
+    #    com.dmdev.spring.database.pool: info
+    org.springframework.jdbc.core: trace
+  file:
+    name: dmdev.log
+    path: /
