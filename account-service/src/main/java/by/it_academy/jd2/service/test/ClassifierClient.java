@@ -1,5 +1,6 @@
 package by.it_academy.jd2.service.test;
 
+import by.it_academy.jd2.service.feign.CurrencyInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +18,12 @@ public class ClassifierClient {
 
     public boolean currencyExists(UUID currencyId) {
         try {
-            ResponseEntity<CurrencyReadDto> response = restTemplate.getForEntity(
-                    "http://192.168.100.29:8080/info/currency/{currencyId}",
-                    CurrencyReadDto.class,
+            ResponseEntity<CurrencyInfoDto> response = restTemplate.getForEntity(
+                    "http://192.168.100.29:8081/info/currency/{currencyId}",
+                    CurrencyInfoDto.class,
                     currencyId
             );
-            CurrencyReadDto body = response.getBody();
+            CurrencyInfoDto body = response.getBody();
             return response.getStatusCode() == HttpStatus.OK;
         } catch (HttpClientErrorException.NotFound e) {
             return false;
@@ -32,7 +33,7 @@ public class ClassifierClient {
     public boolean categoryExists(UUID categoryId) {
         try {
             ResponseEntity<Void> response = restTemplate.getForEntity(
-                    "http://192.168.100.29/api/v1/category/{categoryId}",
+                    "http://192.168.100.29:8081/api/v1/category/{categoryId}",
                     Void.class,
                     categoryId
             );
