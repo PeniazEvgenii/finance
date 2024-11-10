@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Aspect
 @Component
-public class LoggingAspect {
+public class LoggingServiceAspect {
 
     @Pointcut("by.it_academy.jd2.commonlib.aop.CommonPointcut.isServiceLayer() && execution(public * findByTitle(*))")
     public void anyFindByTitleServiceMethod() {}

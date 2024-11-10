@@ -6,13 +6,10 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class CommonPointcut {
+public class  CommonPointcut {
 
     @Pointcut("@within(org.springframework.stereotype.Service)")
     public void isServiceLayer() {}
-
-    @Pointcut("@within(org.springframework.stereotype.Controller)")
-    public void isControllerLayer() {}
 
     @Pointcut("isServiceLayer() && execution(public * findById(*))")
     public void anyFindByIdServiceMethod() {}
@@ -22,4 +19,28 @@ public class CommonPointcut {
 
     @Pointcut("isServiceLayer() && execution(public * save(*))")
     public void anySaveServiceMethod() {}
+
+    @Pointcut("isServiceLayer() && execution(public * update(*))")
+    public void anyUpdateServiceMethod() {}
+
+    @Pointcut("isServiceLayer() && execution(public * findByMail(*))")
+    public void isFindByMailServiceMethod(){};
+
+
+
+    @Pointcut("@within(org.springframework.web.bind.annotation.RestController)")
+    public void isControllerLayer() {}
+
+    @Pointcut("isControllerLayer() && execution(public * findById(*))")
+    public void anyFindByIdControllerLayer(){}
+
+    @Pointcut("isControllerLayer() && execution(public * findAll(..))")
+    public void anyFindAllControllerLayer() {}
+
+    @Pointcut("isControllerLayer() && execution(public * save(*))")
+    public void anySaveControllerLayer() {}
+
+    @Pointcut("isControllerLayer() && execution(public * update(*))")
+    public void anyUpdateControllerLayer() {}
+
 }
