@@ -32,14 +32,14 @@ public class MailService implements IMailService {
         try {
             javaMailSender.send(simpleMailMessage);
         } catch (MailAuthenticationException exception) {
-            log.error("проблемы аутентификации при попытке соединения с сервером отправки почты");
-            throw new EmailSendException("Ошибка отправки сообщения", exception);
+            log.error("authentication problems when trying to connect to the mail sending server");
+            throw new EmailSendException("Error sending message", exception);
         } catch (MailParseException exception) {
-            log.error("Ошибка при обработке почтового сообщения: {}", simpleMailMessage);
-            throw new EmailSendException("Ошибка отправки сообщения", exception);
+            log.error("error processing mail message: {}", simpleMailMessage);
+            throw new EmailSendException("Error sending message", exception);
         } catch (MailSendException exception) {
-            log.error("произошла ошибка при отправке письма{}", simpleMailMessage);
-            throw new EmailSendException("Ошибка отправки сообщения", exception);
+            log.error("an error occurred while sending the message: {}", simpleMailMessage);
+            throw new EmailSendException("Error sending message", exception);
         }
 
     }
