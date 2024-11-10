@@ -18,12 +18,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
+
 import java.util.Optional;
 import java.util.UUID;
 
+@Validated
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AccountService implements IAccountService {
 
     private final IAccountMapper accountMapper;
@@ -31,26 +34,25 @@ public class AccountService implements IAccountService {
 
     @Transactional
     @Override
-    public void create(@Valid AccountCreateDto createDto) {        //проверить валюту по id!!!!!
+    public void create(@Valid AccountCreateDto createDto) {
         Optional.of(createDto)
                 .map(accountMapper::mapCreate)
-                .map(accountRepository::saveAndFlush);
+                .map(accountRepository::saveAndFlush)
+                .orElseThrow();                                 // свое исключение проброшу
     }
 
     @Override
     public PageOf<AccountReadDto> findAll(@Valid PageDto pageDto) {
-        Sort.TypedSort<String> sortByTitle = Sort.sort(AccountReadDto.class)
-                .by(AccountReadDto::getTitle);
-
+        Sort sortByTitle = Sort.sort(AccountReadDto.class)
+                .by(AccountReadDto::getTitle)
+                .ascending();
         PageRequest pageRequest = PageRequest.of(
                 pageDto.getPage(),
                 pageDto.getSize(),
                 sortByTitle);
-
         Page<AccountReadDto> accounts = accountRepository
                 .findAll(pageRequest)
                 .map(accountMapper::mapRead);
-
         return PageOf.of(accounts);
     }
 
@@ -60,23 +62,28 @@ public class AccountService implements IAccountService {
                .map(accountMapper::mapRead);
     }
 
-
     @Transactional
     @Override
-    public void update(@Valid AccountUpdateDto updateDto) {                                 //проверить валюту по id!!!!!
-        AccountEntity accountEntity = accountRepository.findById(updateDto.getId())
-                .orElseThrow(IdNotFoundException::new);
+    public void update(@Valid AccountUpdateDto updateDto) {
+//        AccountEntity accountEntity = accountRepository.findById(updateDto.getId())         // наверное в аннотации бессмысленно чекать существ ли  и делать плюс запрос
+//                .orElseThrow(IdNotFoundException::new);
+//                                                                                            // а можно в аннотации чекнуть сразу аккаунт и время!!!
+//        if(!updateDto.getDtUpdate().equals(accountEntity.getDtUpdate())) {
+//            throw new UpdateTimeMismatchException();
+//        }
+//
+//        Optional.of(accountEntity)
+//                .map(entity -> accountMapper.mapUpdate(updateDto, entity))
+//                .map(accountRepository::saveAndFlush)
+//                .orElseThrow();                                                      // // свое исключение проброшу
 
-        if(!updateDto.getDtUpdate().equals(accountEntity.getDtUpdate())) {
-            throw new UpdateTimeMismatchException();
-        }
-
-        Optional.of(accountEntity)
+        accountRepository.findById(updateDto.getId())               // компактно, не понятно время неверно или id
                 .map(entity -> accountMapper.mapUpdate(updateDto, entity))
                 .map(accountRepository::saveAndFlush)
                 .orElseThrow();
     }
 
+    @Override
     public Optional<AccountEntity> findEntityById(UUID id) {
         return accountRepository.findById(id);
     }
