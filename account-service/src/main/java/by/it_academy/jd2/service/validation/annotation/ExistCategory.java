@@ -1,6 +1,6 @@
 package by.it_academy.jd2.service.validation.annotation;
 
-import by.it_academy.jd2.service.validation.NotZeroValue;
+import by.it_academy.jd2.service.validation.CheckExistOperationCategory;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -9,11 +9,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = NotZeroValue.class)
+@Constraint(validatedBy = CheckExistOperationCategory.class)
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface NotZero {
-    String message() default "{Сумма операции не должна быть равна нулю}";
+public @interface ExistCategory {
+    String message() default "{Неверна указана категория операции}";
 
     Class<?>[] groups() default {};
 

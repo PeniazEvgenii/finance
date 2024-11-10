@@ -1,5 +1,6 @@
 package by.it_academy.jd2.service.validation;
 
+import by.it_academy.jd2.service.validation.annotation.NotZero;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;

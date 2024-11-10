@@ -13,7 +13,7 @@ import java.util.UUID;
 @Builder
 public class OperationCategoryReadDto {
 
-    @JsonProperty(value = "id")
+    @JsonProperty(value = "uuid")
     private final UUID id;
 
     @JsonProperty(value = "dt_create")

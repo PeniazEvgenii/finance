@@ -1,6 +1,6 @@
 package by.it_academy.jd2.service.validation.annotation;
 
-import by.it_academy.jd2.service.validation.NotZeroValue;
+import by.it_academy.jd2.service.validation.CheckExistCurrency;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -9,11 +9,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = NotZeroValue.class)
+@Constraint(validatedBy = CheckExistCurrency.class)
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface NotZero {
-    String message() default "{Сумма операции не должна быть равна нулю}";
+public @interface ExistCurrency {
+    String message() default "{Неверна указана валюта}";
 
     Class<?>[] groups() default {};
 
