@@ -1,5 +1,6 @@
 package by.it_academy.jd2.controller;
 
+import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.service.api.IAccountService;
 import by.it_academy.jd2.service.dto.AccountCreateDto;
@@ -23,26 +24,29 @@ public class AccountController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody @Validated AccountCreateDto createDto) {
+    public void create(@RequestBody AccountCreateDto createDto) {
+
         accountService.create(createDto);
     }
 
     @GetMapping
     public PageOf<AccountReadDto> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                           @RequestParam(value = "size", defaultValue = "20") Integer size) {
-        return accountService.findAll(new PageDto(page, size));                                        //непонятно про пользователя, пока хардкод в таблице
+
+        return accountService.findAll(new PageDto(page, size));              //непонятно про пользователя, пока хардкод в таблице
     }
 
     @GetMapping("/{uuid}")
     public AccountReadDto findById(@PathVariable("uuid") UUID id) {
+
         return accountService.findById(id)
-                .orElseThrow();
+                .orElseThrow(IdNotFoundException::new);
     }
 
     @PutMapping("/{uuid}/dt_update/{dt_update}")
     public void update(@PathVariable("uuid") UUID id,
                        @PathVariable("dt_update") Instant dtUpdate,
-                       @RequestBody @Validated AccountCreateDto createDto) {
+                       @RequestBody AccountCreateDto createDto) {
 
         AccountUpdateDto updateDto = AccountUpdateDto.builder()
                 .id(id)

@@ -1,2 +1,6 @@
 server:
   port: 8082
+
+service:
+  classifier: localhost:8081
+  audit: localhost:8082
