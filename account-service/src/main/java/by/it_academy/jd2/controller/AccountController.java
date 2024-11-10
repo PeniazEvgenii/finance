@@ -57,6 +57,6 @@ public class AccountController {
                 .currencyId(createDto.getCurrencyId())
                 .build();
 
-        accountService.update(updateDto);
+git         accountService.update(updateDto);
     }
 }
