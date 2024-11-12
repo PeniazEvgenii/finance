@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -21,10 +23,14 @@ import java.util.UUID;
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "accounts")
 @Entity
+@OptimisticLocking(type = OptimisticLockType.VERSION)
 public class AccountEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Version
+    private Integer version;
 
     @CreatedDate
     @Column(name = "dt_create", nullable = false)
@@ -52,5 +58,10 @@ public class AccountEntity {
 
     @Column(name = "user_id", nullable = false)
     private UUID userId;                     //непонятно что делать, или таблицу делать!!!!
+
+
+    public void addValue(BigDecimal value) {
+        balance = balance.add(value);
+    }
 }
 

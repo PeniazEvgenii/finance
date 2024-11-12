@@ -2,6 +2,8 @@ package by.it_academy.jd2.repository.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -18,11 +20,15 @@ import java.util.UUID;
 @ToString(exclude = "accountEntity")
 @Table(name = "operations")
 @EntityListeners(AuditingEntityListener.class)
+@OptimisticLocking(type = OptimisticLockType.VERSION)
 public class OperationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Version
+    private Integer version;
 
     @CreatedDate
     @Column(name = "dt_create", nullable = false)
