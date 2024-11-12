@@ -7,6 +7,7 @@ import java.util.UUID;
 
 @Data
 public class UpdateDto {
+
     private final UUID accountId;
 
     private final UUID operationId;
