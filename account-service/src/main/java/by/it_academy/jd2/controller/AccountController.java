@@ -1,15 +1,15 @@
 package by.it_academy.jd2.controller;
 
+import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.service.api.IAccountService;
 import by.it_academy.jd2.service.dto.AccountCreateDto;
 import by.it_academy.jd2.service.dto.AccountReadDto;
 import by.it_academy.jd2.service.dto.AccountUpdateDto;
-import by.it_academy.jd2.service.dto.PageDto;
+import by.it_academy.jd2.service.mapper.IAccountMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -21,6 +21,7 @@ import java.util.UUID;
 public class AccountController {
 
     private final IAccountService accountService;
+    private final IAccountMapper accountMapper;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -48,15 +49,7 @@ public class AccountController {
                        @PathVariable("dt_update") Instant dtUpdate,
                        @RequestBody AccountCreateDto createDto) {
 
-        AccountUpdateDto updateDto = AccountUpdateDto.builder()
-                .id(id)
-                .dtUpdate(dtUpdate)
-                .title(createDto.getTitle())
-                .description(createDto.getDescription())
-                .type(createDto.getType())
-                .currencyId(createDto.getCurrencyId())
-                .build();
-
-git         accountService.update(updateDto);
+        AccountUpdateDto updateDto = accountMapper.mapUpdateDto(createDto, id, dtUpdate);
+        accountService.update(updateDto);
     }
 }
