@@ -2,7 +2,7 @@ package by.it_academy.jd2.controller;
 
 import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.page.PageOf;
-import by.it_academy.jd2.service.IOperationService;
+import by.it_academy.jd2.service.api.IOperationService;
 import by.it_academy.jd2.service.dto.OperationDto;
 import by.it_academy.jd2.service.dto.OperationReadDto;
 import by.it_academy.jd2.service.dto.OperationUpdateDto;
