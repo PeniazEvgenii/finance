@@ -1,11 +1,11 @@
 package by.it_academy.jd2.service.api;
 
+import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.entity.AccountEntity;
 import by.it_academy.jd2.service.dto.AccountCreateDto;
 import by.it_academy.jd2.service.dto.AccountReadDto;
 import by.it_academy.jd2.service.dto.AccountUpdateDto;
-import by.it_academy.jd2.service.dto.PageDto;
 import jakarta.validation.Valid;
 
 import java.util.Optional;

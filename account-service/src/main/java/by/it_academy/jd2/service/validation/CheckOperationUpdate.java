@@ -1,7 +1,7 @@
 package by.it_academy.jd2.service.validation;
 
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
-import by.it_academy.jd2.service.IOperationService;
+import by.it_academy.jd2.service.api.IOperationService;
 import by.it_academy.jd2.service.dto.OperationReadDto;
 import by.it_academy.jd2.service.dto.OperationUpdateDto;
 import by.it_academy.jd2.service.validation.annotation.OperationUpdate;

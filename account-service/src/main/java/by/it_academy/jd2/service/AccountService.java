@@ -1,5 +1,6 @@
 package by.it_academy.jd2.service;
 
+import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.commonlib.exception.UpdateTimeMismatchException;
 import by.it_academy.jd2.commonlib.page.PageOf;
@@ -9,7 +10,6 @@ import by.it_academy.jd2.service.api.IAccountService;
 import by.it_academy.jd2.service.dto.AccountCreateDto;
 import by.it_academy.jd2.service.dto.AccountReadDto;
 import by.it_academy.jd2.service.dto.AccountUpdateDto;
-import by.it_academy.jd2.service.dto.PageDto;
 import by.it_academy.jd2.service.mapper.IAccountMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -77,7 +77,7 @@ public class AccountService implements IAccountService {
 //                .map(accountRepository::saveAndFlush)
 //                .orElseThrow();                                                      // // свое исключение проброшу
 
-        accountRepository.findById(updateDto.getId())               // компактно, не понятно время неверно или id
+        accountRepository.findById(updateDto.getId())                       // компактно, понятно только время, а Exception в аннотации не такой как проброшу()
                 .map(entity -> accountMapper.mapUpdate(updateDto, entity))
                 .map(accountRepository::saveAndFlush)
                 .orElseThrow();
