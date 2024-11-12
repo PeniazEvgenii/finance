@@ -6,6 +6,7 @@ import by.it_academy.jd2.service.dto.AccountReadDto;
 import by.it_academy.jd2.service.dto.AccountUpdateDto;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.UUID;
 
 @Component
@@ -46,5 +47,20 @@ public class AccountMapper implements IAccountMapper {
         entity.setType(updateDto.getType());
         entity.setCurrencyId(updateDto.getCurrencyId());
         return entity;
+    }
+
+
+    @Override
+    public AccountUpdateDto mapUpdateDto(AccountCreateDto createDto,
+                                         UUID accountId,
+                                         Instant dtUpdate) {
+        return AccountUpdateDto.builder()
+                .id(accountId)
+                .dtUpdate(dtUpdate)
+                .title(createDto.getTitle())
+                .description(createDto.getDescription())
+                .type(createDto.getType())
+                .currencyId(createDto.getCurrencyId())
+                .build();
     }
 }
