@@ -24,7 +24,7 @@ public class InfoController {
     public ResponseEntity<CurrencyReadDto> findCurrencyById(@PathVariable("uuid") UUID id) {
         return currencyService.findById(id)
                 .map(currency -> ResponseEntity.ok().body(currency))
-                .orElseGet(() -> ResponseEntity.ok().body(null));                               //оптимальный вариант
+                .orElseGet(() -> ResponseEntity.ok().body(null));
     }
 
     @GetMapping("/category/{uuid}")
