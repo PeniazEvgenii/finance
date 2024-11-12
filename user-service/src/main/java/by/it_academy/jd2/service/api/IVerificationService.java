@@ -7,5 +7,5 @@ public interface IVerificationService {
 
     void sendCode(UserEntity user);
 
-    boolean checkCode(VerificationDto verificationDto);
+    void checkCode(VerificationDto verificationDto);
 }

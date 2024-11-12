@@ -7,6 +7,7 @@ import by.it_academy.jd2.service.api.IMailService;
 import by.it_academy.jd2.service.api.IVerificationService;
 import by.it_academy.jd2.service.dto.MailDto;
 import by.it_academy.jd2.service.dto.VerificationDto;
+import by.it_academy.jd2.service.exception.VerificationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -42,11 +43,11 @@ public class VerificationService implements IVerificationService {
                 .orElseThrow();
     }
 
-    public boolean checkCode(VerificationDto verificationDto) {
-        return codeRepository.findByMail(verificationDto.getMail())
+    public void checkCode(VerificationDto verificationDto) {
+         codeRepository.findByMail(verificationDto.getMail())
                 .map(CodeEntity::getCode)
                 .filter(code -> verificationDto.getCode().equals(code))
-                .isPresent();
+                .orElseThrow(VerificationException::new);
     }
 
     private String generateCode() {
