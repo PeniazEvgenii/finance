@@ -25,7 +25,8 @@ public class OperationReadDto {
 
     private final String description;
 
-    private final UUID category;
+    @JsonProperty(value = "category")
+    private final UUID categoryId;
 
     private final BigDecimal value;
 
