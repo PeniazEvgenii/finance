@@ -1,7 +1,5 @@
 package by.it_academy.jd2.repository.entity;
 
-import by.it_academy.jd2.commonlib.dto.UserRole;
-import by.it_academy.jd2.service.dto.UserStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -52,9 +50,9 @@ public class UserEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private EUserRole role;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private UserStatus status;
+    private EUserStatus status;
 }

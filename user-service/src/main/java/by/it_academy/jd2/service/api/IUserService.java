@@ -2,6 +2,7 @@ package by.it_academy.jd2.service.api;
 
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.entity.UserEntity;
+import by.it_academy.jd2.repository.entity.EUserStatus;
 import by.it_academy.jd2.service.dto.*;
 import jakarta.validation.Valid;
 
@@ -21,5 +22,7 @@ public interface IUserService {
 
     Optional<UserReadDto> findByMail(String mail);
 
-    List<UserEntity> findByStatusWithoutCode(UserStatus userStatus);
+    List<UserEntity> findByStatusWithoutCode(EUserStatus status);
+
+    Optional<UserSecure> findByMailWithPass(String mail);
 }

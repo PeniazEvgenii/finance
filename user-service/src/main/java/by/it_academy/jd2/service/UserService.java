@@ -2,6 +2,7 @@ package by.it_academy.jd2.service;
 
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.commonlib.exception.UpdateTimeMismatchException;
+import by.it_academy.jd2.repository.entity.EUserStatus;
 import by.it_academy.jd2.service.api.IUserService;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.IUserRepository;
@@ -81,7 +82,13 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<UserEntity> findByStatusWithoutCode(UserStatus userStatus) {
-        return userRepository.findByStatusWithoutCode(userStatus);
+    public List<UserEntity> findByStatusWithoutCode(EUserStatus status) {
+        return userRepository.findByStatusWithoutCode(status);
+    }
+
+    @Override
+    public Optional<UserSecure> findByMailWithPass(String mail) {
+        return userRepository.findByMailIgnoreCase(mail)
+                .map(userMapper::mapSecure);
     }
 }
