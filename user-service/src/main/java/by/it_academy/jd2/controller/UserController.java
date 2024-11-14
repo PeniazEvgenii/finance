@@ -8,6 +8,7 @@ import by.it_academy.jd2.service.validation.group.CreateAction;
 import by.it_academy.jd2.service.validation.group.UpdateAction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,6 @@ public class UserController {
     public void create(@RequestBody @Validated(CreateAction.class) UserCreateDto userCreateDto) {
         userService.create(userCreateDto);
     }
-
     @GetMapping
     public PageOf<UserReadDto> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                        @RequestParam(value = "size", defaultValue = "20") Integer size) {

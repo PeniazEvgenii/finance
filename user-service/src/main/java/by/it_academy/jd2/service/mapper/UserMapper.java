@@ -1,13 +1,19 @@
 package by.it_academy.jd2.service.mapper;
 
-import by.it_academy.jd2.commonlib.dto.UserRole;
+import by.it_academy.jd2.repository.entity.EUserRole;
 import by.it_academy.jd2.repository.entity.UserEntity;
+import by.it_academy.jd2.repository.entity.EUserStatus;
 import by.it_academy.jd2.service.dto.*;
 import by.it_academy.jd2.service.mapper.api.IUserMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class UserMapper implements IUserMapper {
+
+    private final PasswordEncoder passwordEncoder;
 
     public UserReadDto mapRead(UserEntity object) {
         return UserReadDto.builder()
@@ -28,7 +34,7 @@ public class UserMapper implements IUserMapper {
                 .fio(object.getFio())
                 .role(object.getRole())
                 .status(object.getStatus())
-                .password(object.getPassword())
+                .password(passwordEncoder.encode(object.getPassword()))
                 .build();
     }
 
@@ -42,9 +48,22 @@ public class UserMapper implements IUserMapper {
         return UserEntity.builder()
                 .mail(object.getMail().toLowerCase())
                 .fio(object.getFio())
-                .role(UserRole.USER)
-                .status(UserStatus.WAITING_ACTIVATION)
-                .password(object.getPassword())
+                .role(EUserRole.USER)
+                .status(EUserStatus.WAITING_ACTIVATION)
+                .password(passwordEncoder.encode(object.getPassword()))
+                .build();
+    }
+
+    public UserSecure mapSecure(UserEntity entity) {
+        return UserSecure.builder()
+                .id(entity.getId())
+                .mail(entity.getMail())
+                .fio(entity.getFio())
+                .role(entity.getRole())
+                .status(entity.getStatus())
+                .password(entity.getPassword())
+                .dtUpdate(entity.getDtUpdate())           // даты уберем наверное
+                .dtCreate(entity.getDtCreate())
                 .build();
     }
 
@@ -53,7 +72,7 @@ public class UserMapper implements IUserMapper {
         user.setFio(userDto.getFio());
         user.setRole(userDto.getRole());
         user.setStatus(userDto.getStatus());
-        user.setPassword(userDto.getPassword());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
     }
 
 }

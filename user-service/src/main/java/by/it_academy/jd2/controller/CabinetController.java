@@ -1,10 +1,13 @@
 package by.it_academy.jd2.controller;
 
+import by.it_academy.jd2.controller.utils.JwtTokenHandler;
+import by.it_academy.jd2.service.api.IAuthService;
 import by.it_academy.jd2.service.api.ICabinetService;
 import by.it_academy.jd2.service.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,10 +16,13 @@ import org.springframework.web.bind.annotation.*;
 public class CabinetController {
 
     private final ICabinetService cabinetService;
+    private final IAuthService authService;
+    private final JwtTokenHandler jwtTokenHandler;
 
     @PostMapping("/registration")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void registration(@RequestBody @Valid UserRegistrationDto userRegistrationDto) {
+    public void registration(@RequestBody UserRegistrationDto userRegistrationDto) {
+
         cabinetService.registration(userRegistrationDto);
     }
 
@@ -29,15 +35,17 @@ public class CabinetController {
     }
 
     @PostMapping("/login")
-   // @ResponseStatus(value = HttpStatus.OK, reason = "Вход выполнен. Токен для Authorization Header")
     public String login(@RequestBody UserLoginDto userLoginDto) {
 
-        return null;
+        UserSecure user = authService.login(userLoginDto);
+
+        return jwtTokenHandler.generateToken(user);
     }
 
     @GetMapping("/me")
     @ResponseStatus(HttpStatus.OK)
-    public UserReadDto me(/*@AuthenticationPrincipal principal*/) {
-        return null;      //получим мэйл и у userservice сделаем findByEmail
+    public UserReadDto me() {
+
+        return authService.me();
     }
 }

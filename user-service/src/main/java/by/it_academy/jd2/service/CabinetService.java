@@ -2,19 +2,21 @@ package by.it_academy.jd2.service;
 
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.repository.IUserRepository;
+import by.it_academy.jd2.repository.entity.EUserStatus;
 import by.it_academy.jd2.repository.entity.UserEntity;
 import by.it_academy.jd2.service.api.ICabinetService;
 import by.it_academy.jd2.service.dto.UserRegistrationDto;
-import by.it_academy.jd2.service.dto.UserStatus;
 import by.it_academy.jd2.service.dto.VerificationDto;
 import by.it_academy.jd2.service.mapper.api.IUserMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Optional;
 
+@Validated
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -41,7 +43,7 @@ public class CabinetService implements ICabinetService {
         UserEntity userEntity = userRepository
                 .findByMailIgnoreCase(verificationDto.getMail())
                 .orElseThrow(IdNotFoundException::new);
-        userEntity.setStatus(UserStatus.ACTIVATED);
+        userEntity.setStatus(EUserStatus.ACTIVATED);
         Optional.of(userEntity)
                 .map(userRepository::saveAndFlush)                                  //будем аудит отправлять
                 .orElseThrow();

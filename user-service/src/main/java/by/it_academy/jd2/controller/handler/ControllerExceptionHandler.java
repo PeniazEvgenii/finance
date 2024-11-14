@@ -117,7 +117,7 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<List<ErrorResponse>> onException() {
+    public ResponseEntity<List<ErrorResponse>> onException(Exception exception) {
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR,
                 "Сервер не смог корректно обработать запрос. Попробуйте позже или обратитесь к администратору");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
