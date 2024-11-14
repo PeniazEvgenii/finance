@@ -1,4 +1,4 @@
-package by.it_academy.jd2.repository.entity;
+package by.it_academy.jd2.commonlib.dto;
 
 public enum EUserRole /* implements GrantedAuthority*/ {
     ADMIN, USER, MANAGER;
