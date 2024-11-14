@@ -26,3 +26,7 @@ spring:
   jackson:
     deserialization:
       read-date-timestamps-as-nanoseconds: false
+
+app:
+  jwt:
+    secret: NDQ1ZjAzNjQtMzViZi00MDRjLTljZjQtNjNjYWIyZTU5ZDYw
