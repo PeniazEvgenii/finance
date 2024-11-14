@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS app.accounts
     id uuid,
     title character varying NOT NULL,
     description character varying NOT NULL,
-    dt_create timestamp without time zone NOT NULL,
-    dt_update timestamp without time zone NOT NULL,
+    dt_create timestamp(3) without time zone NOT NULL,
+    dt_update timestamp(3) without time zone NOT NULL,
     balance numeric NOT NULL,
     type character varying NOT NULL,
     currency_id uuid,
@@ -23,9 +23,9 @@ CREATE TABLE IF NOT EXISTS app.accounts
 CREATE TABLE IF NOT EXISTS app.operations
 (
     id uuid,
-    dt_create timestamp without time zone NOT NULL,
-    dt_update timestamp without time zone NOT NULL,
-    date timestamp without time zone NOT NULL,
+    dt_create timestamp(3) without time zone NOT NULL,
+    dt_update timestamp(3) without time zone NOT NULL,
+    date timestamp(3) without time zone NOT NULL,
     description character varying NOT NULL,
     category_id uuid NOT NULL,
     value numeric NOT NULL,

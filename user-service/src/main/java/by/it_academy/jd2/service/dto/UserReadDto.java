@@ -1,7 +1,9 @@
 package by.it_academy.jd2.service.dto;
 
 
-import by.it_academy.jd2.commonlib.dto.UserRole;
+import by.it_academy.jd2.repository.entity.EUserRole;
+import by.it_academy.jd2.repository.entity.EUserStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
@@ -16,20 +18,18 @@ public class UserReadDto {
     private final UUID uuid;
 
     @JsonProperty(value = "dt_create")
-    // @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
-   // @JsonSerialize(using = InstantToMicrosecondsSerializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
     private final Instant dtCreate;
 
     @JsonProperty(value = "dt_update")
-  //  @JsonSerialize(using = InstantToMicrosecondsSerializer.class)
-   // @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
     private final Instant dtUpdate;
 
     private final String mail;
 
     private final String fio;
 
-    private final UserRole role;
+    private final EUserRole role;
 
-    private final UserStatus status;
+    private final EUserStatus status;
 }

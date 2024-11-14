@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 
-@Component
+//@Component
 public class MicrosecondsToInstantConverter implements Converter<String, Instant> {
 
     @Override

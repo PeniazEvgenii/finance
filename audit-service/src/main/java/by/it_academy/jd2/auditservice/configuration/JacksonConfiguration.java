@@ -5,15 +5,15 @@ import by.it_academy.jd2.commonlib.jackson.MicrosecondsToInstantConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 public class JacksonConfiguration {
 
-    @Bean
+    //@Bean
     public MicrosecondsToInstantConverter microsecondsToInstantConverter() {
         return new MicrosecondsToInstantConverter();
     }
 
-    @Bean
+   // @Bean
     public InstantToMicrosecondsSerializer instantToMicrosecondsSerializer() {
         return new InstantToMicrosecondsSerializer();
     }

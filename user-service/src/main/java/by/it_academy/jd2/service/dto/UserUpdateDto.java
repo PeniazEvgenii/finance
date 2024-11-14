@@ -1,6 +1,7 @@
 package by.it_academy.jd2.service.dto;
 
-import by.it_academy.jd2.commonlib.dto.UserRole;
+import by.it_academy.jd2.repository.entity.EUserRole;
+import by.it_academy.jd2.repository.entity.EUserStatus;
 import by.it_academy.jd2.service.validation.MailUpdate;
 
 import lombok.Builder;
@@ -23,10 +24,10 @@ public class UserUpdateDto {
     private final String fio;
 
 //    @NotNull(message = "Роль пользователя обязательна")
-    private final UserRole role;
+    private final EUserRole role;
 
 //    @NotNull(message = "Статус пользователя обязателен")
-    private final UserStatus status;
+    private final EUserStatus status;
 
 //    @NotNull(message = "Пароль обязателен")
 //    @NotBlank(message = "Пароль должен быть не пустой")

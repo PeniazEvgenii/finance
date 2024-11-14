@@ -1,10 +1,9 @@
 package by.it_academy.jd2.integration.repository;
 
 import by.it_academy.jd2.integration.IntegrationTestBase;
-import by.it_academy.jd2.integration.annotation.IT;
 import by.it_academy.jd2.repository.IUserRepository;
 import by.it_academy.jd2.repository.entity.UserEntity;
-import by.it_academy.jd2.service.dto.UserStatus;
+import by.it_academy.jd2.repository.entity.EUserStatus;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +36,7 @@ class IUserRepositoryTest extends IntegrationTestBase {
 
     @Test
     void findByStatusWithoutCode() {
-        List<UserEntity> users = userRepository.findByStatusWithoutCode(UserStatus.WAITING_ACTIVATION);
+        List<UserEntity> users = userRepository.findByStatusWithoutCode(EUserStatus.WAITING_ACTIVATION);
         assertThat(users).hasSize(2);
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.boot.jackson.JsonComponent;
 import java.io.IOException;
 import java.time.Instant;
 
-@JsonComponent
+//@JsonComponent
 public class InstantToMicrosecondsSerializer extends JsonSerializer<Instant> {
 
     @Override

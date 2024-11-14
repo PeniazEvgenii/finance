@@ -1,6 +1,7 @@
 package by.it_academy.jd2.auditservice.service.dto;
 
 import by.it_academy.jd2.commonlib.dto.EssenceType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
@@ -15,9 +16,11 @@ public class AuditReadDto {
     @JsonProperty(value = "uuid")
     private final UUID id;
 
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
     @JsonProperty(value = "dt_create")
     private final Instant dtCreate;
 
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
     @JsonProperty(value = "dt_update")
     private final Instant dtUpdate;
 

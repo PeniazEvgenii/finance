@@ -9,7 +9,7 @@ import org.springframework.boot.jackson.JsonComponent;
 import java.io.IOException;
 import java.time.Instant;
 
-@JsonComponent
+//@JsonComponent
 public class MicrosecondsToInstantDeserializer extends JsonDeserializer<Instant> {
 
     @Override

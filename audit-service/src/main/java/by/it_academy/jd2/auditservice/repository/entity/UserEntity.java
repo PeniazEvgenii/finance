@@ -1,7 +1,5 @@
 package by.it_academy.jd2.auditservice.repository.entity;
 
-
-import by.it_academy.jd2.commonlib.dto.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

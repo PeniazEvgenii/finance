@@ -1,9 +1,9 @@
 package by.it_academy.jd2.integration.service;
 
-import by.it_academy.jd2.commonlib.dto.UserRole;
+import by.it_academy.jd2.repository.entity.EUserRole;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.integration.IntegrationTestBase;
-import by.it_academy.jd2.repository.entity.UserEntity;
+import by.it_academy.jd2.repository.entity.EUserStatus;
 import by.it_academy.jd2.service.api.IUserService;
 import by.it_academy.jd2.service.dto.*;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ class UserServiceTest extends IntegrationTestBase {
 
     @Test
     void create() {
-        UserCreateDto userCreateDto = new UserCreateDto("test@mail.ru", "test", UserRole.ADMIN, UserStatus.ACTIVATED, "test");
+        UserCreateDto userCreateDto = new UserCreateDto("test@mail.ru", "test", EUserRole.ADMIN, EUserStatus.ACTIVATED, "test");
         userService.create(userCreateDto);
         Optional<UserReadDto> expectUser = userService.findByMail("test@mail.ru");
         assertTrue(expectUser.isPresent());
@@ -55,8 +55,8 @@ class UserServiceTest extends IntegrationTestBase {
                 .fio("update")
                 .password("update")
                 .mail(userReadDto.getMail())
-                .role(UserRole.ADMIN)
-                .status(UserStatus.ACTIVATED)
+                .role(EUserRole.ADMIN)
+                .status(EUserStatus.ACTIVATED)
                 .dtUpdate(userReadDto.getDtUpdate())
                 .build();
         userService.update(userUpdateDto);

@@ -93,7 +93,7 @@ public class OperationService implements IOperationService {
     @Override
     @Transactional
     public void delete(@Valid OperationUpdateDto updateDto) {
-        operationRepository.findById(updateDto.getOperationId())
+        operationRepository.findById(updateDto.getOperationId())               // можно маппер сделать updateDto -> operationEntity и туда баланс
                 .map(operationEntity -> {
                     BigDecimal value = operationEntity.getValue();
                     AccountEntity accountEntity = operationEntity.getAccountEntity();

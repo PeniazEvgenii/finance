@@ -7,8 +7,11 @@ import by.it_academy.jd2.commonlib.error.StructuredErrorResponse;
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.controller.ClassifierController;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -56,23 +59,40 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(IdNotFoundException.class)
     public ResponseEntity<List<ErrorResponse>> onIdNotFoundException(
             IdNotFoundException exception) {
-        ErrorResponse errorResponse = new ErrorResponse(EError.ERROR, "Запрос содержит некорректный ID. Измените запрос и отправьте его ещё раз");
+        ErrorResponse errorResponse = new ErrorResponse(EError.ERROR, exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
     }
 
-    //HttpMessageNotReadableException     когда в теле ничего не передано
-
     @ExceptionHandler(NoResourceFoundException.class)
-    public ResponseEntity<List<ErrorResponse>> onNoHandlerFoundException() {
+    public ResponseEntity<List<ErrorResponse>> onNoResourceFoundException() {
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR,
                 "Введен неверный URL");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(List.of(errorResponse));
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<List<ErrorResponse>> onHttpMessageNotReadableException (HttpMessageNotReadableException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(EError.ERROR,
+                "Тип данных, переданных в запросе не соответствует требованиям");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(List.of(errorResponse));
+    }
 
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<List<ErrorResponse>> onValidationException(
+            ValidationException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(EError.ERROR,
+                "Запрос содержит некорректные данные. Измените запрос и отправьте его ещё раз");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
+    }
 
-
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<List<ErrorResponse>> onHttpRequestMethodNotSupportedException(
+            HttpRequestMethodNotSupportedException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(EError.ERROR, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<List<ErrorResponse>> onException(Exception exception) {
@@ -83,9 +103,4 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(List.of(errorResponse));
     }
-
-
-
-
-
 }

@@ -1,5 +1,6 @@
 package by.it_academy.jd2.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -16,9 +17,11 @@ public class OperationCategoryReadDto {
     @JsonProperty(value = "uuid")
     private final UUID id;
 
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
     @JsonProperty(value = "dt_create")
     private final Instant dtCreate;
 
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
     @JsonProperty(value = "dt_update")
     private final Instant dtUpdate;
 
