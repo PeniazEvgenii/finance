@@ -1,7 +1,7 @@
 package by.it_academy.jd2.service.dto;
 
 
-import by.it_academy.jd2.repository.entity.EUserRole;
+import by.it_academy.jd2.commonlib.dto.EUserRole;
 import by.it_academy.jd2.repository.entity.EUserStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

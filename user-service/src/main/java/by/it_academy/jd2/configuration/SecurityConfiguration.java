@@ -1,7 +1,7 @@
 package by.it_academy.jd2.configuration;
 
 import by.it_academy.jd2.controller.filter.JwtFilter;
-import by.it_academy.jd2.repository.entity.EUserRole;
+import by.it_academy.jd2.commonlib.dto.EUserRole;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

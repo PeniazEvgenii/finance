@@ -1,7 +1,7 @@
 package by.it_academy.jd2.service.dto;
 
 import by.it_academy.jd2.repository.entity.EUserStatus;
-import by.it_academy.jd2.repository.entity.EUserRole;
+import by.it_academy.jd2.commonlib.dto.EUserRole;
 import lombok.Builder;
 import lombok.Data;
 import java.time.Instant;

@@ -1,5 +1,6 @@
 package by.it_academy.jd2.repository.entity;
 
+import by.it_academy.jd2.commonlib.dto.EUserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

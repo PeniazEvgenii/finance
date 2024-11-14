@@ -1,5 +1,6 @@
 package by.it_academy.jd2.controller.utils;
 
+import by.it_academy.jd2.commonlib.dto.UserToken;
 import by.it_academy.jd2.configuration.properties.JwtProperties;
 import by.it_academy.jd2.service.dto.UserSecure;
 import io.jsonwebtoken.*;
@@ -22,11 +23,19 @@ public class JwtTokenHandler {
     }
 
     public String generateToken(String mail, UserSecure user) {
+        UserToken userToken = UserToken.builder()
+                .id(user.getId())
+                .fio(user.getFio())
+                .mail(user.getMail())
+                .role(user.getRole())
+                .build();
+
         return Jwts.builder()
                 .setSubject(mail)
-                .claim("id", user.getId())          // посмотреть что есть
-                .claim("fio", user.getFio())
-                .claim("role", user.getRole())
+//                .claim("id", user.getId())          // посмотреть что есть
+//                .claim("fio", user.getFio())
+//                .claim("role", user.getRole())
+                .claim("user", userToken)
                 .setIssuer(jwtProperties.getIssuer())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(jwtProperties.getExpiration())))
