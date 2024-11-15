@@ -1,7 +1,7 @@
-package by.it_academy.jd2.controller.util;
+package by.it_academy.jd2.auditservice.controller.util;
 
+import by.it_academy.jd2.auditservice.configuration.properties.JwtProperties;
 import by.it_academy.jd2.commonlib.dto.UserToken;
-import by.it_academy.jd2.configuration.properties.JwtProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +21,14 @@ public class JwtTokenHandler {
         return getClaims(token).getSubject();
     }
 
-    public Date getExpirationDate(String token) {
-        return getClaims(token).getExpiration();
-    }
-
     public UserToken getUser(String token) {
         Claims claims = getClaims(token);
         Object user = claims.get("user");
         return objectMapper.convertValue(user, UserToken.class);
+    }
+
+    public Date getExpirationDate(String token) {
+        return getClaims(token).getExpiration();
     }
 
     public boolean validate(String token) {
@@ -59,4 +59,5 @@ public class JwtTokenHandler {
     private boolean isTokenExpired(String token) {
         return getExpirationDate(token).before(new Date());
     }
+
 }

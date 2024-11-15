@@ -1,11 +1,10 @@
-package by.it_academy.jd2.configuration;
+package by.it_academy.jd2.auditservice.configuration;
 
-import by.it_academy.jd2.controller.filter.JwtFilter;
+import by.it_academy.jd2.auditservice.controller.filter.JwtFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,9 +13,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfiguration {
 
     private final JwtFilter jwtFilter;
@@ -37,10 +36,8 @@ public class SecurityConfiguration {
                                         response.setStatus(HttpServletResponse.SC_FORBIDDEN))
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/info/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/classifier/currency").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/classifier/operation/category").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/classifier/**").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers("/event").permitAll()
+                        .requestMatchers("/audit/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

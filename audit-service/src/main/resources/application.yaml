@@ -26,3 +26,7 @@ logging:
   file:
     name: dmdev.log
     path: /
+
+app:
+  jwt:
+    secret: NDQ1ZjAzNjQtMzViZi00MDRjLTljZjQtNjNjYWIyZTU5ZDYw
