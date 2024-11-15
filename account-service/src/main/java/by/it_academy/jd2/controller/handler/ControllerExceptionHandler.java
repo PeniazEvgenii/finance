@@ -59,9 +59,8 @@ public class ControllerExceptionHandler {
 
 
     @ExceptionHandler(NoResourceFoundException.class)
-    public ResponseEntity<List<ErrorResponse>> onResourceFoundException() {
-        ErrorResponse errorResponse = new ErrorResponse(EError.ERROR,
-                "Введен неверный URL");
+    public ResponseEntity<List<ErrorResponse>> onResourceFoundException(NoResourceFoundException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(EError.ERROR, exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(List.of(errorResponse));
     }

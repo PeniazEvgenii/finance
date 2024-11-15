@@ -26,6 +26,7 @@ import static org.springframework.util.StringUtils.hasText;
 public class JwtFilter extends OncePerRequestFilter {
 
     private static final String AUTH_TYPE = "Bearer ";
+    private static final String PREFIX_ROLE = "ROLE_";
 
     private final IUserService userService;
     private final JwtTokenHandler jwtHandler;
@@ -42,7 +43,8 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        String token = authHeader.split(" ")[1].trim();
+        String token = authHeader.substring(AUTH_TYPE.length()).trim();
+
         if (!jwtHandler.validate(token)) {
             filterChain.doFilter(request, response);
             return;
@@ -57,7 +59,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private void setUpAuthentication(HttpServletRequest request, UserReadDto user) {
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        user, null, List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole())));
+                        user, null, List.of(new SimpleGrantedAuthority(PREFIX_ROLE + user.getRole())));
 
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 

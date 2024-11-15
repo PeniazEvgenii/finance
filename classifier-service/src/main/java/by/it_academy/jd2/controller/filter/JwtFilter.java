@@ -1,4 +1,4 @@
-package by.it_academy.jd2.controller;
+package by.it_academy.jd2.controller.filter;
 
 import by.it_academy.jd2.commonlib.dto.UserToken;
 import by.it_academy.jd2.controller.util.JwtTokenHandler;
@@ -26,6 +26,7 @@ import static org.springframework.util.StringUtils.hasText;
 public class JwtFilter extends OncePerRequestFilter {
 
     private static final String AUTH_TYPE = "Bearer ";
+    private static final String PREFIX_ROLE = "ROLE_";
 
     private final JwtTokenHandler jwtTokenHandler;
 
@@ -57,7 +58,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private void setUpAuthentication(HttpServletRequest request, UserToken user) {
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                user, null, List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole())));
+                user, null, List.of(new SimpleGrantedAuthority(PREFIX_ROLE + user.getRole())));
 
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
