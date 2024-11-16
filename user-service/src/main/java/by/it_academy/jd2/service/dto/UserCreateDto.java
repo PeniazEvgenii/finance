@@ -9,6 +9,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 @Data
+@Builder
 @AllArgsConstructor
 public class UserCreateDto {
     @UniqueMail(groups = {CreateAction.class})
@@ -28,6 +29,6 @@ public class UserCreateDto {
 
     @NotNull(message = "Пароль обязателен")
     @NotBlank(message = "Пароль должен быть не пустой")
-    @Length(min = 4, message = "Длина пароля должна быть не менне 4 символов")
+    @Length(min = 4, message = "Длина пароля должна быть не менее 4 символов")
     private final String password;
 }

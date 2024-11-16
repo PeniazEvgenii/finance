@@ -39,9 +39,13 @@ public class UserMapper implements IUserMapper {
     }
 
     @Override
-    public UserEntity mapEntityUpdate(UserUpdateDto fromObject, UserEntity toObject) {
-        copy(fromObject, toObject);
-        return toObject;
+    public UserEntity mapEntityUpdate(UserCreateDto createDto, UserEntity user) {
+        user.setMail(createDto.getMail());
+        user.setFio(createDto.getFio());
+        user.setRole(createDto.getRole());
+        user.setStatus(createDto.getStatus());
+        user.setPassword(passwordEncoder.encode(createDto.getPassword()));
+        return user;
     }
 
     public UserEntity mapRegistration(UserRegistrationDto object) {
@@ -65,14 +69,6 @@ public class UserMapper implements IUserMapper {
                 .dtUpdate(entity.getDtUpdate())           // даты уберем наверное
                 .dtCreate(entity.getDtCreate())
                 .build();
-    }
-
-    private void copy(UserUpdateDto userDto, UserEntity user) {
-        user.setMail(userDto.getMail());
-        user.setFio(userDto.getFio());
-        user.setRole(userDto.getRole());
-        user.setStatus(userDto.getStatus());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
     }
 
 }

@@ -4,7 +4,9 @@ import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.entity.UserEntity;
 import by.it_academy.jd2.repository.entity.EUserStatus;
 import by.it_academy.jd2.service.dto.*;
+import by.it_academy.jd2.service.validation.group.CreateAction;
 import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,9 +18,9 @@ public interface IUserService {
 
     Optional<UserReadDto> findById(UUID id);
 
-    void create(@Valid UserCreateDto userCreateDto);
+    void create(UserCreateDto userCreateDto);
 
-    public void update(@Valid UserUpdateDto userUpdateDto);
+    public void update(UserCreateDto createDto, UserUpdateDto userUpdateDt);
 
     Optional<UserReadDto> findByMail(String mail);
 

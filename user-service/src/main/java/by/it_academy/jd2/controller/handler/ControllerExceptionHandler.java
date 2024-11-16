@@ -123,6 +123,4 @@ public class ControllerExceptionHandler {
                 .body(List.of(errorResponse));
     }
 
-
-
 }

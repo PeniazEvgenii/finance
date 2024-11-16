@@ -1,8 +1,6 @@
 package by.it_academy.jd2.service;
 
 import by.it_academy.jd2.commonlib.dto.PageDto;
-import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
-import by.it_academy.jd2.commonlib.exception.UpdateTimeMismatchException;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.IAccountRepository;
 import by.it_academy.jd2.repository.entity.AccountEntity;
@@ -25,8 +23,8 @@ import java.util.UUID;
 
 @Validated
 @Service
-@RequiredArgsConstructor
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class AccountService implements IAccountService {
 
     private final IAccountMapper accountMapper;
@@ -58,27 +56,18 @@ public class AccountService implements IAccountService {
 
     @Override
     public Optional<AccountReadDto> findById(UUID id) {
-        return accountRepository.findById(id)
+        return accountRepository
+               .findById(id)
                .map(accountMapper::mapRead);
     }
 
     @Transactional
     @Override
-    public void update(@Valid AccountUpdateDto updateDto) {
-//        AccountEntity accountEntity = accountRepository.findById(updateDto.getId())         // наверное в аннотации бессмысленно чекать существ ли  и делать плюс запрос
-//                .orElseThrow(IdNotFoundException::new);
-//                                                                                            // а можно в аннотации чекнуть сразу аккаунт и время!!!
-//        if(!updateDto.getDtUpdate().equals(accountEntity.getDtUpdate())) {
-//            throw new UpdateTimeMismatchException();
-//        }
-//
-//        Optional.of(accountEntity)
-//                .map(entity -> accountMapper.mapUpdate(updateDto, entity))
-//                .map(accountRepository::saveAndFlush)
-//                .orElseThrow();                                                      // // свое исключение проброшу
+    public void update(@Valid AccountCreateDto createDto,
+                       @Valid AccountUpdateDto updateDto) {
 
-        accountRepository.findById(updateDto.getId())                       // компактно, понятно только время, а Exception в аннотации не такой как проброшу()
-                .map(entity -> accountMapper.mapUpdate(updateDto, entity))
+        accountRepository.findById(updateDto.getId())
+                .map(entity -> accountMapper.mapUpdate(createDto, entity))
                 .map(accountRepository::saveAndFlush)
                 .orElseThrow();
     }

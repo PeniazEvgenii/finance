@@ -3,10 +3,9 @@ package by.it_academy.jd2.controller;
 import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.service.api.IOperationService;
-import by.it_academy.jd2.service.dto.OperationDto;
+import by.it_academy.jd2.service.dto.OperationCreateDto;
 import by.it_academy.jd2.service.dto.OperationReadDto;
 import by.it_academy.jd2.service.dto.OperationUpdateDto;
-import by.it_academy.jd2.service.mapper.IOperationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,14 +19,13 @@ import java.util.UUID;
 public class OperationController {
 
     private final IOperationService operationService;
-    private final IOperationMapper operationMapper;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@PathVariable("uuid") UUID accountId,
-                      @RequestBody OperationDto dto) {
+                      @RequestBody OperationCreateDto createDto) {
 
-        operationService.create(operationMapper.mapCreateDto(dto, accountId));
+        operationService.create(createDto, accountId);
     }
 
     @GetMapping
@@ -44,7 +42,7 @@ public class OperationController {
     public void update(@PathVariable("uuid") UUID accountId,
                        @PathVariable("uuid_operation") UUID operationId,
                        @PathVariable("dt_update") Instant dtUpdate,
-                       @RequestBody OperationDto dto) {
+                       @RequestBody OperationCreateDto dto) {
 
         OperationUpdateDto operationUpdateDto = mapUpdate(accountId, operationId, dtUpdate);
         operationService.update(dto, operationUpdateDto);

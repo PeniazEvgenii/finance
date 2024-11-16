@@ -19,7 +19,7 @@ public interface IAccountService {
 
     Optional<AccountReadDto> findById(UUID id);
 
-    void update(@Valid AccountUpdateDto updateDto);
+    void update(@Valid AccountCreateDto createDto, @Valid AccountUpdateDto updateDto);
 
     Optional<AccountEntity> findEntityById(UUID id);
 }

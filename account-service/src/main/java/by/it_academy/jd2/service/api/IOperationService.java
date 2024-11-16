@@ -10,13 +10,13 @@ import java.util.UUID;
 
 public interface IOperationService {
 
-    void create(@Valid OperationCreateDto createDto);
+    void create(@Valid OperationCreateDto createDto, UUID accountId);
 
     PageOf<OperationReadDto> findAll(@Valid PageDto pageDto, UUID accountId);
 
     Optional<OperationReadDto> findByIdAndAccountId(UUID id, UUID accountId);
 
-    void update(@Valid OperationDto dto, @Valid OperationUpdateDto updateDto);
+    void update(@Valid OperationCreateDto dto, @Valid OperationUpdateDto updateDto);
 
     void delete(@Valid OperationUpdateDto updateDto);
 }

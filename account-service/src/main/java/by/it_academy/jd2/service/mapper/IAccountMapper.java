@@ -14,8 +14,6 @@ public interface IAccountMapper {
 
     AccountReadDto mapRead(AccountEntity entity);
 
-    AccountEntity mapUpdate(AccountUpdateDto updateDto, AccountEntity entity);
+    AccountEntity mapUpdate(AccountCreateDto createDto, AccountEntity entity);
 
-    AccountUpdateDto mapUpdateDto(AccountCreateDto createDto,
-                                  UUID accountId, Instant dtUpdate);
 }

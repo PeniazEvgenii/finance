@@ -1,18 +1,15 @@
 package by.it_academy.jd2.service.mapper;
 
 import by.it_academy.jd2.commonlib.exception.CurrencyMismatchException;
-import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.repository.entity.AccountEntity;
 import by.it_academy.jd2.repository.entity.OperationEntity;
 import by.it_academy.jd2.service.api.IAccountService;
 import by.it_academy.jd2.service.dto.OperationCreateDto;
-import by.it_academy.jd2.service.dto.OperationDto;
 import by.it_academy.jd2.service.dto.OperationReadDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -21,13 +18,7 @@ public class OperationMapper implements IOperationMapper {
     private final IAccountService accountService;
 
     @Override
-    public OperationEntity mapCreate(OperationCreateDto createDto) {
-        AccountEntity account = accountService
-                .findEntityById(createDto.getAccountId())
-                .orElseThrow(IdNotFoundException::new);
-        if(!account.getCurrencyId().equals(createDto.getCurrencyId())) {
-            throw new CurrencyMismatchException();
-        }
+    public OperationEntity mapCreate(OperationCreateDto createDto, AccountEntity account) {
 
         account.addValue(createDto.getValue());
 
@@ -53,11 +44,11 @@ public class OperationMapper implements IOperationMapper {
                .build();
     }
 
-    public OperationEntity mapUpdate(OperationDto dto, OperationEntity entity) {
+    public OperationEntity mapUpdate(OperationCreateDto dto, OperationEntity entity) {
         AccountEntity accountEntity = entity.getAccountEntity();
-        if(!checkCurrency(dto, accountEntity)) {
-            throw new CurrencyMismatchException();
-        }
+//        if(!checkCurrency(dto, accountEntity)) {
+//            throw new CurrencyMismatchException();
+//        }
         BigDecimal oldBalance = accountEntity.getBalance();
         BigDecimal newBalance = oldBalance.subtract(entity.getValue()).add(dto.getValue());
         accountEntity.setBalance(newBalance);
@@ -69,18 +60,7 @@ public class OperationMapper implements IOperationMapper {
         return entity;
     }
 
-    public OperationCreateDto mapCreateDto(OperationDto dto, UUID accountId) {
-        return OperationCreateDto.builder()
-                .date(dto.getDate())
-                .description(dto.getDescription())
-                .categoryId(dto.getCategoryId())
-                .value(dto.getValue())
-                .currencyId(dto.getCurrencyId())
-                .accountId(accountId)
-                .build();
-    }
-
-    private boolean checkCurrency(OperationDto dto, AccountEntity entity) {
-        return entity.getCurrencyId().equals(dto.getCurrencyId());
-    }
+//    private boolean checkCurrency(OperationCreateDto dto, AccountEntity entity) {
+//        return entity.getCurrencyId().equals(dto.getCurrencyId());
+//    }
 }

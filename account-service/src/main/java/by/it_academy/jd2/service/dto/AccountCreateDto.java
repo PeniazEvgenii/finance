@@ -23,7 +23,7 @@ public class AccountCreateDto {
     private final EType type;
 
     @ExistCurrency
-    @NotNull(message = "Валюта обязателена")  // можно в аннотации делать запрос, что такая валюта есть!!!
+    @NotNull(message = "Валюта обязателена")
     @JsonProperty(value = "currency")
     private final UUID currencyId;
 }

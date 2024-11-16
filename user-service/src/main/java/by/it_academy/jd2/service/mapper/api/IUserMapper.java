@@ -9,7 +9,7 @@ public interface IUserMapper {
 
     UserEntity mapCreate(UserCreateDto object);
 
-    UserEntity mapEntityUpdate(UserUpdateDto fromObject, UserEntity toObject);
+    UserEntity mapEntityUpdate(UserCreateDto fromObject, UserEntity toObject);
 
     UserEntity mapRegistration(UserRegistrationDto object);
 

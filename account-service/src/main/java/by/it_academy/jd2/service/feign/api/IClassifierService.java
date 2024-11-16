@@ -12,5 +12,4 @@ public interface IClassifierService {
 
     public Optional<OperationCategoryInfoDto> findOperationCategoryById(UUID id);
 
-    boolean checkCurrency(UUID id);                                                                                         //удалить!!!!
 }

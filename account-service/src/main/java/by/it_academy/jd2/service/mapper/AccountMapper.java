@@ -41,26 +41,13 @@ public class AccountMapper implements IAccountMapper {
     }
 
     @Override
-    public AccountEntity mapUpdate(AccountUpdateDto updateDto, AccountEntity entity) {
-        entity.setTitle(updateDto.getTitle());
-        entity.setDescription(updateDto.getDescription());
-        entity.setType(updateDto.getType());
-        entity.setCurrencyId(updateDto.getCurrencyId());
+    public AccountEntity mapUpdate(AccountCreateDto createDto, AccountEntity entity) {
+        entity.setTitle(createDto.getTitle());
+        entity.setDescription(createDto.getDescription());
+        entity.setType(createDto.getType());
+        entity.setCurrencyId(createDto.getCurrencyId());
         return entity;
     }
 
 
-    @Override
-    public AccountUpdateDto mapUpdateDto(AccountCreateDto createDto,
-                                         UUID accountId,
-                                         Instant dtUpdate) {
-        return AccountUpdateDto.builder()
-                .id(accountId)
-                .dtUpdate(dtUpdate)
-                .title(createDto.getTitle())
-                .description(createDto.getDescription())
-                .type(createDto.getType())
-                .currencyId(createDto.getCurrencyId())
-                .build();
-    }
 }

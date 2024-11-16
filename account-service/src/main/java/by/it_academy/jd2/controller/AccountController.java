@@ -49,7 +49,7 @@ public class AccountController {
                        @PathVariable("dt_update") Instant dtUpdate,
                        @RequestBody AccountCreateDto createDto) {
 
-        AccountUpdateDto updateDto = accountMapper.mapUpdateDto(createDto, id, dtUpdate);
-        accountService.update(updateDto);
+        AccountUpdateDto updateDto = new AccountUpdateDto(id, dtUpdate);
+        accountService.update(createDto, updateDto);
     }
 }

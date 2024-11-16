@@ -33,11 +33,4 @@ public class ClassifierService implements IClassifierService {
         }
     }
 
-    public boolean checkCurrency(UUID id) {
-        ResponseEntity<CurrencyInfoDto> currency = classifierClient.findCurrencyById(id);
-        CurrencyInfoDto body = currency.getBody();
-//        currency.getStatusCode();
-//        currency.getBody();
-        return currency != null;
-    }
 }

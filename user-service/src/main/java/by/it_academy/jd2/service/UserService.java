@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Validated()
+@Validated
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -53,8 +53,8 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public void create(@Valid UserCreateDto userCreateDto) {
-         Optional.of(userCreateDto)
+    public void create(UserCreateDto userCreateDto) {
+        Optional.of(userCreateDto)
                 .map(userMapper::mapCreate)
                 .map(userRepository::save)
                 .orElseThrow();                                  //можно свое исключение добавить и будем отлавливать что не создалось
@@ -62,22 +62,23 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public void update(@Valid UserUpdateDto userUpdateDto) {
-        UserEntity userEntity = userRepository.findById(userUpdateDto.getId())
+    public void update(UserCreateDto createDto, UserUpdateDto updateDto) {
+        UserEntity userEntity = userRepository
+                .findById(updateDto.getId())
                 .orElseThrow(IdNotFoundException::new);
 
-        if(!userUpdateDto.getDtUpdate().equals(userEntity.getDtUpdate())) {
-            throw new UpdateTimeMismatchException();
-        }
+        validateUpdate(createDto, updateDto, userEntity);
+
         Optional.of(userEntity)
-                .map(entity -> userMapper.mapEntityUpdate(userUpdateDto, entity))
+                .map(entity -> userMapper.mapEntityUpdate(createDto, entity))
                 .map(userRepository::saveAndFlush)
                 .orElseThrow();
     }
 
+
     @Override
     public Optional<UserReadDto> findByMail(String mail) {
-         return userRepository.findByMailIgnoreCase(mail)
+        return userRepository.findByMailIgnoreCase(mail)
                 .map(userMapper::mapRead);
     }
 
@@ -90,5 +91,19 @@ public class UserService implements IUserService {
     public Optional<UserSecure> findByMailWithPass(String mail) {
         return userRepository.findByMailIgnoreCase(mail)
                 .map(userMapper::mapSecure);
+    }
+
+    private void validateUpdate(UserCreateDto createDto,
+                                UserUpdateDto updateDto,
+                                UserEntity userEntity) {
+
+        this.findByMail(createDto.getMail())
+                .map(UserReadDto::getUuid)
+                .filter(uuid -> uuid.equals(userEntity.getId()))
+                .orElseThrow(() -> new IllegalArgumentException("Пользователь с таким email уже существует"));
+
+        if (!updateDto.getDtUpdate().equals(userEntity.getDtUpdate())) {
+            throw new UpdateTimeMismatchException();
+        }
     }
 }

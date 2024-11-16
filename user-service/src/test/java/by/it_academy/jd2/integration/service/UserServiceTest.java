@@ -50,16 +50,20 @@ class UserServiceTest extends IntegrationTestBase {
     void update() {
         Optional<UserReadDto> user = userService.findById(UUID.fromString(USER_ID));
         UserReadDto userReadDto = user.get();
-        UserUpdateDto userUpdateDto = UserUpdateDto.builder()
+
+        UserUpdateDto updateDto = UserUpdateDto.builder()
                 .id(userReadDto.getUuid())
-                .fio("update")
-                .password("update")
+                .dtUpdate(userReadDto.getDtUpdate())
+                .build();
+
+        UserCreateDto createDto = UserCreateDto.builder()
                 .mail(userReadDto.getMail())
                 .role(EUserRole.ADMIN)
                 .status(EUserStatus.ACTIVATED)
-                .dtUpdate(userReadDto.getDtUpdate())
+                .fio("update")
+                .password("update")
                 .build();
-        userService.update(userUpdateDto);
+        userService.update(createDto, updateDto);
         Optional<UserReadDto> userUpdate = userService.findById(UUID.fromString(USER_ID));
         assertTrue(userUpdate.isPresent());
         userUpdate.ifPresent(u -> assertEquals("update", u.getFio()));
