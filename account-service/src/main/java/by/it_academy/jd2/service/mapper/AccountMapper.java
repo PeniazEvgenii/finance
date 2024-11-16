@@ -4,13 +4,10 @@ import by.it_academy.jd2.repository.entity.AccountEntity;
 import by.it_academy.jd2.service.api.IUserHolderService;
 import by.it_academy.jd2.service.dto.AccountCreateDto;
 import by.it_academy.jd2.service.dto.AccountReadDto;
-import by.it_academy.jd2.service.dto.AccountUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.util.UUID;
+
 
 @Component
 @RequiredArgsConstructor

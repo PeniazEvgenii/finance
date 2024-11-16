@@ -17,7 +17,7 @@ public interface IOperationRepository extends JpaRepository<OperationEntity, UUI
     @Query("select o from OperationEntity o where o.accountEntity.id = :accountId and o.id = :id")
     Optional<OperationEntity> findByIdAndAccountId(UUID id, UUID accountId);
 
-    @Query("select o from OperationEntity o join fetch o.accountEntity ae where ae.userId = :userId")
+    @Query("select o from OperationEntity o join fetch o.accountEntity ae where o.id = :id and ae.userId = :userId")
     Optional<OperationEntity> findByIdAndUserId(UUID id, UUID userId);
 
 }
