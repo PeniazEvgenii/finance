@@ -2,6 +2,7 @@ package by.it_academy.jd2.service;
 
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.ICurrencyRepository;
+import by.it_academy.jd2.repository.entity.CurrencyEntity;
 import by.it_academy.jd2.service.api.ICurrencyService;
 import by.it_academy.jd2.service.dto.CurrencyCreateDto;
 import by.it_academy.jd2.service.dto.CurrencyReadDto;
@@ -30,7 +31,7 @@ public class CurrencyService implements ICurrencyService {
 
     @Transactional
     @Override
-    public void create(CurrencyCreateDto createDto) {
+    public void create(@Valid CurrencyCreateDto createDto) {
         Optional.of(createDto)
                 .map(currencyMapper::mapCreate)
                 .map(currencyRepository::saveAndFlush)
@@ -39,8 +40,8 @@ public class CurrencyService implements ICurrencyService {
 
     @Override
     public PageOf<CurrencyReadDto> findAll(@Valid PageDto pageDto) {
-        Sort sortCurrency = Sort.sort(CurrencyReadDto.class)
-                .by(CurrencyReadDto::getTitle)
+        Sort sortCurrency = Sort.sort(CurrencyEntity.class)
+                .by(CurrencyEntity::getTitle)
                 .ascending();
 
         PageRequest pageRequest = PageRequest.of(

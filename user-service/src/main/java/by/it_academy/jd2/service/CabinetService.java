@@ -5,6 +5,7 @@ import by.it_academy.jd2.repository.IUserRepository;
 import by.it_academy.jd2.repository.entity.EUserStatus;
 import by.it_academy.jd2.repository.entity.UserEntity;
 import by.it_academy.jd2.service.api.ICabinetService;
+import by.it_academy.jd2.service.api.IVerificationService;
 import by.it_academy.jd2.service.dto.UserRegistrationDto;
 import by.it_academy.jd2.service.dto.VerificationDto;
 import by.it_academy.jd2.service.mapper.api.IUserMapper;
@@ -19,16 +20,16 @@ import java.util.Optional;
 @Validated
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class CabinetService implements ICabinetService {
 
     private final IUserRepository userRepository;
     private final IUserMapper userMapper;
-    private final VerificationService verificationService;
+    private final IVerificationService verificationService;
 
-    @Transactional
     public void registration(@Valid UserRegistrationDto userRegistrationDto) {
-        UserEntity userEntity = Optional.of(userRegistrationDto)
+
+        UserEntity userEntity = Optional.of(userRegistrationDto)       //посмотрю может не возвращать либо в аудит
                 .map(userMapper::mapRegistration)
                 .map(userRepository::saveAndFlush)
                 .orElseThrow();
@@ -36,17 +37,14 @@ public class CabinetService implements ICabinetService {
         // verificationService.sendCode(userEntity);               //если без шедуллера
     }
 
-    @Transactional
     public void verify(@Valid VerificationDto verificationDto) {
-        verificationService.checkCode(verificationDto);                       //могу и ENTITY передать, -1 запрос НО передаю с
+        verificationService.checkCode(verificationDto);
 
-        UserEntity userEntity = userRepository
-                .findByMailIgnoreCase(verificationDto.getMail())
-                .orElseThrow(IdNotFoundException::new);
-        userEntity.setStatus(EUserStatus.ACTIVATED);
-        Optional.of(userEntity)
-                .map(userRepository::saveAndFlush)                                  //будем аудит отправлять
-                .orElseThrow();
-
+        userRepository.findByMailIgnoreCase(verificationDto.getMail())
+                .map(entity -> {
+                    entity.setStatus(EUserStatus.ACTIVATED);
+                    return entity;
+                })
+                .map(userRepository::saveAndFlush);
     }
 }

@@ -2,6 +2,7 @@ package by.it_academy.jd2.service;
 
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.IOperationCategoryRepository;
+import by.it_academy.jd2.repository.entity.OperationCategoryEntity;
 import by.it_academy.jd2.service.api.IOperationCategoryService;
 import by.it_academy.jd2.service.dto.OperationCategoryCreateDto;
 import by.it_academy.jd2.service.dto.OperationCategoryReadDto;
@@ -30,7 +31,7 @@ public class OperationCategoryService implements IOperationCategoryService {
 
     @Transactional
     @Override
-    public void create(OperationCategoryCreateDto createDto) {
+    public void create(@Valid OperationCategoryCreateDto createDto) {
         Optional.of(createDto)
                 .map(operationCategoryMapper::mapCreate)
                 .map(operationCategoryRepository::saveAndFlush)
@@ -39,8 +40,8 @@ public class OperationCategoryService implements IOperationCategoryService {
 
     @Override
     public PageOf<OperationCategoryReadDto> findAll(@Valid PageDto pageDto) {
-        Sort sortCategory = Sort.sort(OperationCategoryReadDto.class)
-                .by(OperationCategoryReadDto::getTitle)
+        Sort sortCategory = Sort.sort(OperationCategoryEntity.class)
+                .by(OperationCategoryEntity::getTitle)
                 .ascending();
 
         PageRequest pageRequest = PageRequest.of(

@@ -37,7 +37,7 @@ public class SecurityConfiguration {
                                         response.setStatus(HttpServletResponse.SC_FORBIDDEN))
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/users/**").permitAll()          //hasRole(EUserRole.ADMIN.name())   вернуть!!!!!
+                        .requestMatchers("/users/**").hasRole(EUserRole.ADMIN.name())
                         .requestMatchers("/cabinet/registration").permitAll()
                         .requestMatchers("/cabinet/login").permitAll()
                         .requestMatchers("/cabinet/verification").permitAll()

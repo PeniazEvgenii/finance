@@ -13,7 +13,7 @@ public interface IOperationCategoryService {
 
     PageOf<OperationCategoryReadDto> findAll(@Valid PageDto pageDto);
 
-    void create(OperationCategoryCreateDto createDto);
+    void create(@Valid OperationCategoryCreateDto createDto);
 
     Optional<OperationCategoryReadDto> findByTitle(String title);
 

@@ -19,7 +19,7 @@ public class ClassifierController {
 
     @PostMapping("/currency")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void createCurrency(@RequestBody @Valid CurrencyCreateDto currencyCreateDto) {
+    public void createCurrency(@RequestBody CurrencyCreateDto currencyCreateDto) {
 
         currencyService.create(currencyCreateDto);
     }
@@ -34,7 +34,7 @@ public class ClassifierController {
 
     @PostMapping("/operation/category")
     @ResponseStatus(value = HttpStatus.CREATED)                                                                         //опред может валид все на сервис
-    public void createOperationCategory(@RequestBody @Valid OperationCategoryCreateDto operationCategoryCreateDto) {
+    public void createOperationCategory(@RequestBody OperationCategoryCreateDto operationCategoryCreateDto) {
 
         operationCategoryService.create(operationCategoryCreateDto);
     }

@@ -38,9 +38,8 @@ public class VerificationService implements IVerificationService {
                 .build();
 
         mailService.send(new MailDto("kentuchi2018@gmail.com", verifyCode, MAIL_TITLE));   //user.getMail() заменить после теста !!!!!!!
-        Optional.of(codeEntity)
-                .map(codeRepository::saveAndFlush)
-                .orElseThrow();
+
+        codeRepository.saveAndFlush(codeEntity);
     }
 
     public void checkCode(VerificationDto verificationDto) {
@@ -48,6 +47,9 @@ public class VerificationService implements IVerificationService {
                 .map(CodeEntity::getCode)
                 .filter(code -> verificationDto.getCode().equals(code))
                 .orElseThrow(VerificationException::new);
+
+         // codeRepository.delete(codeEntity);  если надо удалять код, без map
+        // .filter(entity -> verificationDto.getCode().equals(entity.getCode()))
     }
 
     private String generateCode() {

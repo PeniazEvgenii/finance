@@ -33,8 +33,8 @@ public class UserService implements IUserService {
 
     @Override
     public PageOf<UserReadDto> findAll(@Valid PageDto pageDto) {
-        Sort sortUsers = Sort.sort(UserReadDto.class)
-                .by(UserReadDto::getDtCreate)
+        Sort sortUsers = Sort.sort(UserEntity.class)
+                .by(UserEntity::getDtCreate)
                 .descending();
         PageRequest pageRequest = PageRequest.of(
                 pageDto.getPage(),
@@ -67,12 +67,10 @@ public class UserService implements IUserService {
                 .findById(updateDto.getId())
                 .orElseThrow(IdNotFoundException::new);
 
-        validateUpdate(createDto, updateDto, userEntity);
+        validateUpdate(createDto, updateDto, userEntity);        //id user отдельно, а не в одном объекте, чтобы сделать валидацию раньше
 
-        Optional.of(userEntity)
-                .map(entity -> userMapper.mapEntityUpdate(createDto, entity))
-                .map(userRepository::saveAndFlush)
-                .orElseThrow();
+        userEntity = userMapper.mapEntityUpdate(createDto, userEntity);
+        userRepository.saveAndFlush(userEntity);
     }
 
 
@@ -83,14 +81,14 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<UserEntity> findByStatusWithoutCode(EUserStatus status) {
-        return userRepository.findByStatusWithoutCode(status);
-    }
-
-    @Override
     public Optional<UserSecure> findByMailWithPass(String mail) {
         return userRepository.findByMailIgnoreCase(mail)
                 .map(userMapper::mapSecure);
+    }
+
+    @Override
+    public List<UserEntity> findByStatusWithoutCode(EUserStatus status) {
+        return userRepository.findByStatusWithoutCode(status);
     }
 
     private void validateUpdate(UserCreateDto createDto,

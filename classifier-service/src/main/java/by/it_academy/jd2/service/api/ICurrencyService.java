@@ -13,7 +13,7 @@ public interface ICurrencyService {
 
     PageOf<CurrencyReadDto> findAll(@Valid PageDto pageDto);
 
-    void create(CurrencyCreateDto createDto);
+    void create(@Valid CurrencyCreateDto createDto);
 
     Optional<CurrencyReadDto> findByTitle(String title);
 

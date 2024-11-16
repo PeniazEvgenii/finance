@@ -19,10 +19,6 @@ public class JwtTokenHandler {
     private final JwtProperties jwtProperties;
 
     public String generateToken(UserSecure user) {
-        return generateToken(user.getMail(), user);               // Только User оставить
-    }
-
-    public String generateToken(String mail, UserSecure user) {
         UserToken userToken = UserToken.builder()
                 .id(user.getId())
                 .fio(user.getFio())
@@ -31,10 +27,7 @@ public class JwtTokenHandler {
                 .build();
 
         return Jwts.builder()
-                .setSubject(mail)
-//                .claim("id", user.getId())          // посмотреть что есть
-//                .claim("fio", user.getFio())
-//                .claim("role", user.getRole())
+                .setSubject(user.getMail())
                 .claim("user", userToken)
                 .setIssuer(jwtProperties.getIssuer())
                 .setIssuedAt(new Date())
@@ -56,7 +49,6 @@ public class JwtTokenHandler {
     public boolean validate(String token) {
         try {
             Jwts.parser().setSigningKey(jwtProperties.getSecret()).parseClaimsJws(token);
-            boolean tokenExpired = isTokenExpired(token); //тестирую//тестирую//тестирую//тестирую//тестирую//тестирую
             return true;
         } catch (SignatureException ex) {
             log.error("Invalid JWT signature - {}", ex.getMessage());
