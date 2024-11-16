@@ -21,5 +21,5 @@ public interface IAccountService {
 
     void update(@Valid AccountCreateDto createDto, @Valid AccountUpdateDto updateDto);
 
-    Optional<AccountEntity> findEntityById(UUID id);
+    Optional<AccountEntity> findEntityByIdAndUserId(UUID id);
 }

@@ -1,18 +1,24 @@
 package by.it_academy.jd2.service.mapper;
 
 import by.it_academy.jd2.repository.entity.AccountEntity;
+import by.it_academy.jd2.service.api.IUserHolderService;
 import by.it_academy.jd2.service.dto.AccountCreateDto;
 import by.it_academy.jd2.service.dto.AccountReadDto;
 import by.it_academy.jd2.service.dto.AccountUpdateDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
 @Component
+@RequiredArgsConstructor
 public class AccountMapper implements IAccountMapper {
 
     private static final Integer START_BALANCE = 0;
+
+    private final IUserHolderService userHolderService;
 
     @Override
     public AccountEntity mapCreate(AccountCreateDto createDto) {
@@ -22,7 +28,7 @@ public class AccountMapper implements IAccountMapper {
                 .balance(new BigDecimal(START_BALANCE))
                 .type(createDto.getType())
                 .currencyId(createDto.getCurrencyId())
-/** ATTENTION!!!! **/ .userId(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"))        //непонятно что с User
+                .userId(userHolderService.getUserId())
                 .build();
     }
 

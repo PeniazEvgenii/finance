@@ -9,6 +9,7 @@ import by.it_academy.jd2.repository.entity.AccountEntity;
 import by.it_academy.jd2.repository.entity.OperationEntity;
 import by.it_academy.jd2.service.api.IAccountService;
 import by.it_academy.jd2.service.api.IOperationService;
+import by.it_academy.jd2.service.api.IUserHolderService;
 import by.it_academy.jd2.service.dto.OperationCreateDto;
 import by.it_academy.jd2.service.dto.OperationReadDto;
 import by.it_academy.jd2.service.dto.OperationUpdateDto;
@@ -35,12 +36,13 @@ public class OperationService implements IOperationService {
     private final IOperationRepository operationRepository;
     private final IOperationMapper operationMapper;
     private final IAccountService accountService;
+    private final IUserHolderService userHolderService;
 
     @Transactional
     public void create(@Valid OperationCreateDto createDto, UUID accountId) {
 
         AccountEntity account = accountService
-                .findEntityById(accountId)
+                .findEntityByIdAndUserId(accountId)
                 .orElseThrow(IdNotFoundException::new);
 
         if (!checkCurrency(createDto, account)) {
@@ -54,10 +56,11 @@ public class OperationService implements IOperationService {
     }
 
     @Override
-    public PageOf<OperationReadDto> findAll(@Valid PageDto pageDto, UUID accountId) {          //надо проверить принадлежность аккаунт Id к пользователю
+    public PageOf<OperationReadDto> findAll(@Valid PageDto pageDto, UUID accountId) {
+        UUID currentUserId = userHolderService.getUserId();
 
-        Sort sortOperation = Sort.sort(OperationReadDto.class)
-                .by(OperationReadDto::getDtCreate)
+        Sort sortOperation = Sort.sort(OperationEntity.class)
+                .by(OperationEntity::getDtCreate)
                 .descending();
 
         PageRequest pageRequest = PageRequest.of(
@@ -65,7 +68,8 @@ public class OperationService implements IOperationService {
                 pageDto.getSize(),
                 sortOperation);
 
-        Page<OperationReadDto> operations = operationRepository.findAllByAccountId(accountId, pageRequest)
+        Page<OperationReadDto> operations = operationRepository
+                .findAllByAccountIdAndUserId(accountId, currentUserId, pageRequest)
                 .map(operationMapper::mapRead);
 
         return PageOf.of(operations);
@@ -73,12 +77,11 @@ public class OperationService implements IOperationService {
 
     @Override
     @Transactional
-    public void update(@Valid OperationCreateDto dto,                                            //надо проверить принадлежность аккаунт Id к пользователю
+    public void update(@Valid OperationCreateDto dto,
                        @Valid OperationUpdateDto updateDto) {
+        UUID currentUserId = userHolderService.getUserId();
 
-        OperationEntity operationEntity = operationRepository
-                .findById(updateDto.getOperationId())
-                .orElseThrow(IdNotFoundException::new);
+        OperationEntity operationEntity = getOperationEntity(updateDto, currentUserId);
 
         if (!checkCurrency(dto, operationEntity.getAccountEntity())) {
             throw new CurrencyMismatchException();
@@ -91,24 +94,28 @@ public class OperationService implements IOperationService {
     }
 
     @Override
+    @Transactional
+    public void delete(@Valid OperationUpdateDto updateDto) {
+        UUID currentUserId = userHolderService.getUserId();
+
+        OperationEntity operationEntity = getOperationEntity(updateDto, currentUserId);
+
+        updateBalance(operationEntity);
+        operationRepository.delete(operationEntity);
+        operationRepository.flush();
+    }
+
+    private OperationEntity getOperationEntity(OperationUpdateDto updateDto, UUID currentUserId) {
+        return operationRepository
+                .findByIdAndUserId(updateDto.getOperationId(), currentUserId)
+                .orElseThrow(IdNotFoundException::new);
+    }
+
+    @Override
     public Optional<OperationReadDto> findByIdAndAccountId(UUID id, UUID accountId) {
         return operationRepository.findByIdAndAccountId(id, accountId)
                 .map(operationMapper::mapRead);
     }
-
-    @Override
-    @Transactional
-    public void delete(@Valid OperationUpdateDto updateDto) {                                       //надо проверить принадлежность аккаунт Id к пользователю
-        operationRepository
-                .findById(updateDto.getOperationId())
-                .map(operationEntity -> {
-                    updateBalance(operationEntity);
-                    operationRepository.delete(operationEntity);
-                    operationRepository.flush();
-                    return true;
-                }).orElseThrow();
-    }
-
 
     private void updateBalance(OperationEntity operationEntity) {
         BigDecimal value = operationEntity.getValue();
