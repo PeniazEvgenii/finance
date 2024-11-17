@@ -7,7 +7,6 @@ import by.it_academy.jd2.service.api.IAccountService;
 import by.it_academy.jd2.service.dto.AccountCreateDto;
 import by.it_academy.jd2.service.dto.AccountReadDto;
 import by.it_academy.jd2.service.dto.AccountUpdateDto;
-import by.it_academy.jd2.service.mapper.IAccountMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,6 @@ import java.util.UUID;
 public class AccountController {
 
     private final IAccountService accountService;
-    private final IAccountMapper accountMapper;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -34,7 +32,7 @@ public class AccountController {
     public PageOf<AccountReadDto> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                           @RequestParam(value = "size", defaultValue = "20") Integer size) {
 
-        return accountService.findAll(new PageDto(page, size));              //непонятно про пользователя, пока хардкод в таблице
+        return accountService.findAll(new PageDto(page, size));
     }
 
     @GetMapping("/{uuid}")

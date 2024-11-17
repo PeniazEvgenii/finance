@@ -29,14 +29,13 @@ public class AccountEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-//    @Version
-//    private Integer version;
+    @Version
+    private Integer version;
 
     @CreatedDate
     @Column(name = "dt_create", nullable = false)
     private Instant dtCreate;
 
-    @Version
     @LastModifiedDate
     @Column(name = "dt_update", nullable = false)
     private Instant dtUpdate;
@@ -58,7 +57,7 @@ public class AccountEntity {
     private UUID currencyId;
 
     @Column(name = "user_id", nullable = false)
-    private UUID userId;                     //непонятно что делать, или таблицу делать!!!!
+    private UUID userId;
 
 
     public void addValue(BigDecimal value) {

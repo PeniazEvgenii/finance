@@ -1,6 +1,6 @@
 package by.it_academy.jd2.auditservice.service.dto;
 
-import by.it_academy.jd2.commonlib.dto.UserRole;
+import by.it_academy.jd2.commonlib.dto.EUserRole;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +18,5 @@ public class UserReadDto {
 
     private final String fio;
 
-    private final UserRole role;
+    private final EUserRole role;
 }

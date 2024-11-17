@@ -1,5 +1,6 @@
 package by.it_academy.jd2.auditservice.repository.entity;
 
+import by.it_academy.jd2.commonlib.dto.EUserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,7 +32,7 @@ public class UserEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private EUserRole role;
 
     @CreatedDate
     @Column(name = "dt_create", nullable = false)

@@ -27,14 +27,13 @@ public class OperationEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-//    @Version
-//    private Integer version;
+    @Version
+    private Integer version;
 
     @CreatedDate
     @Column(name = "dt_create", nullable = false)
     private Instant dtCreate;
 
-    @Version
     @LastModifiedDate
     @Column(name = "dt_update", nullable = false)
     private Instant dtUpdate;

@@ -30,8 +30,8 @@ public class AuditService implements IAuditService {
 
     @Override
     public PageOf<AuditReadDto> findAll(@Valid PageDto pageDto) {
-        Sort sortAudit = Sort.sort(AuditReadDto.class)
-                .by(AuditReadDto::getDtCreate)
+        Sort sortAudit = Sort.sort(AuditEntity.class)
+                .by(AuditEntity::getDtCreate)
                 .descending();
 
         PageRequest pageRequest = PageRequest.of(

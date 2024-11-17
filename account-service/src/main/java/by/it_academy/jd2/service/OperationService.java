@@ -3,6 +3,7 @@ package by.it_academy.jd2.service;
 import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.exception.CurrencyMismatchException;
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
+import by.it_academy.jd2.commonlib.exception.SaveException;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.IOperationRepository;
 import by.it_academy.jd2.repository.entity.AccountEntity;
@@ -52,7 +53,7 @@ public class OperationService implements IOperationService {
         Optional.of(createDto)
                 .map(dto -> operationMapper.mapCreate(createDto, account))
                 .map(operationRepository::saveAndFlush)
-                .orElseThrow();
+                .orElseThrow(SaveException::new);
     }
 
     @Override
@@ -90,7 +91,7 @@ public class OperationService implements IOperationService {
         Optional.of(operationEntity)
                 .map(entity -> operationMapper.mapUpdate(dto, entity))
                 .map(operationRepository::saveAndFlush)
-                .orElseThrow();
+                .orElseThrow(SaveException::new);
     }
 
     @Override

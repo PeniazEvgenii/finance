@@ -2,6 +2,7 @@ package by.it_academy.jd2.service;
 
 import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
+import by.it_academy.jd2.commonlib.exception.SaveException;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.IAccountRepository;
 import by.it_academy.jd2.repository.entity.AccountEntity;
@@ -36,16 +37,11 @@ public class AccountService implements IAccountService {
     @Transactional
     @Override
     public void create(@Valid AccountCreateDto createDto) {
-//        UUID currentUserId = userHolderService.getUserId();       установка пользователя на маппере сейчас
-//        Optional.of(createDto)
-//                .map(dto -> accountMapper(dto, currentUserId))
-//                .map(accountRepository::saveAndFlush)
-//                .orElseThrow();
 
         Optional.of(createDto)
                 .map(accountMapper::mapCreate)
                 .map(accountRepository::saveAndFlush)
-                .orElseThrow();                                 // свое исключение проброшу
+                .orElseThrow(SaveException::new);
     }
 
     @Override
@@ -89,7 +85,7 @@ public class AccountService implements IAccountService {
         Optional.of(accountEntity)
                 .map(entity -> accountMapper.mapUpdate(createDto, entity))
                 .map(accountRepository::saveAndFlush)
-                .orElseThrow();
+                .orElseThrow(SaveException::new);
     }
 
     @Override

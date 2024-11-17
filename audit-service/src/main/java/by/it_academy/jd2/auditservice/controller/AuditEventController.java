@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/event")
 @RequiredArgsConstructor
-public class AuditInfoController {
+public class AuditEventController {
 
     private final IAuditService auditService;
 
