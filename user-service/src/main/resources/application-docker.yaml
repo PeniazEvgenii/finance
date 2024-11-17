@@ -2,6 +2,9 @@ spring:
   datasource:
     url: jdbc:postgresql://finance-db/user
     username: postgres
-    password: root                       #может поменяется
-#  liquibase:
-#    liquibase-schema: app                # может в public закинуть
+    password: root
+  liquibase:
+    liquibase-schema: app                # может в public закинуть
+
+service:
+  audit: audit-service:8080

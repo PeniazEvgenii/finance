@@ -25,7 +25,7 @@ logging:
     #    com.dmdev.spring.database.pool: info
     org.springframework.jdbc.core: trace
   file:
-    name: dmdev.log
+    name: finance.log
     path: /
 
 app:

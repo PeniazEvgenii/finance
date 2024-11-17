@@ -2,6 +2,6 @@ spring:
   datasource:
     url: jdbc:postgresql://finance-db:5432/audit
     username: postgres
-    password: root                       #может поменяется
-#  liquibase:
-#    liquibase-schema: app               #пока в паблик схему ???
+    password: root
+  liquibase:
+    liquibase-schema: app               #пока в паблик схему ???

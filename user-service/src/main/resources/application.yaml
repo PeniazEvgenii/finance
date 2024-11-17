@@ -42,7 +42,7 @@ logging:
     #    by.it_academy.jd2: debug
     org.springframework.jdbc.core: trace
   file:
-    name: dmdev.log
+    name: finance.log
     path: /
 
 app:

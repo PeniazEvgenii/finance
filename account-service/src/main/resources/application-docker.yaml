@@ -3,8 +3,8 @@ spring:
     url: jdbc:postgresql://finance-db:5432/account
     username: postgres
     password: root
-#  liquibase:
-#    liquibase-schema: app               #пока в паблик схему ???
+  liquibase:
+    liquibase-schema: app               #пока в паблик схему ???
 
 service:
   classifier: classifier-service:8080

@@ -51,10 +51,7 @@ class UserServiceTest extends IntegrationTestBase {
         Optional<UserReadDto> user = userService.findById(UUID.fromString(USER_ID));
         UserReadDto userReadDto = user.get();
 
-        UserUpdateDto updateDto = UserUpdateDto.builder()
-                .id(userReadDto.getUuid())
-                .dtUpdate(userReadDto.getDtUpdate())
-                .build();
+        UserUpdateDto updateDto = new UserUpdateDto(userReadDto.getUuid(), userReadDto.getDtUpdate());
 
         UserCreateDto createDto = UserCreateDto.builder()
                 .mail(userReadDto.getMail())

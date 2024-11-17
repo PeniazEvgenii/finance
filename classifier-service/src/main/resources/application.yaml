@@ -1,11 +1,3 @@
-logging:
-  level:
-    root: info
-#    com.dmdev.spring.database.pool: info
-    org.springframework.jdbc.core: trace
-  file:
-    name: dmdev.log
-    path: /
 spring:
   application:
     name: classifier-service
@@ -26,6 +18,15 @@ spring:
   jackson:
     deserialization:
       read-date-timestamps-as-nanoseconds: false
+
+logging:
+  level:
+    root: info
+    #    com.dmdev.spring.database.pool: info
+    org.springframework.jdbc.core: trace
+  file:
+    name: finance.log
+    path: /
 
 app:
   jwt:
