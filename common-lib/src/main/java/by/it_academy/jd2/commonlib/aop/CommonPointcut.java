@@ -14,13 +14,13 @@ public class  CommonPointcut {
     @Pointcut("isServiceLayer() && execution(public * findById(*))")
     public void anyFindByIdServiceMethod() {}
 
-    @Pointcut("isServiceLayer() && execution(public * findAll(*))")
+    @Pointcut("isServiceLayer() && execution(public * findAll(..))")
     public void anyFindAllServiceMethod() {}
 
-    @Pointcut("isServiceLayer() && execution(public * save(*))")
-    public void anySaveServiceMethod() {}
+    @Pointcut("isServiceLayer() && execution(public * create(..))")
+    public void anyCreateServiceMethod() {}
 
-    @Pointcut("isServiceLayer() && execution(public * update(*))")
+    @Pointcut("isServiceLayer() && execution(public * update(..))")
     public void anyUpdateServiceMethod() {}
 
     @Pointcut("isServiceLayer() && execution(public * findByMail(*))")
@@ -37,10 +37,10 @@ public class  CommonPointcut {
     @Pointcut("isControllerLayer() && execution(public * findAll(..))")
     public void anyFindAllControllerLayer() {}
 
-    @Pointcut("isControllerLayer() && execution(public * save(*))")
-    public void anySaveControllerLayer() {}
+    @Pointcut("isControllerLayer() && execution(public * create(..))")
+    public void anyCreateControllerLayer() {}
 
-    @Pointcut("isControllerLayer() && execution(public * update(*))")
+    @Pointcut("isControllerLayer() && execution(public * update(..))")
     public void anyUpdateControllerLayer() {}
 
 }
