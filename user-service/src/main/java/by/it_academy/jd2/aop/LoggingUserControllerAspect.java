@@ -30,11 +30,11 @@ public class LoggingUserControllerAspect {
         log.info("Before - invoked findAll() controller method in class {}", controller);
     }
 
-    @Before(value = "by.it_academy.jd2.commonlib.aop.CommonPointcut.anySaveControllerLayer() " +
+    @Before(value = "by.it_academy.jd2.commonlib.aop.CommonPointcut.anyCreateControllerLayer() " +
             "&& args(dto) " +
             "&& target(controller)", argNames = "dto,controller")
     public void addLogBeforeSave(Object dto, Object controller) {
-        log.info("Before - invoked save() controller method in class {}, with dto {}", controller, dto);
+        log.info("Before - invoked create() controller method in class {}, with dto {}", controller, dto);
     }
 
     @Before(value = "by.it_academy.jd2.commonlib.aop.CommonPointcut.anyUpdateControllerLayer() " +

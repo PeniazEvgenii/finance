@@ -29,14 +29,13 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-//    @Version
-//    private Long version;
+    @Version
+    private Long version;
 
     @CreatedDate
     @Column(name = "dt_create", nullable = false)
     private Instant dtCreate;
 
-    @Version
     @LastModifiedDate
     @Column(name = "dt_update", nullable = false)
     private Instant dtUpdate;

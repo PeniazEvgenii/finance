@@ -5,11 +5,13 @@ import by.it_academy.jd2.commonlib.error.ErrorResponse;
 import by.it_academy.jd2.commonlib.error.StructuredError;
 import by.it_academy.jd2.commonlib.error.StructuredErrorResponse;
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
+import by.it_academy.jd2.commonlib.exception.SaveException;
 import by.it_academy.jd2.commonlib.exception.UpdateTimeMismatchException;
 import by.it_academy.jd2.service.exception.EmailSendException;
 import by.it_academy.jd2.service.exception.VerificationException;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -105,6 +107,22 @@ public class ControllerExceptionHandler {
             HttpRequestMethodNotSupportedException exception) {
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR, exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
+    }
+
+    @ExceptionHandler(SaveException.class)
+    public ResponseEntity<List<ErrorResponse>> onSaveException(SaveException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(EError.ERROR,
+                "Сервер не смог корректно обработать запрос. Попробуйте позже или обратитесь к администратору");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(List.of(errorResponse));
+    }
+
+    @ExceptionHandler(OptimisticLockingFailureException.class)
+    public ResponseEntity<List<ErrorResponse>> onOptimisticLockingFailureException(OptimisticLockingFailureException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(EError.ERROR,
+                "Объект был изменен другим пользователем. Попробуйте еще раз или обратитесь к администратору");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(List.of(errorResponse));
     }
 
     @ExceptionHandler(ValidationException.class)

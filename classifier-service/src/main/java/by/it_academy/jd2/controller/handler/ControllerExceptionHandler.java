@@ -5,6 +5,7 @@ import by.it_academy.jd2.commonlib.error.ErrorResponse;
 import by.it_academy.jd2.commonlib.error.StructuredError;
 import by.it_academy.jd2.commonlib.error.StructuredErrorResponse;
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
+import by.it_academy.jd2.commonlib.exception.SaveException;
 import by.it_academy.jd2.controller.ClassifierController;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
@@ -91,6 +92,14 @@ public class ControllerExceptionHandler {
             HttpRequestMethodNotSupportedException exception) {
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR, exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
+    }
+
+    @ExceptionHandler(SaveException.class)
+    public ResponseEntity<List<ErrorResponse>> onSaveException(SaveException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(EError.ERROR,
+                "Сервер не смог корректно обработать запрос. Попробуйте позже или обратитесь к администратору");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(List.of(errorResponse));
     }
 
     @ExceptionHandler(Exception.class)

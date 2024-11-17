@@ -1,6 +1,7 @@
 package by.it_academy.jd2.service;
 
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
+import by.it_academy.jd2.commonlib.exception.SaveException;
 import by.it_academy.jd2.repository.IUserRepository;
 import by.it_academy.jd2.repository.entity.EUserStatus;
 import by.it_academy.jd2.repository.entity.UserEntity;
@@ -32,7 +33,7 @@ public class CabinetService implements ICabinetService {
         UserEntity userEntity = Optional.of(userRegistrationDto)       //посмотрю может не возвращать либо в аудит
                 .map(userMapper::mapRegistration)
                 .map(userRepository::saveAndFlush)
-                .orElseThrow();
+                .orElseThrow(SaveException::new);
 
         // verificationService.sendCode(userEntity);               //если без шедуллера
     }

@@ -1,6 +1,7 @@
 package by.it_academy.jd2.service;
 
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
+import by.it_academy.jd2.commonlib.exception.SaveException;
 import by.it_academy.jd2.commonlib.exception.UpdateTimeMismatchException;
 import by.it_academy.jd2.repository.entity.EUserStatus;
 import by.it_academy.jd2.service.api.IUserService;
@@ -8,6 +9,7 @@ import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.IUserRepository;
 import by.it_academy.jd2.repository.entity.UserEntity;
 import by.it_academy.jd2.service.dto.*;
+import by.it_academy.jd2.service.exception.MailNotUnuqueException;
 import by.it_academy.jd2.service.mapper.api.IUserMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -57,7 +59,7 @@ public class UserService implements IUserService {
         Optional.of(userCreateDto)
                 .map(userMapper::mapCreate)
                 .map(userRepository::save)
-                .orElseThrow();                                  //можно свое исключение добавить и будем отлавливать что не создалось
+                .orElseThrow(SaveException::new);
     }
 
     @Override
@@ -67,7 +69,7 @@ public class UserService implements IUserService {
                 .findById(updateDto.getId())
                 .orElseThrow(IdNotFoundException::new);
 
-        validateUpdate(createDto, updateDto, userEntity);        //id user отдельно, а не в одном объекте, чтобы сделать валидацию раньше
+        validateUpdate(createDto, updateDto, userEntity);
 
         userEntity = userMapper.mapEntityUpdate(createDto, userEntity);
         userRepository.saveAndFlush(userEntity);
@@ -98,7 +100,7 @@ public class UserService implements IUserService {
         this.findByMail(createDto.getMail())
                 .map(UserReadDto::getUuid)
                 .filter(uuid -> uuid.equals(userEntity.getId()))
-                .orElseThrow(() -> new IllegalArgumentException("Пользователь с таким email уже существует"));
+                .orElseThrow(MailNotUnuqueException::new);
 
         if (!updateDto.getDtUpdate().equals(userEntity.getDtUpdate())) {
             throw new UpdateTimeMismatchException();

@@ -12,14 +12,14 @@ public class LoggingServiceAspect {
     @Pointcut("by.it_academy.jd2.commonlib.aop.CommonPointcut.isServiceLayer() && execution(public * findByTitle(*))")
     public void anyFindByTitleServiceMethod() {}
 
-    @Before(value = "by.it_academy.jd2.commonlib.aop.CommonPointcut.anySaveServiceMethod() " +
+    @Before(value = "by.it_academy.jd2.commonlib.aop.CommonPointcut.anyCreateServiceMethod() " +
             "&& args(dto) " +
             "&& target(service)", argNames = "dto, service")
     public void addLogBeforeSaveServiceMethod(Object dto, Object service) {
         log.info("Before - invoked save Service Method in class {}, with dto {}", service, dto);
     }
 
-    @AfterThrowing(value = "by.it_academy.jd2.commonlib.aop.CommonPointcut.anySaveServiceMethod() && target(service)",
+    @AfterThrowing(value = "by.it_academy.jd2.commonlib.aop.CommonPointcut.anyCreateServiceMethod() && target(service)",
                   throwing = "ex")
     public void addLogAfterThrowingSaveServiceMethod(Throwable ex, Object service) {
         log.error("After - invoked save Service Method in class {}, exception {}: {} ", service, ex.getClass(), ex.getMessage());

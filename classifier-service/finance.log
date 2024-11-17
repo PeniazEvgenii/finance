@@ -1,0 +1,136 @@
+2024-11-17T16:20:47.888+03:00  INFO 10704 --- [classifier-service] [main] b.i.j.i.service.CurrencyServiceTest      : Starting CurrencyServiceTest using Java 21.0.4 with PID 10704 (started by user in C:\Users\user\IdeaProjects\finance\classifier-service)
+2024-11-17T16:20:47.892+03:00  INFO 10704 --- [classifier-service] [main] b.i.j.i.service.CurrencyServiceTest      : The following 1 profile is active: "test"
+2024-11-17T16:20:49.275+03:00  INFO 10704 --- [classifier-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-17T16:20:49.397+03:00  INFO 10704 --- [classifier-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 105 ms. Found 2 JPA repository interfaces.
+2024-11-17T16:20:50.729+03:00  INFO 10704 --- [classifier-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-11-17T16:20:51.044+03:00  INFO 10704 --- [classifier-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7323c38c
+2024-11-17T16:20:51.047+03:00  INFO 10704 --- [classifier-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-11-17T16:20:51.313+03:00  INFO 10704 --- [classifier-service] [main] liquibase.database                       : Set default schema name to public
+2024-11-17T16:20:51.792+03:00  INFO 10704 --- [classifier-service] [main] liquibase.changelog                      : Creating database history table with name: public.databasechangelog
+2024-11-17T16:20:51.851+03:00  INFO 10704 --- [classifier-service] [main] liquibase.changelog                      : Reading from public.databasechangelog
+2024-11-17T16:20:51.985+03:00  INFO 10704 --- [classifier-service] [main] liquibase.lockservice                    : Successfully acquired change log lock
+2024-11-17T16:20:51.990+03:00  INFO 10704 --- [classifier-service] [main] liquibase.command                        : Using deploymentId: 1849651990
+2024-11-17T16:20:51.997+03:00  INFO 10704 --- [classifier-service] [main] liquibase.changelog                      : Reading from public.databasechangelog
+2024-11-17T16:20:52.009+03:00  INFO 10704 --- [classifier-service] [main] liquibase.ui                             : Running Changeset: db/changelog/db.changelog-1.0.sql::1::Evgenii
+2024-11-17T16:20:52.053+03:00  INFO 10704 --- [classifier-service] [main] liquibase.changelog                      : Custom SQL executed
+2024-11-17T16:20:52.059+03:00  INFO 10704 --- [classifier-service] [main] liquibase.changelog                      : ChangeSet db/changelog/db.changelog-1.0.sql::1::Evgenii ran successfully in 47ms
+2024-11-17T16:20:52.072+03:00  INFO 10704 --- [classifier-service] [main] liquibase.ui                             : Running Changeset: db/changelog/db.changelog-1.0.sql::2::Evgenii
+2024-11-17T16:20:52.084+03:00  INFO 10704 --- [classifier-service] [main] liquibase.changelog                      : Custom SQL executed
+2024-11-17T16:20:52.086+03:00  INFO 10704 --- [classifier-service] [main] liquibase.changelog                      : ChangeSet db/changelog/db.changelog-1.0.sql::2::Evgenii ran successfully in 13ms
+2024-11-17T16:20:52.104+03:00  INFO 10704 --- [classifier-service] [main] liquibase.util                           : UPDATE SUMMARY
+2024-11-17T16:20:52.104+03:00  INFO 10704 --- [classifier-service] [main] liquibase.util                           : Run:                          2
+2024-11-17T16:20:52.105+03:00  INFO 10704 --- [classifier-service] [main] liquibase.util                           : Previously run:               0
+2024-11-17T16:20:52.105+03:00  INFO 10704 --- [classifier-service] [main] liquibase.util                           : Filtered out:                 0
+2024-11-17T16:20:52.106+03:00  INFO 10704 --- [classifier-service] [main] liquibase.util                           : -------------------------------
+2024-11-17T16:20:52.106+03:00  INFO 10704 --- [classifier-service] [main] liquibase.util                           : Total change sets:            2
+2024-11-17T16:20:52.107+03:00  INFO 10704 --- [classifier-service] [main] liquibase.util                           : Update summary generated
+2024-11-17T16:20:52.110+03:00  INFO 10704 --- [classifier-service] [main] liquibase.command                        : Update command completed successfully.
+2024-11-17T16:20:52.111+03:00  INFO 10704 --- [classifier-service] [main] liquibase.ui                             : Liquibase: Update has been successful. Rows affected: 2
+2024-11-17T16:20:52.122+03:00  INFO 10704 --- [classifier-service] [main] liquibase.lockservice                    : Successfully released change log lock
+2024-11-17T16:20:52.127+03:00  INFO 10704 --- [classifier-service] [main] liquibase.command                        : Command execution complete
+2024-11-17T16:20:52.453+03:00  INFO 10704 --- [classifier-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-17T16:20:52.569+03:00  INFO 10704 --- [classifier-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-11-17T16:20:52.634+03:00  INFO 10704 --- [classifier-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-11-17T16:20:52.805+03:00  INFO 10704 --- [classifier-service] [main] o.h.e.boot.internal.EnversServiceImpl    : Envers integration enabled? : true
+2024-11-17T16:20:53.177+03:00  INFO 10704 --- [classifier-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-17T16:20:54.709+03:00  INFO 10704 --- [classifier-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-11-17T16:20:54.813+03:00  INFO 10704 --- [classifier-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-17T16:20:56.436+03:00  WARN 10704 --- [classifier-service] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 6c54454e-15e0-4d57-83ce-76d46c08c402
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-11-17T16:20:56.462+03:00  INFO 10704 --- [classifier-service] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2024-11-17T16:20:58.134+03:00  INFO 10704 --- [classifier-service] [main] b.i.j.i.service.CurrencyServiceTest      : Started CurrencyServiceTest in 10.704 seconds (process running for 17.591)
+2024-11-17T16:20:58.812+03:00  INFO 10704 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : Before - invoked save Service Method in class by.it_academy.jd2.service.CurrencyService@223ed38f, with dto CurrencyCreateDto(title=BYN, description=белорусский рубль)
+2024-11-17T16:20:58.892+03:00  INFO 10704 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : Before - invoked findByTitle Service Method in class by.it_academy.jd2.service.CurrencyService@223ed38f, with title BYN
+2024-11-17T16:20:59.077+03:00  INFO 10704 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : After - invoked findByTitle Service Method in class by.it_academy.jd2.service.CurrencyService@223ed38f, result Optional.empty
+2024-11-17T16:20:59.243+03:00  INFO 10704 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : invoked findAll Service Method in class by.it_academy.jd2.service.CurrencyService@223ed38f
+2024-11-17T16:20:59.443+03:00  INFO 10704 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : Before - invoked findById Service Method in class by.it_academy.jd2.service.CurrencyService@223ed38f, with id 7eeebe68-ab98-4c71-af8e-6a2d5e0acc42
+2024-11-17T16:20:59.462+03:00  INFO 10704 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : After - invoked findById Service Method in class by.it_academy.jd2.service.CurrencyService@223ed38f, result Optional[CurrencyReadDto(id=7eeebe68-ab98-4c71-af8e-6a2d5e0acc42, dtCreate=2024-11-01T09:30:12.415Z, dtUpdate=2024-11-01T09:30:12.415Z, title=USD, description=Доллар США)]
+2024-11-17T16:20:59.485+03:00  INFO 10704 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : Before - invoked findByTitle Service Method in class by.it_academy.jd2.service.CurrencyService@223ed38f, with title USD
+2024-11-17T16:20:59.491+03:00  INFO 10704 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : After - invoked findByTitle Service Method in class by.it_academy.jd2.service.CurrencyService@223ed38f, result Optional[CurrencyReadDto(id=7eeebe68-ab98-4c71-af8e-6a2d5e0acc42, dtCreate=2024-11-01T09:30:12.415Z, dtUpdate=2024-11-01T09:30:12.415Z, title=USD, description=Доллар США)]
+2024-11-17T16:20:59.509+03:00  INFO 10704 --- [classifier-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [by.it_academy.jd2.interation.service.OperationCategoryServiceTest]: OperationCategoryServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-11-17T16:20:59.512+03:00  INFO 10704 --- [classifier-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration by.it_academy.jd2.ApplicationClassifierRunner for test class by.it_academy.jd2.interation.service.OperationCategoryServiceTest
+2024-11-17T16:20:59.562+03:00  INFO 10704 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : Before - invoked save Service Method in class by.it_academy.jd2.service.OperationCategoryService@57bebe03, with dto OperationCategoryCreateDto(title=авто)
+2024-11-17T16:20:59.582+03:00  INFO 10704 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : Before - invoked findByTitle Service Method in class by.it_academy.jd2.service.OperationCategoryService@57bebe03, with title авто
+2024-11-17T16:20:59.589+03:00  INFO 10704 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : After - invoked findByTitle Service Method in class by.it_academy.jd2.service.OperationCategoryService@57bebe03, result Optional.empty
+2024-11-17T16:20:59.636+03:00  INFO 10704 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : invoked findAll Service Method in class by.it_academy.jd2.service.OperationCategoryService@57bebe03
+2024-11-17T16:20:59.676+03:00  INFO 10704 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : Before - invoked findById Service Method in class by.it_academy.jd2.service.OperationCategoryService@57bebe03, with id cecfc4ec-9c99-4afe-a836-2e499a2e0561
+2024-11-17T16:20:59.682+03:00  INFO 10704 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : After - invoked findById Service Method in class by.it_academy.jd2.service.OperationCategoryService@57bebe03, result Optional[OperationCategoryReadDto(id=cecfc4ec-9c99-4afe-a836-2e499a2e0561, dtCreate=2024-11-01T09:46:11.580Z, dtUpdate=2024-11-01T09:46:11.580Z, title=тачка)]
+2024-11-17T16:20:59.698+03:00  INFO 10704 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : Before - invoked findByTitle Service Method in class by.it_academy.jd2.service.OperationCategoryService@57bebe03, with title тачка
+2024-11-17T16:20:59.704+03:00  INFO 10704 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : After - invoked findByTitle Service Method in class by.it_academy.jd2.service.OperationCategoryService@57bebe03, result Optional[OperationCategoryReadDto(id=cecfc4ec-9c99-4afe-a836-2e499a2e0561, dtCreate=2024-11-01T09:46:11.580Z, dtUpdate=2024-11-01T09:46:11.580Z, title=тачка)]
+2024-11-17T16:20:59.704+03:00  INFO 10704 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : Before - invoked findByTitle Service Method in class by.it_academy.jd2.service.OperationCategoryService@57bebe03, with title ТаЧкА
+2024-11-17T16:20:59.711+03:00  INFO 10704 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : After - invoked findByTitle Service Method in class by.it_academy.jd2.service.OperationCategoryService@57bebe03, result Optional[OperationCategoryReadDto(id=cecfc4ec-9c99-4afe-a836-2e499a2e0561, dtCreate=2024-11-01T09:46:11.580Z, dtUpdate=2024-11-01T09:46:11.580Z, title=тачка)]
+2024-11-17T16:20:59.774+03:00  INFO 10704 --- [classifier-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-11-17T16:20:59.779+03:00  INFO 10704 --- [classifier-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-11-17T16:20:59.790+03:00  INFO 10704 --- [classifier-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-11-17T16:47:32.053+03:00  INFO 5352 --- [classifier-service] [main] b.i.j.i.service.CurrencyServiceTest      : Starting CurrencyServiceTest using Java 21.0.4 with PID 5352 (started by user in C:\Users\user\IdeaProjects\finance\classifier-service)
+2024-11-17T16:47:32.056+03:00  INFO 5352 --- [classifier-service] [main] b.i.j.i.service.CurrencyServiceTest      : The following 1 profile is active: "test"
+2024-11-17T16:47:33.342+03:00  INFO 5352 --- [classifier-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-17T16:47:33.471+03:00  INFO 5352 --- [classifier-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 114 ms. Found 2 JPA repository interfaces.
+2024-11-17T16:47:34.716+03:00  INFO 5352 --- [classifier-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-11-17T16:47:35.038+03:00  INFO 5352 --- [classifier-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3c8758d1
+2024-11-17T16:47:35.040+03:00  INFO 5352 --- [classifier-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-11-17T16:47:35.315+03:00  INFO 5352 --- [classifier-service] [main] liquibase.database                       : Set default schema name to public
+2024-11-17T16:47:35.856+03:00  INFO 5352 --- [classifier-service] [main] liquibase.changelog                      : Creating database history table with name: public.databasechangelog
+2024-11-17T16:47:35.912+03:00  INFO 5352 --- [classifier-service] [main] liquibase.changelog                      : Reading from public.databasechangelog
+2024-11-17T16:47:36.034+03:00  INFO 5352 --- [classifier-service] [main] liquibase.lockservice                    : Successfully acquired change log lock
+2024-11-17T16:47:36.037+03:00  INFO 5352 --- [classifier-service] [main] liquibase.command                        : Using deploymentId: 1851256037
+2024-11-17T16:47:36.042+03:00  INFO 5352 --- [classifier-service] [main] liquibase.changelog                      : Reading from public.databasechangelog
+2024-11-17T16:47:36.054+03:00  INFO 5352 --- [classifier-service] [main] liquibase.ui                             : Running Changeset: db/changelog/db.changelog-1.0.sql::1::Evgenii
+2024-11-17T16:47:36.084+03:00  INFO 5352 --- [classifier-service] [main] liquibase.changelog                      : Custom SQL executed
+2024-11-17T16:47:36.089+03:00  INFO 5352 --- [classifier-service] [main] liquibase.changelog                      : ChangeSet db/changelog/db.changelog-1.0.sql::1::Evgenii ran successfully in 33ms
+2024-11-17T16:47:36.104+03:00  INFO 5352 --- [classifier-service] [main] liquibase.ui                             : Running Changeset: db/changelog/db.changelog-1.0.sql::2::Evgenii
+2024-11-17T16:47:36.114+03:00  INFO 5352 --- [classifier-service] [main] liquibase.changelog                      : Custom SQL executed
+2024-11-17T16:47:36.116+03:00  INFO 5352 --- [classifier-service] [main] liquibase.changelog                      : ChangeSet db/changelog/db.changelog-1.0.sql::2::Evgenii ran successfully in 11ms
+2024-11-17T16:47:36.130+03:00  INFO 5352 --- [classifier-service] [main] liquibase.util                           : UPDATE SUMMARY
+2024-11-17T16:47:36.130+03:00  INFO 5352 --- [classifier-service] [main] liquibase.util                           : Run:                          2
+2024-11-17T16:47:36.130+03:00  INFO 5352 --- [classifier-service] [main] liquibase.util                           : Previously run:               0
+2024-11-17T16:47:36.131+03:00  INFO 5352 --- [classifier-service] [main] liquibase.util                           : Filtered out:                 0
+2024-11-17T16:47:36.131+03:00  INFO 5352 --- [classifier-service] [main] liquibase.util                           : -------------------------------
+2024-11-17T16:47:36.131+03:00  INFO 5352 --- [classifier-service] [main] liquibase.util                           : Total change sets:            2
+2024-11-17T16:47:36.132+03:00  INFO 5352 --- [classifier-service] [main] liquibase.util                           : Update summary generated
+2024-11-17T16:47:36.136+03:00  INFO 5352 --- [classifier-service] [main] liquibase.command                        : Update command completed successfully.
+2024-11-17T16:47:36.136+03:00  INFO 5352 --- [classifier-service] [main] liquibase.ui                             : Liquibase: Update has been successful. Rows affected: 2
+2024-11-17T16:47:36.146+03:00  INFO 5352 --- [classifier-service] [main] liquibase.lockservice                    : Successfully released change log lock
+2024-11-17T16:47:36.150+03:00  INFO 5352 --- [classifier-service] [main] liquibase.command                        : Command execution complete
+2024-11-17T16:47:36.440+03:00  INFO 5352 --- [classifier-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-17T16:47:36.570+03:00  INFO 5352 --- [classifier-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-11-17T16:47:36.626+03:00  INFO 5352 --- [classifier-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-11-17T16:47:36.770+03:00  INFO 5352 --- [classifier-service] [main] o.h.e.boot.internal.EnversServiceImpl    : Envers integration enabled? : true
+2024-11-17T16:47:37.060+03:00  INFO 5352 --- [classifier-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-17T16:47:38.520+03:00  INFO 5352 --- [classifier-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-11-17T16:47:38.577+03:00  INFO 5352 --- [classifier-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-17T16:47:40.367+03:00  WARN 5352 --- [classifier-service] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: f0facade-ec9f-4c50-9ac3-68357f9eb0a1
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-11-17T16:47:40.431+03:00  INFO 5352 --- [classifier-service] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2024-11-17T16:47:42.418+03:00  INFO 5352 --- [classifier-service] [main] b.i.j.i.service.CurrencyServiceTest      : Started CurrencyServiceTest in 10.888 seconds (process running for 17.243)
+2024-11-17T16:47:43.249+03:00  INFO 5352 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : Before - invoked save Service Method in class by.it_academy.jd2.service.CurrencyService@66c58c03, with dto CurrencyCreateDto(title=BYN, description=белорусский рубль)
+2024-11-17T16:47:43.307+03:00  INFO 5352 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : Before - invoked findByTitle Service Method in class by.it_academy.jd2.service.CurrencyService@66c58c03, with title BYN
+2024-11-17T16:47:43.483+03:00  INFO 5352 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : After - invoked findByTitle Service Method in class by.it_academy.jd2.service.CurrencyService@66c58c03, result Optional.empty
+2024-11-17T16:47:43.679+03:00  INFO 5352 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : invoked findAll Service Method in class by.it_academy.jd2.service.CurrencyService@66c58c03
+2024-11-17T16:47:43.861+03:00  INFO 5352 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : Before - invoked findById Service Method in class by.it_academy.jd2.service.CurrencyService@66c58c03, with id 7eeebe68-ab98-4c71-af8e-6a2d5e0acc42
+2024-11-17T16:47:43.892+03:00  INFO 5352 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : After - invoked findById Service Method in class by.it_academy.jd2.service.CurrencyService@66c58c03, result Optional[CurrencyReadDto(id=7eeebe68-ab98-4c71-af8e-6a2d5e0acc42, dtCreate=2024-11-01T09:30:12.415Z, dtUpdate=2024-11-01T09:30:12.415Z, title=USD, description=Доллар США)]
+2024-11-17T16:47:43.916+03:00  INFO 5352 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : Before - invoked findByTitle Service Method in class by.it_academy.jd2.service.CurrencyService@66c58c03, with title USD
+2024-11-17T16:47:43.922+03:00  INFO 5352 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : After - invoked findByTitle Service Method in class by.it_academy.jd2.service.CurrencyService@66c58c03, result Optional[CurrencyReadDto(id=7eeebe68-ab98-4c71-af8e-6a2d5e0acc42, dtCreate=2024-11-01T09:30:12.415Z, dtUpdate=2024-11-01T09:30:12.415Z, title=USD, description=Доллар США)]
+2024-11-17T16:47:43.940+03:00  INFO 5352 --- [classifier-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [by.it_academy.jd2.interation.service.OperationCategoryServiceTest]: OperationCategoryServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-11-17T16:47:43.943+03:00  INFO 5352 --- [classifier-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration by.it_academy.jd2.ApplicationClassifierRunner for test class by.it_academy.jd2.interation.service.OperationCategoryServiceTest
+2024-11-17T16:47:43.958+03:00  INFO 5352 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : Before - invoked save Service Method in class by.it_academy.jd2.service.OperationCategoryService@c82f6bd, with dto OperationCategoryCreateDto(title=авто)
+2024-11-17T16:47:43.975+03:00  INFO 5352 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : Before - invoked findByTitle Service Method in class by.it_academy.jd2.service.OperationCategoryService@c82f6bd, with title авто
+2024-11-17T16:47:43.983+03:00  INFO 5352 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : After - invoked findByTitle Service Method in class by.it_academy.jd2.service.OperationCategoryService@c82f6bd, result Optional.empty
+2024-11-17T16:47:44.044+03:00  INFO 5352 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : invoked findAll Service Method in class by.it_academy.jd2.service.OperationCategoryService@c82f6bd
+2024-11-17T16:47:44.104+03:00  INFO 5352 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : Before - invoked findById Service Method in class by.it_academy.jd2.service.OperationCategoryService@c82f6bd, with id cecfc4ec-9c99-4afe-a836-2e499a2e0561
+2024-11-17T16:47:44.111+03:00  INFO 5352 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : After - invoked findById Service Method in class by.it_academy.jd2.service.OperationCategoryService@c82f6bd, result Optional[OperationCategoryReadDto(id=cecfc4ec-9c99-4afe-a836-2e499a2e0561, dtCreate=2024-11-01T09:46:11.580Z, dtUpdate=2024-11-01T09:46:11.580Z, title=тачка)]
+2024-11-17T16:47:44.132+03:00  INFO 5352 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : Before - invoked findByTitle Service Method in class by.it_academy.jd2.service.OperationCategoryService@c82f6bd, with title тачка
+2024-11-17T16:47:44.139+03:00  INFO 5352 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : After - invoked findByTitle Service Method in class by.it_academy.jd2.service.OperationCategoryService@c82f6bd, result Optional[OperationCategoryReadDto(id=cecfc4ec-9c99-4afe-a836-2e499a2e0561, dtCreate=2024-11-01T09:46:11.580Z, dtUpdate=2024-11-01T09:46:11.580Z, title=тачка)]
+2024-11-17T16:47:44.140+03:00  INFO 5352 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : Before - invoked findByTitle Service Method in class by.it_academy.jd2.service.OperationCategoryService@c82f6bd, with title ТаЧкА
+2024-11-17T16:47:44.147+03:00  INFO 5352 --- [classifier-service] [main] b.i.jd2.aop.LoggingServiceAspect         : After - invoked findByTitle Service Method in class by.it_academy.jd2.service.OperationCategoryService@c82f6bd, result Optional[OperationCategoryReadDto(id=cecfc4ec-9c99-4afe-a836-2e499a2e0561, dtCreate=2024-11-01T09:46:11.580Z, dtUpdate=2024-11-01T09:46:11.580Z, title=тачка)]
+2024-11-17T16:47:44.182+03:00  INFO 5352 --- [classifier-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-11-17T16:47:44.188+03:00  INFO 5352 --- [classifier-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-11-17T16:47:44.205+03:00  INFO 5352 --- [classifier-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

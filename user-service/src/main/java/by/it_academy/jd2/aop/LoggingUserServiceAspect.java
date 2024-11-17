@@ -30,7 +30,7 @@ public class LoggingUserServiceAspect {
             "&& target(service) " +
             "&& args(dto)", argNames = "service, dto")
     public void addLogBeforeUpdateServiceMethod(Object service,Object dto){
-        log.info("After - invoke update() service method in class {}, with dto {}", service, dto);
+        log.info("Before - invoke update() service method in class {}, with dto {}", service, dto);
     }
 
     @AfterThrowing(value = "by.it_academy.jd2.commonlib.aop.CommonPointcut.anyUpdateServiceMethod() " +
@@ -40,14 +40,14 @@ public class LoggingUserServiceAspect {
         log.error("AfterThrowing - invoked update() service method in class {}, exception {}: {} ", service, ex.getClass(), ex.getMessage());
     }
 
-    @Before(value = "by.it_academy.jd2.commonlib.aop.CommonPointcut.anySaveServiceMethod() " +
+    @Before(value = "by.it_academy.jd2.commonlib.aop.CommonPointcut.anyCreateServiceMethod() " +
             "&& args(dto) " +
             "&& target(service)", argNames = "dto, service")
     public void addLogBeforeSaveServiceMethod(Object dto, Object service) {
         log.info("Before - invoked save() service method in class {}, with dto {}", service, dto);
     }
 
-    @AfterThrowing(value = "by.it_academy.jd2.commonlib.aop.CommonPointcut.anySaveServiceMethod() " +
+    @AfterThrowing(value = "by.it_academy.jd2.commonlib.aop.CommonPointcut.anyCreateServiceMethod() " +
             "&& target(service)",
             throwing = "ex")
     public void addLogAfterThrowingSaveServiceMethod(Throwable ex, Object service) {
