@@ -1,4 +1,4 @@
-package by.it_academy.jd2.auditservice.service;
+package by.it_academy.jd2.auditservice.service.api;
 
 import by.it_academy.jd2.auditservice.service.dto.AuditCreateDto;
 import by.it_academy.jd2.auditservice.service.dto.AuditReadDto;

@@ -1,6 +1,6 @@
 package by.it_academy.jd2.auditservice.controller;
 
-import by.it_academy.jd2.auditservice.service.IAuditService;
+import by.it_academy.jd2.auditservice.service.api.IAuditService;
 import by.it_academy.jd2.auditservice.service.dto.AuditCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -13,14 +13,14 @@ import org.springframework.stereotype.Component;
 public class LoggingControllerAspect {
 
     @Pointcut("by.it_academy.jd2.commonlib.aop.CommonPointcut.isControllerLayer() && execution(public * update(..))")
-    public void deleteControllerMethod() {}
+    public void isDeleteControllerMethod() {}
 
 
     @Before(value = "by.it_academy.jd2.commonlib.aop.CommonPointcut.anyFindByIdControllerLayer() " +
-            "&& args(dto) " +
-            "&& target(controller)", argNames = "dto,controller")
-    public void addLogBeforeFindByIdMethod(Object dto, Object controller) {
-        log.info("Before - invoked findById() Controller method in class {}, with id {}", controller, dto);
+            "&& args(id) " +
+            "&& target(controller)", argNames = "id,controller")
+    public void addLogBeforeFindByIdMethod(Object id, Object controller) {
+        log.info("Before - invoked findById() Controller method in class {}, with id {}", controller, id);
     }
 
     @AfterReturning(value = "by.it_academy.jd2.commonlib.aop.CommonPointcut.anyFindByIdControllerLayer() " +
@@ -55,7 +55,7 @@ public class LoggingControllerAspect {
         log.info("Before - invoked update() Controller method in class {}", controller);
     }
 
-    @Before(value = "deleteControllerMethod() " +
+    @Before(value = "isDeleteControllerMethod() " +
             "&& args(accountId, operationId, dtUpdate) " +
             "&& target(controller)", argNames = "accountId,operationId,dtUpdate,controller")
     public void addLogBeforeDeleteMethod(Object accountId, Object operationId,

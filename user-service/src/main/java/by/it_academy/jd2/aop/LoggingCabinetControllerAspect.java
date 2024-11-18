@@ -19,7 +19,7 @@ public class LoggingCabinetControllerAspect {
     @Pointcut("by.it_academy.jd2.commonlib.aop.CommonPointcut.isControllerLayer() && execution(public * login(*))")
     public void isLoginMethod() {}
 
-    @Pointcut("by.it_academy.jd2.commonlib.aop.CommonPointcut.isControllerLayer() && execution(public * verify(..))")
+    @Pointcut("by.it_academy.jd2.commonlib.aop.CommonPointcut.isControllerLayer() && execution(public * verification(..))")
     public void isVerificationMethod() {}
 
     @Before(value = "isRegistrationMethod() && target(controller) && args(dto)",
@@ -34,4 +34,9 @@ public class LoggingCabinetControllerAspect {
         log.info("Before - invoked login() controller method in class {}, with user mail {}", controller, dto.getMail());
     }
 
+    @Before(value = "isVerificationMethod() && target(controller) && args(code, mail)",
+            argNames = "controller, mail, code")
+    public void addLogBeforeVerification(Object controller, String mail, String code) {
+        log.info("Before - invoked verification() controller method in class {}, with mail {} and code {}", controller, mail, code);
+    }
 }

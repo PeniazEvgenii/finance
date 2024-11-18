@@ -2,6 +2,7 @@ package by.it_academy.jd2.auditservice.service;
 
 import by.it_academy.jd2.auditservice.repository.IAuditRepository;
 import by.it_academy.jd2.auditservice.repository.entity.AuditEntity;
+import by.it_academy.jd2.auditservice.service.api.IAuditService;
 import by.it_academy.jd2.auditservice.service.dto.AuditCreateDto;
 import by.it_academy.jd2.auditservice.service.dto.AuditReadDto;
 import by.it_academy.jd2.auditservice.service.mapper.api.IAuditMapper;
@@ -53,7 +54,7 @@ public class AuditService implements IAuditService {
 
     @Transactional
     @Override
-    public void create(AuditCreateDto auditReadDto) {          //не знаю как user будут получать сервисы
+    public void create(AuditCreateDto auditReadDto) {
 
     }
 }

@@ -72,5 +72,4 @@ public class LoggingUserServiceAspect {
     public void addLogBeforeFindAllServiceMethod(Object service) {
         log.info("invoked findAll() service method in class {}", service);
     }
-
 }

@@ -1,6 +1,5 @@
 package by.it_academy.jd2.service;
 
-import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.commonlib.exception.SaveException;
 import by.it_academy.jd2.repository.IUserRepository;
 import by.it_academy.jd2.repository.entity.EUserStatus;

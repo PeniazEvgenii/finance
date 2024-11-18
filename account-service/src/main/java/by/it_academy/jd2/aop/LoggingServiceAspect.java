@@ -10,16 +10,16 @@ import org.springframework.stereotype.Component;
 public class LoggingServiceAspect {
 
     @Pointcut("by.it_academy.jd2.commonlib.aop.CommonPointcut.isServiceLayer() && execution(public * findEntityByIdAndUserId(*))")
-    public void findEntityByIdAndUserIdMethod() {}
+    public void isFindEntityByIdAndUserIdMethod() {}
 
     @Pointcut("by.it_academy.jd2.commonlib.aop.CommonPointcut.isServiceLayer() && execution(public * findByIdAndAccountId(..))")
-    public void findByIdAndAccountIdMethod() {}
+    public void isFindByIdAndAccountIdMethod() {}
 
     @Pointcut("by.it_academy.jd2.commonlib.aop.CommonPointcut.isServiceLayer() && execution(public * create(*, *))")
-    public void createOperationServiceMethod() {}
+    public void isCreateOperationServiceMethod() {}
 
     @Pointcut("by.it_academy.jd2.commonlib.aop.CommonPointcut.isServiceLayer() && execution(public * delete(*))")
-    public void deleteServiceMethod() {}
+    public void isDeleteServiceMethod() {}
 
 
     //advices
@@ -68,20 +68,20 @@ public class LoggingServiceAspect {
         log.error("After - invoked create() Service Method in class {}, exception {}: {} ", service, ex.getClass(), ex.getMessage());
     }
 
-    @Before(value = "createOperationServiceMethod() " +
+    @Before(value = "isCreateOperationServiceMethod() " +
             "&& args(createDto, accountId) " +
             "&& target(service)", argNames = "createDto,accountId,service")
     public void addLogBeforeCreateOperationMethod(Object createDto, Object accountId, Object service) {
         log.info("Before - invoked create() ServiceOperation Method in class {}, with dto {} and account_id {}", service, createDto, accountId);
     }
 
-    @AfterThrowing(value = "createOperationServiceMethod() " +
+    @AfterThrowing(value = "isCreateOperationServiceMethod() " +
             "&& target(service)", throwing = "ex")
     public void addLogAfterThrowingCreateOperationMethod(Throwable ex, Object service) {
         log.error("After - invoked create() ServiceOperation Method in class {}, exception {}: {} ", service, ex.getClass(), ex.getMessage());
     }
 
-    @Before(value = "deleteServiceMethod() && args(deleteDto) " +
+    @Before(value = "isDeleteServiceMethod() && args(deleteDto) " +
             "&& target(service)", argNames = "deleteDto,service")
     public void AddLogBeforeDeleteMethod(Object deleteDto, Object service) {
         log.info("Before - invoked delete() ServiceOperation Method in class {}, with dto {}", service, deleteDto);
