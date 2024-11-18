@@ -1,9 +1,7 @@
 package by.it_academy.jd2.service.mapper;
 
-import by.it_academy.jd2.commonlib.exception.CurrencyMismatchException;
 import by.it_academy.jd2.repository.entity.AccountEntity;
 import by.it_academy.jd2.repository.entity.OperationEntity;
-import by.it_academy.jd2.service.api.IAccountService;
 import by.it_academy.jd2.service.dto.OperationCreateDto;
 import by.it_academy.jd2.service.dto.OperationReadDto;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +12,6 @@ import java.math.BigDecimal;
 @Component
 @RequiredArgsConstructor
 public class OperationMapper implements IOperationMapper {
-
-    private final IAccountService accountService;
 
     @Override
     public OperationEntity mapCreate(OperationCreateDto createDto, AccountEntity account) {
@@ -46,9 +42,7 @@ public class OperationMapper implements IOperationMapper {
 
     public OperationEntity mapUpdate(OperationCreateDto dto, OperationEntity entity) {
         AccountEntity accountEntity = entity.getAccountEntity();
-//        if(!checkCurrency(dto, accountEntity)) {
-//            throw new CurrencyMismatchException();
-//        }
+
         BigDecimal oldBalance = accountEntity.getBalance();
         BigDecimal newBalance = oldBalance.subtract(entity.getValue()).add(dto.getValue());
         accountEntity.setBalance(newBalance);
@@ -60,7 +54,4 @@ public class OperationMapper implements IOperationMapper {
         return entity;
     }
 
-//    private boolean checkCurrency(OperationCreateDto dto, AccountEntity entity) {
-//        return entity.getCurrencyId().equals(dto.getCurrencyId());
-//    }
 }

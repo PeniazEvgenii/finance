@@ -16,4 +16,12 @@ public class StructuredError {
     public String getField() {
         return field;
     }
+
+    @Override
+    public String toString() {
+        return "StructuredError{" +
+                "message='" + message + '\'' +
+                ", field='" + field + '\'' +
+                '}';
+    }
 }

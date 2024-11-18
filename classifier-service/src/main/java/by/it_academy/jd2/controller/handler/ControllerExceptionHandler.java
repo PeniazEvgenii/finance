@@ -9,6 +9,7 @@ import by.it_academy.jd2.commonlib.exception.SaveException;
 import by.it_academy.jd2.controller.ClassifierController;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
 
+@Slf4j
 @RestControllerAdvice(basePackageClasses = ClassifierController.class)
 public class ControllerExceptionHandler {
 
@@ -33,6 +35,7 @@ public class ControllerExceptionHandler {
                 .map(error -> new StructuredError(error.getDefaultMessage(), error.getField()))
                 .toList();
         StructuredErrorResponse structuredErrorResponse = new StructuredErrorResponse(EError.STRUCTURED_ERROR, errors);
+        log.error("Argument annotated with fails. Errors: {}", errors);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(structuredErrorResponse);
     }
@@ -53,6 +56,7 @@ public class ControllerExceptionHandler {
                 })
                 .toList();
         StructuredErrorResponse structuredErrorResponse = new StructuredErrorResponse(EError.STRUCTURED_ERROR, errors);
+        log.error("Argument annotated with fails.Errors: {}", errors);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(structuredErrorResponse);
     }
@@ -61,12 +65,14 @@ public class ControllerExceptionHandler {
     public ResponseEntity<List<ErrorResponse>> onIdNotFoundException(
             IdNotFoundException exception) {
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR, exception.getMessage());
+        log.error("Object with id not found");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<List<ErrorResponse>> onNoResourceFoundException(NoResourceFoundException exception) {
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR, exception.getMessage());
+        log.error("ResourceHttpRequestHandler can not find a resource: {}", exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(List.of(errorResponse));
     }
@@ -75,6 +81,7 @@ public class ControllerExceptionHandler {
     public ResponseEntity<List<ErrorResponse>> onHttpMessageNotReadableException (HttpMessageNotReadableException exception) {
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR,
                 "Тип данных, переданных в запросе не соответствует требованиям");
+        log.error("The HttpMessageConverter. read method fails: {}", exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(List.of(errorResponse));
     }
@@ -84,6 +91,7 @@ public class ControllerExceptionHandler {
             ValidationException exception) {
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR,
                 "Запрос содержит некорректные данные. Измените запрос и отправьте его ещё раз");
+        log.error("ValidationException. Errors: {}", exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
     }
 
@@ -91,6 +99,7 @@ public class ControllerExceptionHandler {
     public ResponseEntity<List<ErrorResponse>> onHttpRequestMethodNotSupportedException(
             HttpRequestMethodNotSupportedException exception) {
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR, exception.getMessage());
+        log.error("Request handler does not support a specific request method, error: {}", exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
     }
 
@@ -98,6 +107,7 @@ public class ControllerExceptionHandler {
     public ResponseEntity<List<ErrorResponse>> onSaveException(SaveException exception) {
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR,
                 "Сервер не смог корректно обработать запрос. Попробуйте позже или обратитесь к администратору");
+        log.error("SaveException. Error saving object");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(List.of(errorResponse));
     }
@@ -108,6 +118,7 @@ public class ControllerExceptionHandler {
         String name = exception.getClass().getName();
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR,
                 "Сервер не смог корректно обработать запрос. Попробуйте позже или обратитесь к администратору");
+        log.error("Exception. Error: {}", exception.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(List.of(errorResponse));
     }
