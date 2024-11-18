@@ -6,7 +6,9 @@ import by.it_academy.jd2.auditservice.service.api.IAuditService;
 import by.it_academy.jd2.auditservice.service.dto.AuditCreateDto;
 import by.it_academy.jd2.auditservice.service.dto.AuditReadDto;
 import by.it_academy.jd2.auditservice.service.mapper.api.IAuditMapper;
+import by.it_academy.jd2.commonlib.audit.AuditCreate;
 import by.it_academy.jd2.commonlib.dto.PageDto;
+import by.it_academy.jd2.commonlib.exception.SaveException;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +56,11 @@ public class AuditService implements IAuditService {
 
     @Transactional
     @Override
-    public void create(AuditCreateDto auditReadDto) {
+    public void create(AuditCreateDto createDto) {
+        AuditEntity auditEntity = Optional.of(createDto)
+                .map(auditMapper::mapCreate)
+                .map(auditRepository::saveAndFlush)
+                .orElseThrow(SaveException::new);
 
     }
 }

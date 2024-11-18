@@ -1,7 +1,7 @@
 package by.it_academy.jd2.service.feign.api;
 
-import by.it_academy.jd2.service.feign.CurrencyInfoDto;
-import by.it_academy.jd2.service.feign.OperationCategoryInfoDto;
+import by.it_academy.jd2.service.feign.dto.CurrencyInfoDto;
+import by.it_academy.jd2.service.feign.dto.OperationCategoryInfoDto;
 
 import java.util.Optional;
 import java.util.UUID;

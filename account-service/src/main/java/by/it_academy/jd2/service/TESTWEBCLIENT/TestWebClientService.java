@@ -1,9 +1,8 @@
 package by.it_academy.jd2.service.TESTWEBCLIENT;
 
-import by.it_academy.jd2.service.feign.CurrencyInfoDto;
+import by.it_academy.jd2.service.feign.dto.CurrencyInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.UUID;

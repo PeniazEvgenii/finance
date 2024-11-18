@@ -1,6 +1,6 @@
 package by.it_academy.jd2.auditservice.service.dto;
 
-import by.it_academy.jd2.commonlib.dto.EssenceType;
+import by.it_academy.jd2.commonlib.audit.EEssenceType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
@@ -28,7 +28,7 @@ public class AuditReadDto {
 
     private final String text;
 
-    private final EssenceType type;
+    private final EEssenceType type;
 
     @JsonProperty(value = "id")
     private final String essenceId;

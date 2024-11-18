@@ -1,6 +1,6 @@
 package by.it_academy.jd2.auditservice.repository.entity;
 
-import by.it_academy.jd2.commonlib.dto.EssenceType;
+import by.it_academy.jd2.commonlib.audit.EEssenceType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EntityListeners(EntityListeners.class)
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "audits")
 public class AuditEntity {
 
@@ -42,7 +43,7 @@ public class AuditEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private EssenceType type;
+    private EEssenceType type;
 
     @Column(name = "essence_id", nullable = false)
     private String essenceId;

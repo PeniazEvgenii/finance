@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EntityListeners(EntityListeners.class)
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "users")
 public class UserEntity {
 
@@ -35,10 +36,10 @@ public class UserEntity {
     private EUserRole role;
 
     @CreatedDate
-    @Column(name = "dt_create", nullable = false)
+    @Column(name = "dt_create")
     private Instant dtCreate;
 
     @LastModifiedDate
-    @Column(name = "dt_update", nullable = false)
+    @Column(name = "dt_update")
     private Instant dtUpdate;
 }

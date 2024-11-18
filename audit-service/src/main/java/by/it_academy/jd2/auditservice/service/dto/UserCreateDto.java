@@ -1,5 +1,7 @@
-package by.it_academy.jd2.commonlib.dto;
+package by.it_academy.jd2.auditservice.service.dto;
 
+import by.it_academy.jd2.commonlib.dto.EUserRole;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +13,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserToken {
+public class UserCreateDto {
 
     private UUID id;
     private String fio;

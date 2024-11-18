@@ -1,7 +1,7 @@
 package by.it_academy.jd2.controller.feign;
 
-import by.it_academy.jd2.service.feign.CurrencyInfoDto;
-import by.it_academy.jd2.service.feign.OperationCategoryInfoDto;
+import by.it_academy.jd2.service.feign.dto.CurrencyInfoDto;
+import by.it_academy.jd2.service.feign.dto.OperationCategoryInfoDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

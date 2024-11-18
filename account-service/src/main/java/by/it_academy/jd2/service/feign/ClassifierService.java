@@ -2,6 +2,8 @@ package by.it_academy.jd2.service.feign;
 
 import by.it_academy.jd2.controller.feign.ClassifierClient;
 import by.it_academy.jd2.service.feign.api.IClassifierService;
+import by.it_academy.jd2.service.feign.dto.CurrencyInfoDto;
+import by.it_academy.jd2.service.feign.dto.OperationCategoryInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

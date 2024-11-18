@@ -1,6 +1,6 @@
 package by.it_academy.jd2.service.testTemplate;
 
-import by.it_academy.jd2.service.feign.CurrencyInfoDto;
+import by.it_academy.jd2.service.feign.dto.CurrencyInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

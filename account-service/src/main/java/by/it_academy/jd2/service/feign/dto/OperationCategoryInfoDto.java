@@ -1,4 +1,4 @@
-package by.it_academy.jd2.service.feign;
+package by.it_academy.jd2.service.feign.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
