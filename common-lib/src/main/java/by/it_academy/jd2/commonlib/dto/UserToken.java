@@ -17,5 +17,6 @@ public class UserToken {
     private String fio;
     private String mail;
     private EUserRole role;
+    private Long dtUpdate;
 
 }

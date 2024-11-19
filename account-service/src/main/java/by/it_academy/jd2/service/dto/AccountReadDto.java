@@ -17,11 +17,9 @@ public class AccountReadDto {
     private final UUID id;
 
     @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
-    @JsonProperty(value = "dt_create")
     private final Instant dtCreate;
 
     @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
-    @JsonProperty(value = "dt_update")
     private final Instant dtUpdate;
 
     private final String title;

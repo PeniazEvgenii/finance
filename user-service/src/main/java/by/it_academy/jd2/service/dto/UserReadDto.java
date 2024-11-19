@@ -17,11 +17,9 @@ public class UserReadDto {
 
     private final UUID uuid;
 
-    @JsonProperty(value = "dt_create")
     @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
     private final Instant dtCreate;
 
-    @JsonProperty(value = "dt_update")
     @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
     private final Instant dtUpdate;
 

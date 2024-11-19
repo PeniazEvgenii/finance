@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Data
@@ -19,5 +20,6 @@ public class UserCreateDto {
     private String fio;
     private String mail;
     private EUserRole role;
+    private Instant dtUpdate;
 
 }
