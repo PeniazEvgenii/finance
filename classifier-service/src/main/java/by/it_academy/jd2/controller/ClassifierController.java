@@ -4,7 +4,6 @@ import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.service.api.ICurrencyService;
 import by.it_academy.jd2.service.api.IOperationCategoryService;
 import by.it_academy.jd2.service.dto.*;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +32,7 @@ public class ClassifierController {
     }
 
     @PostMapping("/operation/category")
-    @ResponseStatus(value = HttpStatus.CREATED)                                                                         //опред может валид все на сервис
+    @ResponseStatus(value = HttpStatus.CREATED)
     public void createOperationCategory(@RequestBody OperationCategoryCreateDto operationCategoryCreateDto) {
 
         operationCategoryService.create(operationCategoryCreateDto);

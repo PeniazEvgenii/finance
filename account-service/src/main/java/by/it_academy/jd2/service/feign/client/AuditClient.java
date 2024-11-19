@@ -1,4 +1,4 @@
-package by.it_academy.jd2.controller.feign;
+package by.it_academy.jd2.service.feign.client;
 
 import by.it_academy.jd2.commonlib.audit.AuditCreate;
 import org.springframework.cloud.openfeign.FeignClient;

@@ -1,6 +1,7 @@
 package by.it_academy.jd2.service;
 
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
+import by.it_academy.jd2.controller.utils.JwtTokenHandler;
 import by.it_academy.jd2.repository.entity.EUserStatus;
 import by.it_academy.jd2.service.api.IAuthService;
 import by.it_academy.jd2.service.api.IUserService;
@@ -19,9 +20,11 @@ public class AuthService implements IAuthService {
     private final PasswordEncoder passwordEncoder;
     private final IUserService userService;
     private final UserHolder userHolder;
+    private final JwtTokenHandler jwtTokenHandler;
+
 
     @Override
-    public UserSecure login(UserLoginDto loginDto) {
+    public String login(UserLoginDto loginDto) {
 
         UserSecure userSecure = userService
                 .findByMailWithPass(loginDto.getMail())
@@ -31,11 +34,11 @@ public class AuthService implements IAuthService {
             throw new IllegalArgumentException("Логин или пароль неверный");
         }
 
-        if (checkStatus(userSecure.getStatus())) {
+        if (checkNoActiveStatus(userSecure.getStatus())) {
             throw new AccountStatusException("Учетная запись находится в статусе " + userSecure.getStatus());
         }
 
-        return userSecure;
+        return jwtTokenHandler.generateToken(userSecure);
     }
 
     @Override
@@ -43,7 +46,7 @@ public class AuthService implements IAuthService {
         return userHolder.getUser();
     }
 
-    private boolean checkStatus(EUserStatus status) {
+    private boolean checkNoActiveStatus(EUserStatus status) {
         return status.equals(EUserStatus.DEACTIVATED) ||
                 status.equals(EUserStatus.WAITING_ACTIVATION);
     }

@@ -1,6 +1,5 @@
 package by.it_academy.jd2.service.validation;
 
-import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.service.api.IAccountService;
 import by.it_academy.jd2.service.dto.AccountReadDto;
 import by.it_academy.jd2.service.dto.AccountUpdateDto;
@@ -18,8 +17,7 @@ public class CheckAccountUpdate implements ConstraintValidator<AccountUpdate, Ac
 
     @Override
     public boolean isValid(AccountUpdateDto value, ConstraintValidatorContext context) {
-        AccountReadDto account = accountService.findById(value.getId())
-                .orElseThrow(IdNotFoundException::new);
+        AccountReadDto account = accountService.findById(value.getId());
 
         return account.getDtUpdate().equals(value.getDtUpdate());
     }

@@ -8,6 +8,7 @@ import by.it_academy.jd2.auditservice.service.dto.AuditReadDto;
 import by.it_academy.jd2.auditservice.service.mapper.api.IAuditMapper;
 import by.it_academy.jd2.commonlib.audit.AuditCreate;
 import by.it_academy.jd2.commonlib.dto.PageDto;
+import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.commonlib.exception.SaveException;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import jakarta.validation.Valid;
@@ -49,9 +50,10 @@ public class AuditService implements IAuditService {
     }
 
     @Override
-    public Optional<AuditReadDto> findById(UUID id) {
+    public AuditReadDto findById(UUID id) {
         return auditRepository.findById(id)
-                .map(auditMapper::mapRead);
+                .map(auditMapper::mapRead)
+                .orElseThrow(IdNotFoundException::new);
     }
 
     @Transactional

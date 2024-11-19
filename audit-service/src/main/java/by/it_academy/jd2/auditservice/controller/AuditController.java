@@ -1,9 +1,8 @@
 package by.it_academy.jd2.auditservice.controller;
 
-import by.it_academy.jd2.auditservice.service.AuditService;
+import by.it_academy.jd2.auditservice.service.api.IAuditService;
 import by.it_academy.jd2.auditservice.service.dto.AuditReadDto;
 import by.it_academy.jd2.commonlib.dto.PageDto;
-import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,7 @@ import java.util.UUID;
 @RequestMapping("/audit")
 public class AuditController {
 
-    private final AuditService auditService;
+    private final IAuditService auditService;
 
     @GetMapping
     public PageOf<AuditReadDto> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -27,7 +26,6 @@ public class AuditController {
     @GetMapping("/{uuid}")
     public AuditReadDto findById(@PathVariable("uuid") UUID id) {
 
-        return auditService.findById(id)
-                .orElseThrow(IdNotFoundException::new);
+        return auditService.findById(id);
     }
 }

@@ -17,7 +17,7 @@ public interface IAccountService {
 
     PageOf<AccountReadDto> findAll(@Valid PageDto pageDto);
 
-    Optional<AccountReadDto> findById(UUID id);
+    AccountReadDto findById(UUID id);
 
     void update(@Valid AccountCreateDto createDto, @Valid AccountUpdateDto updateDto);
 

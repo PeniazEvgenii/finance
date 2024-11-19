@@ -33,9 +33,9 @@ class UserServiceTest extends IntegrationTestBase {
 
     @Test
     void findById() {
-        Optional<UserReadDto> user = userService.findById(UUID.fromString(USER_ID));
-        assertTrue(user.isPresent());
-        user.ifPresent(usr -> assertEquals(USER_MAIL, usr.getMail()));
+        UserReadDto user = userService.findById(UUID.fromString(USER_ID));
+        assertNotNull(user);
+        assertEquals(USER_MAIL, user.getMail());
     }
 
     @Test
@@ -48,8 +48,8 @@ class UserServiceTest extends IntegrationTestBase {
 
     @Test
     void update() {
-        Optional<UserReadDto> user = userService.findById(UUID.fromString(USER_ID));
-        UserReadDto userReadDto = user.get();
+        UserReadDto userReadDto = userService.findById(UUID.fromString(USER_ID));
+
 
         UserUpdateDto updateDto = new UserUpdateDto(userReadDto.getUuid(), userReadDto.getDtUpdate());
 
@@ -61,9 +61,9 @@ class UserServiceTest extends IntegrationTestBase {
                 .password("update")
                 .build();
         userService.update(createDto, updateDto);
-        Optional<UserReadDto> userUpdate = userService.findById(UUID.fromString(USER_ID));
-        assertTrue(userUpdate.isPresent());
-        userUpdate.ifPresent(u -> assertEquals("update", u.getFio()));
+        UserReadDto userUpdate = userService.findById(UUID.fromString(USER_ID));
+        assertNotNull(userUpdate);
+        assertEquals("update", userUpdate.getFio());
     }
 
     @Test

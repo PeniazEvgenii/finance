@@ -38,8 +38,7 @@ public class AccountController {
     @GetMapping("/{uuid}")
     public AccountReadDto findById(@PathVariable("uuid") UUID id) {
 
-        return accountService.findById(id)
-                .orElseThrow(IdNotFoundException::new);
+        return accountService.findById(id);
     }
 
     @PutMapping("/{uuid}/dt_update/{dt_update}")

@@ -16,7 +16,7 @@ public interface IUserService {
 
     PageOf<UserReadDto> findAll(@Valid PageDto pageDto);
 
-    Optional<UserReadDto> findById(UUID id);
+    UserReadDto findById(UUID id);
 
     void create(UserCreateDto userCreateDto);
 

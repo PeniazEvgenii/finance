@@ -64,12 +64,13 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public Optional<AccountReadDto> findById(UUID id) {
+    public AccountReadDto findById(UUID id) {
         UUID currentUserId = userHolderService.getUserId();
 
         return accountRepository
-                .findByIdAndUserId(id, currentUserId)          // нет у админа доступа ко всем счетам, проще уже админский сервис
-                .map(accountMapper::mapRead);                  // либо накрай я ищу по id и если не сходится то сверяю права на админа
+                .findByIdAndUserId(id, currentUserId)
+                .map(accountMapper::mapRead)
+                .orElseThrow(IdNotFoundException::new);
     }
 
     @Transactional
@@ -80,7 +81,7 @@ public class AccountService implements IAccountService {
 
         AccountEntity accountEntity = accountRepository
                 .findByIdAndUserId(updateDto.getId(), currentUserId)
-                .orElseThrow(IdNotFoundException::new);
+                .orElseThrow(IdNotFoundException::new);                        // в одну большую цепь. наличие аккаунт уже проверил
 
         Optional.of(accountEntity)
                 .map(entity -> accountMapper.mapUpdate(createDto, entity))

@@ -1,6 +1,6 @@
 package by.it_academy.jd2.service.feign;
 
-import by.it_academy.jd2.controller.feign.ClassifierClient;
+import by.it_academy.jd2.service.feign.client.ClassifierClient;
 import by.it_academy.jd2.service.feign.api.IClassifierService;
 import by.it_academy.jd2.service.feign.dto.CurrencyInfoDto;
 import by.it_academy.jd2.service.feign.dto.OperationCategoryInfoDto;

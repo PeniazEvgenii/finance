@@ -14,7 +14,7 @@ public interface IAuditService {
 
     PageOf<AuditReadDto> findAll(@Valid PageDto pageDto);
 
-    Optional<AuditReadDto> findById(UUID id);
+    AuditReadDto findById(UUID id);
 
     void create(AuditCreateDto createDto);
 }

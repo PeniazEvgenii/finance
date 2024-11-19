@@ -6,7 +6,7 @@ import by.it_academy.jd2.service.dto.UserSecure;
 
 public interface IAuthService {
 
-    UserSecure login(UserLoginDto loginDto);
+    String login(UserLoginDto loginDto);
 
     UserReadDto me();
 }

@@ -29,12 +29,11 @@ public class CabinetService implements ICabinetService {
 
     public void registration(@Valid UserRegistrationDto userRegistrationDto) {
 
-        UserEntity userEntity = Optional.of(userRegistrationDto)       //посмотрю может не возвращать либо в аудит
+        UserEntity userEntity = Optional.of(userRegistrationDto)       //посмотрю может не возвращать либо в аудит через аоп
                 .map(userMapper::mapRegistration)
                 .map(userRepository::saveAndFlush)
                 .orElseThrow(SaveException::new);
 
-        // verificationService.sendCode(userEntity);               //если без шедуллера
     }
 
     public void verify(@Valid VerificationDto verificationDto) {

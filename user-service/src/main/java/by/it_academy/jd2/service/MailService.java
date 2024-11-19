@@ -41,6 +41,5 @@ public class MailService implements IMailService {
             log.error("an error occurred while sending the message: {}", simpleMailMessage);
             throw new EmailSendException("Error sending message", exception);
         }
-
     }
 }

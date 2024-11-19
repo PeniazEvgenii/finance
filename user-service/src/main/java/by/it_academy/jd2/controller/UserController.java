@@ -38,8 +38,7 @@ public class UserController {
     @GetMapping("/{uuid}")
     public UserReadDto findById(@PathVariable(name = "uuid") UUID id) {
 
-        return userService.findById(id)
-                .orElseThrow(IdNotFoundException::new);
+        return userService.findById(id);
     }
 
     @PutMapping("/{uuid}/dt_update/{dt_update}")

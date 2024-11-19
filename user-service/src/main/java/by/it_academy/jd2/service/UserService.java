@@ -48,9 +48,10 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Optional<UserReadDto> findById(UUID id) {
+    public UserReadDto findById(UUID id) {
         return userRepository.findById(id)
-                .map(userMapper::mapRead);
+                .map(userMapper::mapRead)
+                .orElseThrow(IdNotFoundException::new);
     }
 
     @Override
@@ -74,7 +75,6 @@ public class UserService implements IUserService {
         userEntity = userMapper.mapEntityUpdate(createDto, userEntity);
         userRepository.saveAndFlush(userEntity);
     }
-
 
     @Override
     public Optional<UserReadDto> findByMail(String mail) {
