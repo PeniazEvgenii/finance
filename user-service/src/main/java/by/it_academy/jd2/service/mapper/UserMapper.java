@@ -1,6 +1,7 @@
 package by.it_academy.jd2.service.mapper;
 
 import by.it_academy.jd2.commonlib.dto.EUserRole;
+import by.it_academy.jd2.commonlib.dto.UserToken;
 import by.it_academy.jd2.repository.entity.UserEntity;
 import by.it_academy.jd2.repository.entity.EUserStatus;
 import by.it_academy.jd2.service.dto.*;
@@ -48,6 +49,7 @@ public class UserMapper implements IUserMapper {
         return user;
     }
 
+    @Override
     public UserEntity mapRegistration(UserRegistrationDto object) {
         return UserEntity.builder()
                 .mail(object.getMail().toLowerCase())
@@ -58,6 +60,7 @@ public class UserMapper implements IUserMapper {
                 .build();
     }
 
+    @Override
     public UserSecure mapSecure(UserEntity entity) {
         return UserSecure.builder()
                 .id(entity.getId())
@@ -66,9 +69,19 @@ public class UserMapper implements IUserMapper {
                 .role(entity.getRole())
                 .status(entity.getStatus())
                 .password(entity.getPassword())
-                .dtUpdate(entity.getDtUpdate())           // даты уберем наверное
+                .dtUpdate(entity.getDtUpdate())
                 .dtCreate(entity.getDtCreate())
                 .build();
     }
 
+    @Override
+    public UserToken mapToken(UserSecure user) {
+        return UserToken.builder()
+                .id(user.getId())
+                .fio(user.getFio())
+                .mail(user.getMail())
+                .role(user.getRole())
+                .dtUpdate(user.getDtUpdate().toEpochMilli())
+                .build();
+    }
 }

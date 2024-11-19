@@ -31,11 +31,6 @@
         </dependencies>
     </dependencyManagement>
     <dependencies>
-<!--        DELETE WEBFLUX test webclient-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
-        </dependency>
         <dependency>
             <groupId>by.it_academy.jd2</groupId>
             <artifactId>common-lib</artifactId>

@@ -1,8 +1,8 @@
 package by.it_academy.jd2.controller.utils;
 
-import by.it_academy.jd2.commonlib.dto.UserToken;
 import by.it_academy.jd2.configuration.properties.JwtProperties;
 import by.it_academy.jd2.service.dto.UserSecure;
+import by.it_academy.jd2.service.mapper.api.IUserMapper;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,18 +17,12 @@ import java.util.concurrent.TimeUnit;
 public class JwtTokenHandler {
 
     private final JwtProperties jwtProperties;
+    private final IUserMapper userMapper;
 
     public String generateToken(UserSecure user) {
-        UserToken userToken = UserToken.builder()
-                .id(user.getId())
-                .fio(user.getFio())
-                .mail(user.getMail())
-                .role(user.getRole())
-                .build();
-
         return Jwts.builder()
                 .setSubject(user.getMail())
-                .claim("user", userToken)
+                .claim("user", userMapper.mapToken(user))
                 .setIssuer(jwtProperties.getIssuer())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(jwtProperties.getExpiration())))

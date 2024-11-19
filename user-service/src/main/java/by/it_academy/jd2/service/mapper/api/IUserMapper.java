@@ -1,5 +1,6 @@
 package by.it_academy.jd2.service.mapper.api;
 
+import by.it_academy.jd2.commonlib.dto.UserToken;
 import by.it_academy.jd2.repository.entity.UserEntity;
 import by.it_academy.jd2.service.dto.*;
 
@@ -14,4 +15,6 @@ public interface IUserMapper {
     UserEntity mapRegistration(UserRegistrationDto object);
 
     UserSecure mapSecure(UserEntity entity);
+
+    UserToken mapToken(UserSecure user);
 }
