@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
@@ -25,6 +24,9 @@ public class UserEntity {
     @Id
     private UUID id;
 
+    @Version
+    private Long version;
+
     @Column(nullable = false)
     private String mail;
 
@@ -39,7 +41,6 @@ public class UserEntity {
     @Column(name = "dt_create")
     private Instant dtCreate;
 
-    @LastModifiedDate
     @Column(name = "dt_update")
     private Instant dtUpdate;
 }

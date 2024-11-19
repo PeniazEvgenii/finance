@@ -10,4 +10,6 @@ public interface IUserMapper {
     UserReadDto mapRead(UserEntity entity);
 
     UserEntity mapCreate(UserCreateDto userCreate);
+
+    UserEntity updateIfNeed(UserEntity user, UserCreateDto userCreate);
 }

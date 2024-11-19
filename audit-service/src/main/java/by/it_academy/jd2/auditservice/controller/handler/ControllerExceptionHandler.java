@@ -39,6 +39,27 @@ public class ControllerExceptionHandler {
                 .body(structuredErrorResponse);
     }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<StructuredErrorResponse> onConstraintValidationException(
+            ConstraintViolationException exception) {
+
+        List<StructuredError> errors = exception.getConstraintViolations()
+                .stream()
+                .map(violation -> {
+                    String fullPath = violation.getPropertyPath().toString();
+                    String fieldName = fullPath.contains(".")
+                            ? fullPath.substring(fullPath.lastIndexOf(".") + 1)
+                            : fullPath;
+
+                    return new StructuredError(violation.getMessage(), fieldName);
+                })
+                .toList();
+        StructuredErrorResponse structuredErrorResponse = new StructuredErrorResponse(EError.STRUCTURED_ERROR, errors);
+        log.error("Argument annotated with fails.Errors: {}", errors);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(structuredErrorResponse);
+    }
+
     @ExceptionHandler(IdNotFoundException.class)
     public ResponseEntity<List<ErrorResponse>> onIdNotFoundException(
             IdNotFoundException exception) {

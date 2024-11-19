@@ -4,7 +4,6 @@ import by.it_academy.jd2.auditservice.repository.entity.UserEntity;
 import by.it_academy.jd2.auditservice.service.dto.UserCreateDto;
 import by.it_academy.jd2.auditservice.service.dto.UserReadDto;
 import by.it_academy.jd2.auditservice.service.mapper.api.IUserMapper;
-import by.it_academy.jd2.commonlib.dto.UserToken;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -27,6 +26,27 @@ public class UserMapper implements IUserMapper {
                 .fio(userCreate.getFio())
                 .role(userCreate.getRole())
                 .id(userCreate.getId())
+                .dtUpdate(userCreate.getDtUpdate())
                 .build();
     }
+
+    @Override
+    public UserEntity updateIfNeed(UserEntity user, UserCreateDto userCreate) {
+        if(!user.getDtUpdate().equals(userCreate.getDtUpdate())) {
+            return buildEntity(user, userCreate);
+        }
+        return user;
+    }
+
+
+    private UserEntity buildEntity(UserEntity user, UserCreateDto dto) {
+        user.setFio(dto.getFio());
+        user.setMail(dto.getMail());
+        user.setFio(dto.getFio());
+        user.setDtUpdate(dto.getDtUpdate());
+        return user;
+    }
+
+
+
 }

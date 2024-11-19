@@ -35,14 +35,7 @@ public class AuditMapper implements IAuditMapper {
 
     @Override
     public AuditEntity mapCreate(AuditCreateDto createDto) {
-        UserCreateDto userCreate = createDto.getUser();
-
-        UserEntity userEntity = userService
-                .findById(userCreate.getId())
-                .orElseGet(() -> {
-            UserEntity entity = userMapper.mapCreate(userCreate);
-            return userService.create(entity);
-        });
+        UserEntity userEntity = userService.createOrUpdateIfNeeded(createDto.getUser());
 
         return AuditEntity.builder()
                 .text(createDto.getText())
@@ -51,5 +44,4 @@ public class AuditMapper implements IAuditMapper {
                 .user(userEntity)
                 .build();
     }
-
 }
