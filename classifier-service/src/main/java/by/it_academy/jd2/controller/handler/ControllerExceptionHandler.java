@@ -118,7 +118,7 @@ public class ControllerExceptionHandler {
         String name = exception.getClass().getName();
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR,
                 "Сервер не смог корректно обработать запрос. Попробуйте позже или обратитесь к администратору");
-        log.error("Exception. Error: {}", exception.getMessage());
+        log.error("Exception. Error: {}", exception.getMessage(), exception.getCause());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(List.of(errorResponse));
     }

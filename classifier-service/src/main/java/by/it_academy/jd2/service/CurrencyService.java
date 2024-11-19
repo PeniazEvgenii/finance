@@ -8,6 +8,7 @@ import by.it_academy.jd2.service.api.ICurrencyService;
 import by.it_academy.jd2.service.dto.CurrencyCreateDto;
 import by.it_academy.jd2.service.dto.CurrencyReadDto;
 import by.it_academy.jd2.service.dto.PageDto;
+import by.it_academy.jd2.service.feign.api.IAuditService;
 import by.it_academy.jd2.service.mapper.api.ICurrencyMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,11 @@ import java.util.UUID;
 @Service
 public class CurrencyService implements ICurrencyService {
 
+    private final static String CREATE_CURRENCY = "Создана валюта";
+
     private final ICurrencyRepository currencyRepository;
     private final ICurrencyMapper currencyMapper;
+    private final IAuditService auditService;
 
     @Transactional
     @Override
@@ -36,7 +40,9 @@ public class CurrencyService implements ICurrencyService {
         Optional.of(createDto)
                 .map(currencyMapper::mapCreate)
                 .map(currencyRepository::saveAndFlush)
-                .orElseThrow(SaveException::new);                                                                                          //может свое исключение
+                .ifPresentOrElse(
+                        entity -> auditService.send(CREATE_CURRENCY, entity.getId()),
+                        SaveException::new);
     }
 
     @Override

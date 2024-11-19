@@ -8,6 +8,7 @@ import by.it_academy.jd2.service.api.IOperationCategoryService;
 import by.it_academy.jd2.service.dto.OperationCategoryCreateDto;
 import by.it_academy.jd2.service.dto.OperationCategoryReadDto;
 import by.it_academy.jd2.service.dto.PageDto;
+import by.it_academy.jd2.service.feign.api.IAuditService;
 import by.it_academy.jd2.service.mapper.api.IOperationCategoryMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,11 @@ import java.util.UUID;
 @Service
 public class OperationCategoryService implements IOperationCategoryService {
 
+    private final static String CREATE_CATEGORY = "Создана категория операции";
+
     private final IOperationCategoryRepository operationCategoryRepository;
     private final IOperationCategoryMapper operationCategoryMapper;
+    private final IAuditService auditService;
 
     @Transactional
     @Override
@@ -36,7 +40,9 @@ public class OperationCategoryService implements IOperationCategoryService {
         Optional.of(createDto)
                 .map(operationCategoryMapper::mapCreate)
                 .map(operationCategoryRepository::saveAndFlush)
-                .orElseThrow(SaveException::new);                                                                                           //может свое исключение
+                .ifPresentOrElse(
+                        entity -> auditService.send(CREATE_CATEGORY, entity.getId()),
+                        SaveException::new);
     }
 
     @Override
