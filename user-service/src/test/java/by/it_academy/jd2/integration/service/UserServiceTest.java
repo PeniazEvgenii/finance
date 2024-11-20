@@ -51,7 +51,7 @@ class UserServiceTest extends IntegrationTestBase {
         UserReadDto userReadDto = userService.findById(UUID.fromString(USER_ID));
 
 
-        UserUpdateDto updateDto = new UserUpdateDto(userReadDto.getUuid(), userReadDto.getDtUpdate());
+        UserUpdateDto updateDto = new UserUpdateDto(userReadDto.getId(), userReadDto.getDtUpdate());
 
         UserCreateDto createDto = UserCreateDto.builder()
                 .mail(userReadDto.getMail())
@@ -70,7 +70,7 @@ class UserServiceTest extends IntegrationTestBase {
     void findByMail() {
         Optional<UserReadDto> user = userService.findByMail(USER_MAIL);
         assertTrue(user.isPresent());
-        user.ifPresent(usr -> assertEquals(UUID.fromString(USER_ID), usr.getUuid()));
+        user.ifPresent(usr -> assertEquals(UUID.fromString(USER_ID), usr.getId()));
     }
 
 }

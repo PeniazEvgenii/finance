@@ -35,7 +35,7 @@ spring:
   jackson:
     deserialization:
       read-date-timestamps-as-nanoseconds: false
-    
+    property-naming-strategy: SNAKE_CASE
 
 logging:
   level:

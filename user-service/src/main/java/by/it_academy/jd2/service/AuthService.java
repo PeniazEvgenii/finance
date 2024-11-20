@@ -4,14 +4,19 @@ import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.controller.utils.JwtTokenHandler;
 import by.it_academy.jd2.repository.entity.EUserStatus;
 import by.it_academy.jd2.service.api.IAuthService;
+import by.it_academy.jd2.service.api.IUserHolder;
 import by.it_academy.jd2.service.api.IUserService;
 import by.it_academy.jd2.service.dto.UserLoginDto;
 import by.it_academy.jd2.service.dto.UserReadDto;
 import by.it_academy.jd2.service.dto.UserSecure;
 import by.it_academy.jd2.service.exception.AccountStatusException;
+import by.it_academy.jd2.service.feign.api.IAuditService;
+import by.it_academy.jd2.service.mapper.api.IUserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import static by.it_academy.jd2.service.feign.Actions.USER_LOGIN;
 
 @Service
 @RequiredArgsConstructor
@@ -19,8 +24,10 @@ public class AuthService implements IAuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final IUserService userService;
-    private final UserHolder userHolder;
+    private final IUserHolder userHolder;
     private final JwtTokenHandler jwtTokenHandler;
+    private final IAuditService auditService;
+    private final IUserMapper userMapper;
 
 
     @Override
@@ -33,12 +40,15 @@ public class AuthService implements IAuthService {
         if (!passwordEncoder.matches(loginDto.getPassword(), userSecure.getPassword())) {
             throw new IllegalArgumentException("Логин или пароль неверный");
         }
-
         if (checkNoActiveStatus(userSecure.getStatus())) {
             throw new AccountStatusException("Учетная запись находится в статусе " + userSecure.getStatus());
         }
 
-        return jwtTokenHandler.generateToken(userSecure);
+        String token = jwtTokenHandler.generateToken(userSecure);
+
+        auditService.send(USER_LOGIN, userMapper.mapAudit(userSecure));
+
+        return token;
     }
 
     @Override

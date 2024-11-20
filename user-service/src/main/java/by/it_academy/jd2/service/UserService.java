@@ -1,7 +1,6 @@
 package by.it_academy.jd2.service;
 
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
-import by.it_academy.jd2.commonlib.exception.SaveException;
 import by.it_academy.jd2.commonlib.exception.UpdateTimeMismatchException;
 import by.it_academy.jd2.repository.entity.EUserStatus;
 import by.it_academy.jd2.service.api.IUserService;
@@ -10,6 +9,7 @@ import by.it_academy.jd2.repository.IUserRepository;
 import by.it_academy.jd2.repository.entity.UserEntity;
 import by.it_academy.jd2.service.dto.*;
 import by.it_academy.jd2.service.exception.MailNotUnuqueException;
+import by.it_academy.jd2.service.feign.api.IAuditService;
 import by.it_academy.jd2.service.mapper.api.IUserMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,14 +24,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Validated
+import static by.it_academy.jd2.service.feign.Actions.USER_CREATE;
+import static by.it_academy.jd2.service.feign.Actions.USER_UPDATE;
+
 @Service
+@Validated
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class UserService implements IUserService {
 
     private final IUserRepository userRepository;
     private final IUserMapper userMapper;
+    private final IAuditService auditService;
 
     @Override
     public PageOf<UserReadDto> findAll(@Valid PageDto pageDto) {
@@ -59,8 +63,9 @@ public class UserService implements IUserService {
     public void create(UserCreateDto userCreateDto) {
         Optional.of(userCreateDto)
                 .map(userMapper::mapCreate)
-                .map(userRepository::save)
-                .orElseThrow(SaveException::new);
+                .map(userRepository::saveAndFlush)
+                .map(userMapper::mapRead)
+                .ifPresent(user -> auditService.send(USER_CREATE, user));
     }
 
     @Override
@@ -72,19 +77,28 @@ public class UserService implements IUserService {
 
         validateUpdate(createDto, updateDto, userEntity);
 
-        userEntity = userMapper.mapEntityUpdate(createDto, userEntity);
-        userRepository.saveAndFlush(userEntity);
+
+        Optional.of(userEntity)
+                .map(entity -> userMapper.mapEntityUpdate(createDto, entity))
+                .map(userRepository::saveAndFlush)
+                .map(userMapper::mapRead)
+                .ifPresent(user -> auditService.send(USER_UPDATE, user));
+
+//        userEntity = userMapper.mapEntityUpdate(createDto, userEntity);
+//        userRepository.saveAndFlush(userEntity);
+//
+//        auditService.send(USER_UPDATE, userEntity.getId());
     }
 
     @Override
     public Optional<UserReadDto> findByMail(String mail) {
-        return userRepository.findByMailIgnoreCase(mail)
+        return this.findEntityByMail(mail)
                 .map(userMapper::mapRead);
     }
 
     @Override
     public Optional<UserSecure> findByMailWithPass(String mail) {
-        return userRepository.findByMailIgnoreCase(mail)
+        return this.findEntityByMail(mail)
                 .map(userMapper::mapSecure);
     }
 
@@ -93,13 +107,31 @@ public class UserService implements IUserService {
         return userRepository.findByStatusWithoutCode(status);
     }
 
+    @Override
+    @Transactional
+    public UserReadDto updateStatus(String mail, EUserStatus status) {
+        return this.findEntityByMail(mail)
+                .map(entity -> {
+                    entity.setStatus(status);
+                    return entity;
+                })
+                .map(userRepository::saveAndFlush)
+                .map(userMapper::mapRead)
+                .orElseThrow(IdNotFoundException::new);
+    }
+
+    private Optional<UserEntity> findEntityByMail(String mail) {
+        return userRepository.findByMailIgnoreCase(mail);
+    }
+
+
     private void validateUpdate(UserCreateDto createDto,
                                 UserUpdateDto updateDto,
                                 UserEntity userEntity) {
 
         this.findByMail(createDto.getMail())
-                .map(UserReadDto::getUuid)
-                .filter(uuid -> uuid.equals(userEntity.getId()))
+                .map(UserReadDto::getId)
+                .filter(id -> id.equals(userEntity.getId()))
                 .orElseThrow(MailNotUnuqueException::new);
 
         if (!updateDto.getDtUpdate().equals(userEntity.getDtUpdate())) {

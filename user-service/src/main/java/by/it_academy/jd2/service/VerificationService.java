@@ -19,7 +19,6 @@ import java.util.concurrent.ThreadLocalRandom;
 @Service
 @Component
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class VerificationService implements IVerificationService {
 
     public static final String MAIL_TITLE = "Код для верификации";
@@ -37,19 +36,20 @@ public class VerificationService implements IVerificationService {
                 .user(user)
                 .build();
 
-        mailService.send(new MailDto("kentuchi2018@gmail.com", verifyCode, MAIL_TITLE));   //user.getMail() заменить после теста !!!!!!!
-
+        mailService.send(new MailDto("kentuchi2018@gmail.com",
+                verifyCode, MAIL_TITLE));                                          //user.getMail() заменить после теста !!!!!!!
         codeRepository.saveAndFlush(codeEntity);
     }
 
+    @Transactional
     public void checkCode(VerificationDto verificationDto) {
-         codeRepository.findByMail(verificationDto.getMail())
-                .map(CodeEntity::getCode)
-                .filter(code -> verificationDto.getCode().equals(code))
+        CodeEntity codeEntity = codeRepository
+                .findByMail(verificationDto.getMail())
+                .filter(entity -> verificationDto.getCode().equals(entity.getCode()))
                 .orElseThrow(VerificationException::new);
 
-         // codeRepository.delete(codeEntity);  если надо удалять код, без map
-        // .filter(entity -> verificationDto.getCode().equals(entity.getCode()))
+        codeRepository.delete(codeEntity);
+        codeRepository.flush();
     }
 
     private String generateCode() {

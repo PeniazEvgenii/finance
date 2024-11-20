@@ -20,11 +20,13 @@ public interface IUserService {
 
     void create(UserCreateDto userCreateDto);
 
-    public void update(UserCreateDto createDto, UserUpdateDto userUpdateDt);
+    void update(UserCreateDto createDto, UserUpdateDto userUpdateDt);
 
     Optional<UserReadDto> findByMail(String mail);
 
     List<UserEntity> findByStatusWithoutCode(EUserStatus status);
 
     Optional<UserSecure> findByMailWithPass(String mail);
+
+    UserReadDto updateStatus(String mail, EUserStatus status);
 }

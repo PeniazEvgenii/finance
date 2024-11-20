@@ -15,7 +15,8 @@ import java.util.UUID;
 @Builder
 public class UserReadDto {
 
-    private final UUID uuid;
+    @JsonProperty(value = "uuid")
+    private final UUID id;
 
     @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
     private final Instant dtCreate;

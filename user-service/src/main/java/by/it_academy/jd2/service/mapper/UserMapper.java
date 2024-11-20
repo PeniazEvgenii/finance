@@ -18,7 +18,7 @@ public class UserMapper implements IUserMapper {
 
     public UserReadDto mapRead(UserEntity object) {
         return UserReadDto.builder()
-                .uuid(object.getId())
+                .id(object.getId())
                 .dtCreate(object.getDtCreate())
                 .dtUpdate(object.getDtUpdate())
                 .mail(object.getMail())
@@ -50,13 +50,13 @@ public class UserMapper implements IUserMapper {
     }
 
     @Override
-    public UserEntity mapRegistration(UserRegistrationDto object) {
-        return UserEntity.builder()
-                .mail(object.getMail().toLowerCase())
-                .fio(object.getFio())
+    public UserCreateDto mapCreateDto(UserRegistrationDto registrationDto) {
+        return UserCreateDto.builder()
+                .mail(registrationDto.getMail().toLowerCase())
+                .fio(registrationDto.getFio())
                 .role(EUserRole.USER)
                 .status(EUserStatus.WAITING_ACTIVATION)
-                .password(passwordEncoder.encode(object.getPassword()))
+                .password(registrationDto.getPassword())
                 .build();
     }
 
@@ -82,6 +82,29 @@ public class UserMapper implements IUserMapper {
                 .mail(user.getMail())
                 .role(user.getRole())
                 .dtUpdate(user.getDtUpdate().toEpochMilli())
+                .build();
+    }
+
+    @Override
+    public UserToken mapToken(UserReadDto userReadDto) {
+        return UserToken.builder()
+                .id(userReadDto.getId())
+                .mail(userReadDto.getMail())
+                .fio(userReadDto.getFio())
+                .dtUpdate(userReadDto.getDtUpdate().toEpochMilli())
+                .role(userReadDto.getRole())
+                .build();
+    }
+
+    public UserReadDto mapAudit(UserSecure userSecure) {
+        return UserReadDto.builder()
+                .id(userSecure.getId())
+                .dtCreate(userSecure.getDtCreate())
+                .dtUpdate(userSecure.getDtUpdate())
+                .mail(userSecure.getMail())
+                .role(userSecure.getRole())
+                .fio(userSecure.getFio())
+                .status(userSecure.getStatus())
                 .build();
     }
 }

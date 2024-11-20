@@ -10,11 +10,15 @@ public interface IUserMapper {
 
     UserEntity mapCreate(UserCreateDto object);
 
-    UserEntity mapEntityUpdate(UserCreateDto fromObject, UserEntity toObject);
+    UserEntity mapEntityUpdate(UserCreateDto createDto, UserEntity entity);
 
-    UserEntity mapRegistration(UserRegistrationDto object);
+    UserCreateDto mapCreateDto(UserRegistrationDto registrationDto);
 
     UserSecure mapSecure(UserEntity entity);
 
     UserToken mapToken(UserSecure user);
+
+    UserReadDto mapAudit(UserSecure userSecure);
+
+    UserToken mapToken(UserReadDto userReadDto);
 }
