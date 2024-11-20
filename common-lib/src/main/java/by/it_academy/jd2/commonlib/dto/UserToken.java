@@ -1,5 +1,6 @@
 package by.it_academy.jd2.commonlib.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class UserToken {
     private String fio;
     private String mail;
     private EUserRole role;
+    @JsonProperty(value = "dt_update")
     private Long dtUpdate;
 
 }
