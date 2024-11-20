@@ -1,6 +1,5 @@
 package by.it_academy.jd2.service;
 
-import by.it_academy.jd2.commonlib.exception.SaveException;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.ICurrencyRepository;
 import by.it_academy.jd2.repository.entity.CurrencyEntity;
@@ -40,9 +39,7 @@ public class CurrencyService implements ICurrencyService {
         Optional.of(createDto)
                 .map(currencyMapper::mapCreate)
                 .map(currencyRepository::saveAndFlush)
-                .ifPresentOrElse(
-                        entity -> auditService.send(CREATE_CURRENCY, entity.getId()),
-                        SaveException::new);
+                .ifPresent(entity -> auditService.send(CREATE_CURRENCY, entity.getId()));
     }
 
     @Override

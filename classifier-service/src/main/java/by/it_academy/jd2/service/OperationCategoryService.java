@@ -1,6 +1,5 @@
 package by.it_academy.jd2.service;
 
-import by.it_academy.jd2.commonlib.exception.SaveException;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.IOperationCategoryRepository;
 import by.it_academy.jd2.repository.entity.OperationCategoryEntity;
@@ -40,9 +39,7 @@ public class OperationCategoryService implements IOperationCategoryService {
         Optional.of(createDto)
                 .map(operationCategoryMapper::mapCreate)
                 .map(operationCategoryRepository::saveAndFlush)
-                .ifPresentOrElse(
-                        entity -> auditService.send(CREATE_CATEGORY, entity.getId()),
-                        SaveException::new);
+                .ifPresent(entity -> auditService.send(CREATE_CATEGORY, entity.getId()));
     }
 
     @Override
