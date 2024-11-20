@@ -10,8 +10,11 @@ import lombok.Data;
 public class AuditCreateDto {
 
     private UserCreateDto user;
+
     private String text;
+
     private EEssenceType type;
+
     @JsonProperty(value = "id")
     private String essenceId;
 }

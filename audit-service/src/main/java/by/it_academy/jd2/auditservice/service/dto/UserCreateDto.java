@@ -17,9 +17,13 @@ import java.util.UUID;
 public class UserCreateDto {
 
     private UUID id;
+
     private String fio;
+
     private String mail;
+
     private EUserRole role;
+
     private Instant dtUpdate;
 
 }

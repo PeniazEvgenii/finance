@@ -5,11 +5,8 @@ import by.it_academy.jd2.auditservice.repository.entity.UserEntity;
 import by.it_academy.jd2.auditservice.service.api.IUserService;
 import by.it_academy.jd2.auditservice.service.dto.AuditCreateDto;
 import by.it_academy.jd2.auditservice.service.dto.AuditReadDto;
-import by.it_academy.jd2.auditservice.service.dto.UserCreateDto;
 import by.it_academy.jd2.auditservice.service.mapper.api.IAuditMapper;
 import by.it_academy.jd2.auditservice.service.mapper.api.IUserMapper;
-import by.it_academy.jd2.commonlib.audit.AuditCreate;
-import by.it_academy.jd2.commonlib.dto.UserToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
