@@ -1,5 +1,6 @@
 package by.it_academy.jd2.configuration;
 
+import by.it_academy.jd2.commonlib.dto.EUserRole;
 import by.it_academy.jd2.controller.filter.JwtFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +42,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/info/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/classifier/currency").permitAll()
                         .requestMatchers(HttpMethod.GET, "/classifier/operation/category").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/classifier/**").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers(HttpMethod.POST, "/classifier/**").hasAnyRole(EUserRole.ADMIN.name(), EUserRole.MANAGER.name())
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

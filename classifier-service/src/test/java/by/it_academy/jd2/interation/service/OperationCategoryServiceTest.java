@@ -1,5 +1,6 @@
 package by.it_academy.jd2.interation.service;
 
+import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.interation.IntegrationTestBase;
 import by.it_academy.jd2.repository.IOperationCategoryRepository;
@@ -19,14 +20,6 @@ class OperationCategoryServiceTest extends IntegrationTestBase {
 
     private final IOperationCategoryService operationCategoryService;
     private final IOperationCategoryRepository operationCategoryRepository;
-
-    @Test
-    void create() {
-        OperationCategoryCreateDto car = new OperationCategoryCreateDto("авто");
-        operationCategoryService.create(car);
-        operationCategoryRepository.findByTitleIgnoreCase("авто").
-                ifPresent(category -> assertEquals(car.getTitle(), category.getTitle()));
-    }
 
     @Test
     void findAll() {

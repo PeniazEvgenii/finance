@@ -4,7 +4,7 @@ spring:
     username: postgres
     password: root
   liquibase:
-    liquibase-schema: app               #пока в паблик схему ???
+    liquibase-schema: app
 
 service:
   audit: audit-service:8080

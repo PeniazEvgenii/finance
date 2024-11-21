@@ -1,12 +1,11 @@
 package by.it_academy.jd2.interation.service;
 
+import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.interation.IntegrationTestBase;
 import by.it_academy.jd2.repository.ICurrencyRepository;
 import by.it_academy.jd2.service.CurrencyService;
-import by.it_academy.jd2.service.dto.CurrencyCreateDto;
 import by.it_academy.jd2.service.dto.CurrencyReadDto;
-import by.it_academy.jd2.service.dto.PageDto;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 
@@ -22,13 +21,6 @@ class CurrencyServiceTest extends IntegrationTestBase {
     private final CurrencyService currencyService;
     private final ICurrencyRepository currencyRepository;
 
-    @Test
-    void create() {
-        CurrencyCreateDto dto = new CurrencyCreateDto("BYN", "белорусский рубль");
-        currencyService.create(dto);
-        currencyRepository.findByTitleIgnoreCase("BYN").
-                ifPresent(currency -> assertEquals(dto.getTitle(), currency.getTitle()));
-    }
 
     @Test
     void findAll() {

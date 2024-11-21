@@ -11,4 +11,8 @@ public final class Actions {
     public static final String AUDIT_USER_LOGIN = "Пользователь вошел в систему";
     public static final String AUDIT_USER_VERIFY = "Пользователь прошел верификацию";
 
+    public final static String CREATE_CURRENCY = "Создана валюта";
+    public final static String CREATE_CATEGORY = "Создана категория операции";
+
+
 }

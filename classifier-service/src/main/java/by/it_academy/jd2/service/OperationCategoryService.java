@@ -1,12 +1,12 @@
 package by.it_academy.jd2.service;
 
+import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.IOperationCategoryRepository;
 import by.it_academy.jd2.repository.entity.OperationCategoryEntity;
 import by.it_academy.jd2.service.api.IOperationCategoryService;
 import by.it_academy.jd2.service.dto.OperationCategoryCreateDto;
 import by.it_academy.jd2.service.dto.OperationCategoryReadDto;
-import by.it_academy.jd2.service.dto.PageDto;
 import by.it_academy.jd2.service.feign.api.IAuditService;
 import by.it_academy.jd2.service.mapper.api.IOperationCategoryMapper;
 import jakarta.validation.Valid;
@@ -21,13 +21,13 @@ import org.springframework.validation.annotation.Validated;
 import java.util.Optional;
 import java.util.UUID;
 
+import static by.it_academy.jd2.commonlib.constant.Actions.CREATE_CATEGORY;
+
 @Validated
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
 public class OperationCategoryService implements IOperationCategoryService {
-
-    private final static String CREATE_CATEGORY = "Создана категория операции";
 
     private final IOperationCategoryRepository operationCategoryRepository;
     private final IOperationCategoryMapper operationCategoryMapper;
