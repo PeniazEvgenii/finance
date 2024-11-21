@@ -7,7 +7,9 @@ import by.it_academy.jd2.commonlib.error.StructuredErrorResponse;
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.commonlib.exception.SaveException;
 import by.it_academy.jd2.commonlib.exception.UpdateTimeMismatchException;
-import by.it_academy.jd2.service.exception.EmailSendException;
+import by.it_academy.jd2.service.exception.AccountStatusException;
+import by.it_academy.jd2.service.exception.InvalidCredentialsException;
+import by.it_academy.jd2.service.exception.MailSendException;
 import by.it_academy.jd2.service.exception.VerificationException;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
@@ -50,6 +52,20 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
     }
 
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<List<ErrorResponse>> onInvalidCredentialsException(InvalidCredentialsException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(EError.ERROR, exception.getMessage());
+        log.error("invalid password or mail for login");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
+    }
+
+    @ExceptionHandler(AccountStatusException.class)
+    public ResponseEntity<List<ErrorResponse>> onAccountStatusException(AccountStatusException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(EError.ERROR, exception.getMessage());
+        log.error("try login to inactive account: {}", exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
+    }
+
     @ExceptionHandler(UpdateTimeMismatchException.class)
     public ResponseEntity<List<ErrorResponse>> onUpdateTimeMismatchException(UpdateTimeMismatchException exception) {
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR, exception.getMessage());
@@ -57,7 +73,7 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
     }
 
-    @ExceptionHandler(EmailSendException.class)
+    @ExceptionHandler(MailSendException.class)
         public ResponseEntity<List<ErrorResponse>> onEmailSendException() {
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR,
                 "Сервер не смог корректно обработать запрос. Попробуйте позже или обратитесь к администратору");

@@ -1,5 +1,6 @@
 package by.it_academy.jd2.service;
 
+import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.commonlib.exception.UpdateTimeMismatchException;
 import by.it_academy.jd2.repository.entity.EUserStatus;
@@ -8,7 +9,7 @@ import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.IUserRepository;
 import by.it_academy.jd2.repository.entity.UserEntity;
 import by.it_academy.jd2.service.dto.*;
-import by.it_academy.jd2.service.exception.MailNotUnuqueException;
+import by.it_academy.jd2.service.exception.MailNotUniqueException;
 import by.it_academy.jd2.service.feign.api.IAuditService;
 import by.it_academy.jd2.service.mapper.api.IUserMapper;
 import jakarta.validation.Valid;
@@ -24,8 +25,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static by.it_academy.jd2.service.feign.Actions.USER_CREATE;
-import static by.it_academy.jd2.service.feign.Actions.USER_UPDATE;
+import static by.it_academy.jd2.commonlib.constant.Actions.AUDIT_USER_CREATE;
+import static by.it_academy.jd2.commonlib.constant.Actions.AUDIT_USER_UPDATE;
 
 @Service
 @Validated
@@ -65,7 +66,7 @@ public class UserService implements IUserService {
                 .map(userMapper::mapCreate)
                 .map(userRepository::saveAndFlush)
                 .map(userMapper::mapRead)
-                .ifPresent(user -> auditService.send(USER_CREATE, user));
+                .ifPresent(user -> auditService.send(AUDIT_USER_CREATE, user));
     }
 
     @Override
@@ -77,17 +78,24 @@ public class UserService implements IUserService {
 
         validateUpdate(createDto, updateDto, userEntity);
 
-
         Optional.of(userEntity)
                 .map(entity -> userMapper.mapEntityUpdate(createDto, entity))
                 .map(userRepository::saveAndFlush)
                 .map(userMapper::mapRead)
-                .ifPresent(user -> auditService.send(USER_UPDATE, user));
+                .ifPresent(user -> auditService.send(AUDIT_USER_UPDATE, user));
+    }
 
-//        userEntity = userMapper.mapEntityUpdate(createDto, userEntity);
-//        userRepository.saveAndFlush(userEntity);
-//
-//        auditService.send(USER_UPDATE, userEntity.getId());
+    @Override
+    @Transactional
+    public UserReadDto updateStatus(String mail, EUserStatus status) {
+        return this.findEntityByMail(mail)
+                .map(entity -> {
+                    entity.setStatus(status);
+                    return entity;
+                })
+                .map(userRepository::saveAndFlush)
+                .map(userMapper::mapRead)
+                .orElseThrow(IdNotFoundException::new);
     }
 
     @Override
@@ -108,16 +116,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    @Transactional
-    public UserReadDto updateStatus(String mail, EUserStatus status) {
-        return this.findEntityByMail(mail)
-                .map(entity -> {
-                    entity.setStatus(status);
-                    return entity;
-                })
-                .map(userRepository::saveAndFlush)
-                .map(userMapper::mapRead)
-                .orElseThrow(IdNotFoundException::new);
+    public UserReadDto getReadDto(UserSecure userSecure) {
+        return userMapper.mapReadFromSecure(userSecure);
     }
 
     private Optional<UserEntity> findEntityByMail(String mail) {
@@ -132,7 +132,7 @@ public class UserService implements IUserService {
         this.findByMail(createDto.getMail())
                 .map(UserReadDto::getId)
                 .filter(id -> id.equals(userEntity.getId()))
-                .orElseThrow(MailNotUnuqueException::new);
+                .orElseThrow(MailNotUniqueException::new);
 
         if (!updateDto.getDtUpdate().equals(userEntity.getDtUpdate())) {
             throw new UpdateTimeMismatchException();

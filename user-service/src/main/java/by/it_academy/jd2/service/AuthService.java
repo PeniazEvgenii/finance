@@ -10,25 +10,23 @@ import by.it_academy.jd2.service.dto.UserLoginDto;
 import by.it_academy.jd2.service.dto.UserReadDto;
 import by.it_academy.jd2.service.dto.UserSecure;
 import by.it_academy.jd2.service.exception.AccountStatusException;
+import by.it_academy.jd2.service.exception.InvalidCredentialsException;
 import by.it_academy.jd2.service.feign.api.IAuditService;
-import by.it_academy.jd2.service.mapper.api.IUserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static by.it_academy.jd2.service.feign.Actions.USER_LOGIN;
+import static by.it_academy.jd2.commonlib.constant.Actions.AUDIT_USER_LOGIN;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService implements IAuthService {
 
     private final PasswordEncoder passwordEncoder;
-    private final IUserService userService;
-    private final IUserHolder userHolder;
     private final JwtTokenHandler jwtTokenHandler;
     private final IAuditService auditService;
-    private final IUserMapper userMapper;
-
+    private final IUserService userService;
+    private final IUserHolder userHolder;
 
     @Override
     public String login(UserLoginDto loginDto) {
@@ -38,15 +36,14 @@ public class AuthService implements IAuthService {
                 .orElseThrow(IdNotFoundException::new);
 
         if (!passwordEncoder.matches(loginDto.getPassword(), userSecure.getPassword())) {
-            throw new IllegalArgumentException("Логин или пароль неверный");
+            throw new InvalidCredentialsException();
         }
         if (checkNoActiveStatus(userSecure.getStatus())) {
             throw new AccountStatusException("Учетная запись находится в статусе " + userSecure.getStatus());
         }
 
         String token = jwtTokenHandler.generateToken(userSecure);
-
-        auditService.send(USER_LOGIN, userMapper.mapAudit(userSecure));
+        auditService.send(AUDIT_USER_LOGIN, userService.getReadDto(userSecure));
 
         return token;
     }

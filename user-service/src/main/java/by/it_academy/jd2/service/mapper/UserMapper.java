@@ -96,7 +96,7 @@ public class UserMapper implements IUserMapper {
                 .build();
     }
 
-    public UserReadDto mapAudit(UserSecure userSecure) {
+    public UserReadDto mapReadFromSecure(UserSecure userSecure) {
         return UserReadDto.builder()
                 .id(userSecure.getId())
                 .dtCreate(userSecure.getDtCreate())

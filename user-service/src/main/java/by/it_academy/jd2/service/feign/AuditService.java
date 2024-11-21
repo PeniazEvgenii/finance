@@ -12,12 +12,14 @@ import by.it_academy.jd2.service.feign.client.IAuditClient;
 import by.it_academy.jd2.service.mapper.api.IUserMapper;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuditService implements IAuditService {
@@ -28,13 +30,11 @@ public class AuditService implements IAuditService {
 
     @Override
     public void send(String text, UserReadDto userRead) {
-        UserReadDto userReadDto = userHolder.getUser();
 
-        if (userReadDto == null) {
-            userReadDto = userRead;
-        }
+        UserReadDto currentUser = userHolder.getUser();
+        currentUser = (currentUser == null) ? userRead : currentUser;
 
-        UserToken userToken = userMapper.mapToken(userReadDto);
+        UserToken userToken = userMapper.mapToken(currentUser);
 
         AuditCreate audit = AuditCreate.builder()
                 .user(userToken)
@@ -49,8 +49,12 @@ public class AuditService implements IAuditService {
                     .map(ResponseEntity::getStatusCode)
                     .filter(HttpStatus.CREATED::equals)
                     .orElseThrow(AuditSaveException::new);
+            log.info("Audit saved to {}", currentUser);
         } catch (FeignException e) {
-            throw new ConnectionException();
+            log.error("Error sending audit event: {}", e.getMessage());
+//            throw new ConnectionException();
+        } catch (AuditSaveException e) {
+            log.error("Error save audit event");
         }
     }
 }

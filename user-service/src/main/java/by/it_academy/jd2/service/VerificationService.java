@@ -8,29 +8,25 @@ import by.it_academy.jd2.service.api.IVerificationService;
 import by.it_academy.jd2.service.dto.MailDto;
 import by.it_academy.jd2.service.dto.VerificationDto;
 import by.it_academy.jd2.service.exception.VerificationException;
+import by.it_academy.jd2.service.util.CodeGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 @Component
 @RequiredArgsConstructor
 public class VerificationService implements IVerificationService {
 
-    public static final String MAIL_TITLE = "Код для верификации";
-    public static final Integer MIN_RANGE = 1_000_000;
-    public static final Integer MAX_RANGE = 9_999_999;
+    private static final String MAIL_TITLE = "Код для верификации";
 
     private final ICodeRepository codeRepository;
     private final IMailService mailService;
 
     @Transactional
     public void sendCode(UserEntity user) {
-        String verifyCode = generateCode();
+        String verifyCode = CodeGenerator.generateNumericCode();
         CodeEntity codeEntity = CodeEntity.builder()
                 .code(verifyCode)
                 .user(user)
@@ -48,12 +44,11 @@ public class VerificationService implements IVerificationService {
                 .filter(entity -> verificationDto.getCode().equals(entity.getCode()))
                 .orElseThrow(VerificationException::new);
 
-        codeRepository.delete(codeEntity);
-        codeRepository.flush();
+        delete(codeEntity);
     }
 
-    private String generateCode() {
-        ThreadLocalRandom current = ThreadLocalRandom.current();
-        return String.valueOf(current.nextInt(MIN_RANGE, MAX_RANGE));
+    private void delete(CodeEntity codeEntity) {
+        codeRepository.delete(codeEntity);
+        codeRepository.flush();
     }
 }

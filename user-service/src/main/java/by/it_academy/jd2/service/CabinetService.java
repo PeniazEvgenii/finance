@@ -14,7 +14,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import static by.it_academy.jd2.service.feign.Actions.USER_VERIFY;
+import static by.it_academy.jd2.commonlib.constant.Actions.AUDIT_USER_VERIFY;
 
 @Validated
 @Service
@@ -36,6 +36,6 @@ public class CabinetService implements ICabinetService {
         UserReadDto user = userService.updateStatus(verificationDto.getMail(),
                                                     EUserStatus.ACTIVATED);
 
-        auditService.send(USER_VERIFY, user);
+        auditService.send(AUDIT_USER_VERIFY, user);
     }
 }

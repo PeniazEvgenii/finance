@@ -18,7 +18,7 @@ public interface IUserMapper {
 
     UserToken mapToken(UserSecure user);
 
-    UserReadDto mapAudit(UserSecure userSecure);
+    UserReadDto mapReadFromSecure(UserSecure userSecure);
 
     UserToken mapToken(UserReadDto userReadDto);
 }

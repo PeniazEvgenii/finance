@@ -7,3 +7,7 @@ spring:
       hbm2ddl.auto: validate
   liquibase:
     liquibase-schema: public
+
+
+service:
+  audit: localhost:8083

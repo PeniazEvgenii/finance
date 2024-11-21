@@ -1,6 +1,7 @@
 package by.it_academy.jd2.integration.service;
 
 import by.it_academy.jd2.commonlib.dto.EUserRole;
+import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.integration.IntegrationTestBase;
 import by.it_academy.jd2.repository.entity.EUserStatus;
