@@ -1,7 +1,7 @@
 package by.it_academy.jd2.controller;
 
+import by.it_academy.jd2.commonlib.aop.LoggingAspect;
 import by.it_academy.jd2.commonlib.dto.PageDto;
-import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.service.api.IAccountService;
 import by.it_academy.jd2.service.dto.AccountCreateDto;
@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.Instant;
 import java.util.UUID;
 
-@RequiredArgsConstructor
+@LoggingAspect
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/account")
 public class AccountController {
 

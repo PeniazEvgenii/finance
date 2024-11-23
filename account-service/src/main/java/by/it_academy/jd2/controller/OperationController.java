@@ -1,5 +1,6 @@
 package by.it_academy.jd2.controller;
 
+import by.it_academy.jd2.commonlib.aop.LoggingAspect;
 import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.service.api.IOperationService;
@@ -13,8 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.Instant;
 import java.util.UUID;
 
-@RequiredArgsConstructor
+@LoggingAspect
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/account/{uuid}/operation")
 public class OperationController {
 
@@ -42,10 +44,10 @@ public class OperationController {
     public void update(@PathVariable("uuid") UUID accountId,
                        @PathVariable("uuid_operation") UUID operationId,
                        @PathVariable("dt_update") Instant dtUpdate,
-                       @RequestBody OperationCreateDto dto) {
+                       @RequestBody OperationCreateDto createDto) {
 
-        OperationUpdateDto operationUpdateDto = mapUpdate(accountId, operationId, dtUpdate);
-        operationService.update(dto, operationUpdateDto);
+        OperationUpdateDto updateDto = mapUpdate(accountId, operationId, dtUpdate);
+        operationService.update(createDto, updateDto);
 
     }
 
@@ -54,8 +56,8 @@ public class OperationController {
                        @PathVariable("uuid_operation") UUID operationId,
                        @PathVariable("dt_update") Instant dtUpdate) {
 
-        OperationUpdateDto dto = mapUpdate(accountId, operationId, dtUpdate);
-        operationService.delete(dto);
+        OperationUpdateDto updateDto = mapUpdate(accountId, operationId, dtUpdate);
+        operationService.delete(updateDto);
     }
 
     private OperationUpdateDto mapUpdate(UUID accountId, UUID operationId, Instant dtUpdate) {

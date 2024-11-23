@@ -8,6 +8,7 @@ import by.it_academy.jd2.commonlib.exception.CurrencyMismatchException;
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.commonlib.exception.SaveException;
 import by.it_academy.jd2.commonlib.exception.UpdateTimeMismatchException;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 @Slf4j
@@ -42,24 +44,21 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(IdNotFoundException.class)
-    public ResponseEntity<List<ErrorResponse>> onIdNotFoundException(
-            IdNotFoundException exception) {
+    public ResponseEntity<List<ErrorResponse>> onIdNotFoundException(IdNotFoundException exception) {
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR, exception.getMessage());
         log.error("Object with id not found");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
     }
 
     @ExceptionHandler(UpdateTimeMismatchException.class)
-    public ResponseEntity<List<ErrorResponse>> onUpdateTimeMismatchException(
-            UpdateTimeMismatchException exception) {
+    public ResponseEntity<List<ErrorResponse>> onUpdateTimeMismatchException(UpdateTimeMismatchException exception) {
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR, exception.getMessage());
         log.error("TimeUpdate argument mismatch");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
     }
 
     @ExceptionHandler(CurrencyMismatchException.class)
-    public ResponseEntity<List<ErrorResponse>> onCurrencyMismatchException(
-            CurrencyMismatchException exception) {
+    public ResponseEntity<List<ErrorResponse>> onCurrencyMismatchException(CurrencyMismatchException exception) {
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR, exception.getMessage());
         log.error("Currency argument operation and account mismatch");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
@@ -74,8 +73,7 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<StructuredErrorResponse> onConstraintValidationException(
-            ConstraintViolationException exception) {
+    public ResponseEntity<StructuredErrorResponse> onConstraintValidationException(ConstraintViolationException exception) {
 
         List<StructuredError> errors = exception.getConstraintViolations()
                 .stream()
@@ -84,8 +82,8 @@ public class ControllerExceptionHandler {
                     String fieldName = fullPath.contains(".")
                             ? fullPath.substring(fullPath.lastIndexOf(".") + 1)
                             : fullPath;
-
-                    return new StructuredError(violation.getMessage(), fieldName);
+                    String jsonFieldName = getJsonPropertyName(violation.getLeafBean().getClass(), fieldName);
+                    return new StructuredError(violation.getMessage(), jsonFieldName);
                 })
                 .toList();
         StructuredErrorResponse structuredErrorResponse = new StructuredErrorResponse(EError.STRUCTURED_ERROR, errors);
@@ -138,6 +136,7 @@ public class ControllerExceptionHandler {
                 .body(List.of(errorResponse));
     }
 
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<List<ErrorResponse>> onException(Exception exception) {
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR,
@@ -145,5 +144,18 @@ public class ControllerExceptionHandler {
         log.error("Exception. Error: {}", exception.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(List.of(errorResponse));
+    }
+
+    private String getJsonPropertyName(Class<?> clazz, String fieldName) {
+        try {
+            Field field = clazz.getDeclaredField(fieldName);
+            JsonProperty jsonProperty = field.getAnnotation(JsonProperty.class);
+            if (jsonProperty != null && !jsonProperty.value().isEmpty()) {
+                return jsonProperty.value();
+            }
+        } catch (NoSuchFieldException e) {
+            log.warn("Field '{}' not found in class '{}'", fieldName, clazz.getSimpleName());
+        }
+        return fieldName;
     }
 }
