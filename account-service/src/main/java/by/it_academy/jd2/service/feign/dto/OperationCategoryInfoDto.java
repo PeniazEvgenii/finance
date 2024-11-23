@@ -10,7 +10,7 @@ import java.util.UUID;
 @Builder
 public class OperationCategoryInfoDto {
 
-    @JsonProperty(value = "id")
+    @JsonProperty(value = "uuid")
     private final UUID id;
 
     private final String title;

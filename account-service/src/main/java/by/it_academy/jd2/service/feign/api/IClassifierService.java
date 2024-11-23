@@ -10,6 +10,6 @@ public interface IClassifierService {
 
     Optional<CurrencyInfoDto> findCurrencyById(UUID id);
 
-    public Optional<OperationCategoryInfoDto> findOperationCategoryById(UUID id);
+    Optional<OperationCategoryInfoDto> findOperationCategoryById(UUID id);
 
 }
