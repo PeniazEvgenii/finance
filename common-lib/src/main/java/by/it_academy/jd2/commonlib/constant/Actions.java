@@ -11,8 +11,14 @@ public final class Actions {
     public static final String AUDIT_USER_LOGIN = "Пользователь вошел в систему";
     public static final String AUDIT_USER_VERIFY = "Пользователь прошел верификацию";
 
-    public final static String CREATE_CURRENCY = "Создана валюта";
-    public final static String CREATE_CATEGORY = "Создана категория операции";
+    public static final String AUDIT_CURRENCY_CREATE = "Создана валюта";
+    public static final String AUDIT_CATEGORY_CREATE = "Создана категория операции";
+
+    public static final String AUDIT_ACCOUNT_CREATE = "Добавлен новый счет";
+    public static final String AUDIT_ACCOUNT_UPDATE = "Счет обновлен";
+    public static final String AUDIT_OPERATION_CREATE = "Создана новая операция";
+    public static final String AUDIT_OPERATION_UPDATE = "Обновлена операция";
+    public static final String AUDIT_OPERATION_DELETE = "Удалена операция";
 
 
 }

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 @Builder
 public class AuditCreate {
@@ -13,6 +15,6 @@ public class AuditCreate {
     private String text;
     private EEssenceType type;
     @JsonProperty(value = "id")
-    private String essenceId;
+    private UUID essenceId;
 
 }
