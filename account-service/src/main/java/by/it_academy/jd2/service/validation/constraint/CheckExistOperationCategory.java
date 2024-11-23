@@ -1,4 +1,4 @@
-package by.it_academy.jd2.service.validation;
+package by.it_academy.jd2.service.validation.constraint;
 
 import by.it_academy.jd2.service.feign.api.IClassifierService;
 import by.it_academy.jd2.service.validation.annotation.ExistCategory;

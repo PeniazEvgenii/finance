@@ -1,6 +1,6 @@
 package by.it_academy.jd2.service.validation.annotation;
 
-import by.it_academy.jd2.service.validation.CheckExistCurrency;
+import by.it_academy.jd2.service.validation.constraint.CheckExistCurrency;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

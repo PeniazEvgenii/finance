@@ -1,6 +1,6 @@
 package by.it_academy.jd2.service.validation.annotation;
 
-import by.it_academy.jd2.service.validation.CheckExistOperationCategory;
+import by.it_academy.jd2.service.validation.constraint.CheckExistOperationCategory;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
