@@ -4,10 +4,9 @@ import by.it_academy.jd2.repository.entity.AccountEntity;
 import by.it_academy.jd2.repository.entity.OperationEntity;
 import by.it_academy.jd2.service.dto.OperationCreateDto;
 import by.it_academy.jd2.service.dto.OperationReadDto;
+import by.it_academy.jd2.service.mapper.api.IOperationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
 
 @Component
 @RequiredArgsConstructor
@@ -15,7 +14,6 @@ public class OperationMapper implements IOperationMapper {
 
     @Override
     public OperationEntity mapCreate(OperationCreateDto createDto, AccountEntity account) {
-
         account.addValue(createDto.getValue());
 
         return OperationEntity.builder()
@@ -41,17 +39,10 @@ public class OperationMapper implements IOperationMapper {
     }
 
     public OperationEntity mapUpdate(OperationCreateDto dto, OperationEntity entity) {
-        AccountEntity accountEntity = entity.getAccountEntity();
-
-        BigDecimal oldBalance = accountEntity.getBalance();
-        BigDecimal newBalance = oldBalance.subtract(entity.getValue()).add(dto.getValue());
-        accountEntity.setBalance(newBalance);
-
         entity.setDate(dto.getDate());
         entity.setDescription(dto.getDescription());
         entity.setCategoryId(dto.getCategoryId());
         entity.setValue(dto.getValue());
         return entity;
     }
-
 }

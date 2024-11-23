@@ -4,6 +4,7 @@ import by.it_academy.jd2.repository.entity.AccountEntity;
 import by.it_academy.jd2.service.api.IUserHolderService;
 import by.it_academy.jd2.service.dto.AccountCreateDto;
 import by.it_academy.jd2.service.dto.AccountReadDto;
+import by.it_academy.jd2.service.mapper.api.IAccountMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
@@ -13,8 +14,6 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class AccountMapper implements IAccountMapper {
 
-    private static final Integer START_BALANCE = 0;
-
     private final IUserHolderService userHolderService;
 
     @Override
@@ -22,7 +21,7 @@ public class AccountMapper implements IAccountMapper {
         return AccountEntity.builder()
                 .title(createDto.getTitle())
                 .description(createDto.getDescription())
-                .balance(new BigDecimal(START_BALANCE))
+                .balance(BigDecimal.ZERO)
                 .type(createDto.getType())
                 .currencyId(createDto.getCurrencyId())
                 .userId(userHolderService.getUserId())

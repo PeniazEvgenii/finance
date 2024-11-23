@@ -1,8 +1,9 @@
 package by.it_academy.jd2.service;
 
+import by.it_academy.jd2.commonlib.aop.LoggingAspect;
 import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
-import by.it_academy.jd2.commonlib.exception.SaveException;
+import by.it_academy.jd2.commonlib.exception.UpdateTimeMismatchException;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.IAccountRepository;
 import by.it_academy.jd2.repository.entity.AccountEntity;
@@ -11,7 +12,8 @@ import by.it_academy.jd2.service.api.IUserHolderService;
 import by.it_academy.jd2.service.dto.AccountCreateDto;
 import by.it_academy.jd2.service.dto.AccountReadDto;
 import by.it_academy.jd2.service.dto.AccountUpdateDto;
-import by.it_academy.jd2.service.mapper.IAccountMapper;
+import by.it_academy.jd2.service.feign.api.IAuditService;
+import by.it_academy.jd2.service.mapper.api.IAccountMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,15 +26,20 @@ import org.springframework.validation.annotation.Validated;
 import java.util.Optional;
 import java.util.UUID;
 
-@Validated
+import static by.it_academy.jd2.commonlib.constant.Actions.AUDIT_ACCOUNT_CREATE;
+import static by.it_academy.jd2.commonlib.constant.Actions.AUDIT_ACCOUNT_UPDATE;
+
+@LoggingAspect
 @Service
-@Transactional(readOnly = true)
+@Validated
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AccountService implements IAccountService {
 
-    private final IAccountMapper accountMapper;
     private final IAccountRepository accountRepository;
     private final IUserHolderService userHolderService;
+    private final IAccountMapper accountMapper;
+    private final IAuditService auditService;
 
     @Transactional
     @Override
@@ -41,7 +48,7 @@ public class AccountService implements IAccountService {
         Optional.of(createDto)
                 .map(accountMapper::mapCreate)
                 .map(accountRepository::saveAndFlush)
-                .orElseThrow(SaveException::new);
+                .ifPresent(account -> auditService.send(AUDIT_ACCOUNT_CREATE, account.getId()));
     }
 
     @Override
@@ -60,38 +67,37 @@ public class AccountService implements IAccountService {
         Page<AccountReadDto> accounts = accountRepository
                 .findAllByUserId(currentUserId, pageRequest)
                 .map(accountMapper::mapRead);
+
         return PageOf.of(accounts);
     }
 
     @Override
     public AccountReadDto findById(UUID id) {
-        UUID currentUserId = userHolderService.getUserId();
-
-        return accountRepository
-                .findByIdAndUserId(id, currentUserId)
-                .map(accountMapper::mapRead)
-                .orElseThrow(IdNotFoundException::new);
+        AccountEntity account = this.findByIdAndUserId(id);
+        return accountMapper.mapRead(account);
     }
 
     @Transactional
     @Override
     public void update(@Valid AccountCreateDto createDto,
                        @Valid AccountUpdateDto updateDto) {
-        UUID currentUserId = userHolderService.getUserId();
 
-        AccountEntity accountEntity = accountRepository
-                .findByIdAndUserId(updateDto.getId(), currentUserId)
-                .orElseThrow(IdNotFoundException::new);                        // в одну большую цепь. наличие аккаунт уже проверил
+        AccountEntity accountEntity = this.findByIdAndUserId(updateDto.getId());
+
+        if (!accountEntity.getDtUpdate().equals(updateDto.getDtUpdate())) {
+            throw new UpdateTimeMismatchException();
+        }
 
         Optional.of(accountEntity)
                 .map(entity -> accountMapper.mapUpdate(createDto, entity))
                 .map(accountRepository::saveAndFlush)
-                .orElseThrow(SaveException::new);
+                .ifPresent(entity -> auditService.send(AUDIT_ACCOUNT_UPDATE, entity.getId()));
     }
 
     @Override
-    public Optional<AccountEntity> findEntityByIdAndUserId(UUID id) {
+    public AccountEntity findByIdAndUserId(UUID id) {
         UUID currentUserId = userHolderService.getUserId();
-        return accountRepository.findByIdAndUserId(id, currentUserId);
+        return accountRepository.findByIdAndUserId(id, currentUserId)
+                .orElseThrow(IdNotFoundException::new);
     }
 }

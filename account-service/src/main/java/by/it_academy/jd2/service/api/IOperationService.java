@@ -2,6 +2,7 @@ package by.it_academy.jd2.service.api;
 
 import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.page.PageOf;
+import by.it_academy.jd2.repository.entity.OperationEntity;
 import by.it_academy.jd2.service.dto.*;
 import jakarta.validation.Valid;
 
@@ -14,9 +15,10 @@ public interface IOperationService {
 
     PageOf<OperationReadDto> findAll(@Valid PageDto pageDto, UUID accountId);
 
-    Optional<OperationReadDto> findByIdAndAccountId(UUID id, UUID accountId);
+    OperationEntity findByIdAndUserId(UUID id);
 
     void update(@Valid OperationCreateDto dto, @Valid OperationUpdateDto updateDto);
 
     void delete(@Valid OperationUpdateDto updateDto);
+
 }

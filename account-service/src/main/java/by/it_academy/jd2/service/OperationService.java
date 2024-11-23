@@ -1,9 +1,8 @@
 package by.it_academy.jd2.service;
 
+import by.it_academy.jd2.commonlib.aop.LoggingAspect;
 import by.it_academy.jd2.commonlib.dto.PageDto;
-import by.it_academy.jd2.commonlib.exception.CurrencyMismatchException;
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
-import by.it_academy.jd2.commonlib.exception.SaveException;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.IOperationRepository;
 import by.it_academy.jd2.repository.entity.AccountEntity;
@@ -14,7 +13,9 @@ import by.it_academy.jd2.service.api.IUserHolderService;
 import by.it_academy.jd2.service.dto.OperationCreateDto;
 import by.it_academy.jd2.service.dto.OperationReadDto;
 import by.it_academy.jd2.service.dto.OperationUpdateDto;
-import by.it_academy.jd2.service.mapper.IOperationMapper;
+import by.it_academy.jd2.service.feign.api.IAuditService;
+import by.it_academy.jd2.service.mapper.api.IOperationMapper;
+import by.it_academy.jd2.service.validation.api.IValidateOperation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,32 +29,34 @@ import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
 
-@Validated
+import static by.it_academy.jd2.commonlib.constant.Actions.*;
+
+@LoggingAspect
 @Service
+@Validated
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class OperationService implements IOperationService {
 
     private final IOperationRepository operationRepository;
+    private final IUserHolderService userHolderService;
+    private final IValidateOperation validateOperation;
     private final IOperationMapper operationMapper;
     private final IAccountService accountService;
-    private final IUserHolderService userHolderService;
+    private final IAuditService auditService;
 
     @Transactional
     public void create(@Valid OperationCreateDto createDto, UUID accountId) {
 
         AccountEntity account = accountService
-                .findEntityByIdAndUserId(accountId)
-                .orElseThrow(IdNotFoundException::new);
+                .findByIdAndUserId(accountId);
 
-        if (!checkCurrency(createDto, account)) {
-            throw new CurrencyMismatchException();
-        }
+        validateOperation.validateCreate(createDto, account);
 
         Optional.of(createDto)
-                .map(dto -> operationMapper.mapCreate(createDto, account))
+                .map(dto -> operationMapper.mapCreate(dto, account))
                 .map(operationRepository::saveAndFlush)
-                .orElseThrow(SaveException::new);
+                .ifPresent(operation -> auditService.send(AUDIT_OPERATION_CREATE, operation.getId()));
     }
 
     @Override
@@ -78,53 +81,50 @@ public class OperationService implements IOperationService {
 
     @Override
     @Transactional
-    public void update(@Valid OperationCreateDto dto,
+    public void update(@Valid OperationCreateDto createDto,
                        @Valid OperationUpdateDto updateDto) {
-        UUID currentUserId = userHolderService.getUserId();
 
-        OperationEntity operationEntity = getOperationEntity(updateDto, currentUserId);
+        OperationEntity operationEntity = findByIdAndUserId(updateDto.getOperationId());
 
-        if (!checkCurrency(dto, operationEntity.getAccountEntity())) {
-            throw new CurrencyMismatchException();
-        }
+        validateOperation.validateUpdate(createDto, updateDto, operationEntity);
+        updateBalance(operationEntity, createDto.getValue());
 
         Optional.of(operationEntity)
-                .map(entity -> operationMapper.mapUpdate(dto, entity))
+                .map(entity -> operationMapper.mapUpdate(createDto, entity))
                 .map(operationRepository::saveAndFlush)
-                .orElseThrow(SaveException::new);
+                .ifPresent(operation -> auditService.send(AUDIT_OPERATION_UPDATE, operation.getId()));
     }
 
     @Override
     @Transactional
     public void delete(@Valid OperationUpdateDto updateDto) {
-        UUID currentUserId = userHolderService.getUserId();
 
-        OperationEntity operationEntity = getOperationEntity(updateDto, currentUserId);
+        OperationEntity operationEntity = findByIdAndUserId(updateDto.getOperationId());
 
-        updateBalance(operationEntity);
+        validateOperation.validateDelete(updateDto, operationEntity);
+        updateBalance(operationEntity, BigDecimal.ZERO);
+
         operationRepository.delete(operationEntity);
         operationRepository.flush();
-    }
 
-    private OperationEntity getOperationEntity(OperationUpdateDto updateDto, UUID currentUserId) {
-        return operationRepository
-                .findByIdAndUserId(updateDto.getOperationId(), currentUserId)
-                .orElseThrow(IdNotFoundException::new);
+        auditService.send(AUDIT_OPERATION_DELETE, updateDto.getOperationId());
     }
 
     @Override
-    public Optional<OperationReadDto> findByIdAndAccountId(UUID id, UUID accountId) {
-        return operationRepository.findByIdAndAccountId(id, accountId)
-                .map(operationMapper::mapRead);
+    public OperationEntity findByIdAndUserId(UUID id) {
+        UUID currentUserId = userHolderService.getUserId();
+
+        return operationRepository
+                .findByIdAndUserId(id, currentUserId)
+                .orElseThrow(IdNotFoundException::new);
     }
 
-    private void updateBalance(OperationEntity operationEntity) {
-        BigDecimal value = operationEntity.getValue();
-        AccountEntity accountEntity = operationEntity.getAccountEntity();
-        accountEntity.setBalance(accountEntity.getBalance().subtract(value));
+    private void updateBalance(OperationEntity entity, BigDecimal newValue) {
+
+        AccountEntity accountEntity = entity.getAccountEntity();
+        BigDecimal oldBalance = accountEntity.getBalance();
+        BigDecimal newBalance = oldBalance.subtract(entity.getValue()).add(newValue);
+        accountEntity.setBalance(newBalance);
     }
 
-    private boolean checkCurrency(OperationCreateDto dto, AccountEntity account) {
-        return account.getCurrencyId().equals(dto.getCurrencyId());
-    }
 }
