@@ -14,7 +14,7 @@ spring:
       default_schema: app
     open-in-view: false
   liquibase:
-    liquibase-schema: public               #пока в паблик схему ???
+    liquibase-schema: public
   jackson:
     deserialization:
       read-date-timestamps-as-nanoseconds: false
@@ -22,7 +22,6 @@ spring:
 logging:
   level:
     root: info
-    #    com.dmdev.spring.database.pool: info
     org.springframework.jdbc.core: trace
   file:
     name: finance.log
@@ -31,3 +30,10 @@ logging:
 app:
   jwt:
     secret: NDQ1ZjAzNjQtMzViZi00MDRjLTljZjQtNjNjYWIyZTU5ZDYw
+
+async:
+  executor:
+    core-pool-size: 3
+    max-pool-size: 5
+    queue-capacity: 25
+    thread-name-prefix: AsyncThread-

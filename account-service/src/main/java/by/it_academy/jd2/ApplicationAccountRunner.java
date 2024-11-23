@@ -8,8 +8,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
 
 @Slf4j
-@SpringBootApplication
 @EnableFeignClients
+@SpringBootApplication
 @ConfigurationPropertiesScan
 public class ApplicationAccountRunner {
 
