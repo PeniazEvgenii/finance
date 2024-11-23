@@ -1,5 +1,6 @@
 package by.it_academy.jd2.service;
 
+import by.it_academy.jd2.commonlib.aop.LoggingAspect;
 import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.IOperationCategoryRepository;
@@ -21,12 +22,13 @@ import org.springframework.validation.annotation.Validated;
 import java.util.Optional;
 import java.util.UUID;
 
-import static by.it_academy.jd2.commonlib.constant.Actions.CREATE_CATEGORY;
+import static by.it_academy.jd2.commonlib.constant.Actions.AUDIT_CATEGORY_CREATE;
 
+@LoggingAspect
+@Service
 @Validated
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-@Service
 public class OperationCategoryService implements IOperationCategoryService {
 
     private final IOperationCategoryRepository operationCategoryRepository;
@@ -39,7 +41,7 @@ public class OperationCategoryService implements IOperationCategoryService {
         Optional.of(createDto)
                 .map(operationCategoryMapper::mapCreate)
                 .map(operationCategoryRepository::saveAndFlush)
-                .ifPresent(entity -> auditService.send(CREATE_CATEGORY, entity.getId()));
+                .ifPresent(entity -> auditService.send(AUDIT_CATEGORY_CREATE, entity.getId()));
     }
 
     @Override

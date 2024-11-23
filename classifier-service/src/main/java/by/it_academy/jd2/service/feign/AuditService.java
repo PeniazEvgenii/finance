@@ -27,12 +27,7 @@ public class AuditService implements IAuditService {
 
     @Override
     public void send(String text, UUID id) {
-        AuditCreate audit = AuditCreate.builder()
-                .user(userHolder.getUser())
-                .text(text)
-                .type(EEssenceType.REPORT)
-                .essenceId(id.toString())
-                .build();
+        AuditCreate audit = getAudit(text, id);
 
         try {
             Optional.of(audit)
@@ -43,9 +38,18 @@ public class AuditService implements IAuditService {
             log.info("Audit saved to {}", id);
         } catch (FeignException e) {
             log.error("Error sending audit event: {}", e.getMessage());
-//            throw new ConnectionException();
         } catch (AuditSaveException e) {
             log.error("Error save audit event");
         }
+    }
+
+
+    private AuditCreate getAudit(String text, UUID id) {
+        return AuditCreate.builder()
+                .user(userHolder.getUser())
+                .text(text)
+                .type(EEssenceType.REPORT)
+                .essenceId(id)
+                .build();
     }
 }

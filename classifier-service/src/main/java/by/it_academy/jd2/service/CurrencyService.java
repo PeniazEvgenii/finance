@@ -1,5 +1,6 @@
 package by.it_academy.jd2.service;
 
+import by.it_academy.jd2.commonlib.aop.LoggingAspect;
 import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.repository.ICurrencyRepository;
@@ -21,12 +22,13 @@ import org.springframework.validation.annotation.Validated;
 import java.util.Optional;
 import java.util.UUID;
 
-import static by.it_academy.jd2.commonlib.constant.Actions.CREATE_CURRENCY;
+import static by.it_academy.jd2.commonlib.constant.Actions.AUDIT_CURRENCY_CREATE;
 
+@LoggingAspect
+@Service
 @Validated
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-@Service
 public class CurrencyService implements ICurrencyService {
 
     private final ICurrencyRepository currencyRepository;
@@ -39,7 +41,7 @@ public class CurrencyService implements ICurrencyService {
         Optional.of(createDto)
                 .map(currencyMapper::mapCreate)
                 .map(currencyRepository::saveAndFlush)
-                .ifPresent(entity -> auditService.send(CREATE_CURRENCY, entity.getId()));
+                .ifPresent(entity -> auditService.send(AUDIT_CURRENCY_CREATE, entity.getId()));
     }
 
     @Override

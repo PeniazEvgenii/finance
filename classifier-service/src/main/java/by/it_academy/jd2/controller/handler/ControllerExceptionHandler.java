@@ -103,15 +103,6 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
     }
 
-    @ExceptionHandler(SaveException.class)
-    public ResponseEntity<List<ErrorResponse>> onSaveException(SaveException exception) {
-        ErrorResponse errorResponse = new ErrorResponse(EError.ERROR,
-                "Сервер не смог корректно обработать запрос. Попробуйте позже или обратитесь к администратору");
-        log.error("SaveException. Error saving object");
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(List.of(errorResponse));
-    }
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<List<ErrorResponse>> onException(Exception exception) {
         String message = exception.getMessage();
