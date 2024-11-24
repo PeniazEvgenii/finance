@@ -7,10 +7,7 @@ import by.it_academy.jd2.commonlib.error.StructuredErrorResponse;
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.commonlib.exception.SaveException;
 import by.it_academy.jd2.commonlib.exception.UpdateTimeMismatchException;
-import by.it_academy.jd2.service.exception.AccountStatusException;
-import by.it_academy.jd2.service.exception.InvalidCredentialsException;
-import by.it_academy.jd2.service.exception.MailSendException;
-import by.it_academy.jd2.service.exception.VerificationException;
+import by.it_academy.jd2.service.exception.*;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
@@ -70,6 +67,13 @@ public class ControllerExceptionHandler {
     public ResponseEntity<List<ErrorResponse>> onUpdateTimeMismatchException(UpdateTimeMismatchException exception) {
         ErrorResponse errorResponse = new ErrorResponse(EError.ERROR, exception.getMessage());
         log.error("TimeUpdate argument mismatch");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
+    }
+
+    @ExceptionHandler(MailNotUniqueException.class)
+    public ResponseEntity<List<ErrorResponse>> onMailNotUniqueException(MailNotUniqueException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(EError.ERROR, exception.getMessage());
+        log.error("Mail is not unique");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(List.of(errorResponse));
     }
 

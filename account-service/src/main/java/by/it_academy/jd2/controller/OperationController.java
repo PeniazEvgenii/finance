@@ -32,8 +32,8 @@ public class OperationController {
 
     @GetMapping
     public PageOf<OperationReadDto> findAll(@PathVariable("uuid") UUID accountId,
-                                            @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                            @RequestParam(value = "size", defaultValue = "20") Integer size) {
+                                            @RequestParam(defaultValue = "0") Integer page,
+                                            @RequestParam(defaultValue = "20") Integer size) {
 
         return operationService.findAll(new PageDto(page, size), accountId);
     }

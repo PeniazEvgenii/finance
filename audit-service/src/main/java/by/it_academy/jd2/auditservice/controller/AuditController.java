@@ -2,12 +2,14 @@ package by.it_academy.jd2.auditservice.controller;
 
 import by.it_academy.jd2.auditservice.service.api.IAuditService;
 import by.it_academy.jd2.auditservice.service.dto.AuditReadDto;
+import by.it_academy.jd2.commonlib.aop.LoggingAspect;
 import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
+@LoggingAspect
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/audit")
@@ -16,8 +18,8 @@ public class AuditController {
     private final IAuditService auditService;
 
     @GetMapping
-    public PageOf<AuditReadDto> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                        @RequestParam(value = "size", defaultValue = "20") Integer size) {
+    public PageOf<AuditReadDto> findAll(@RequestParam(defaultValue = "0") Integer page,
+                                        @RequestParam(defaultValue = "20") Integer size) {
 
         return auditService.findAll(new PageDto(page, size));
     }

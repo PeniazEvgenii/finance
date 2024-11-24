@@ -1,5 +1,6 @@
 package by.it_academy.jd2.controller;
 
+import by.it_academy.jd2.commonlib.aop.LoggingAspect;
 import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.page.PageOf;
 import by.it_academy.jd2.service.api.IUserService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.Instant;
 import java.util.UUID;
 
+@LoggingAspect
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -29,8 +31,8 @@ public class UserController {
     }
 
     @GetMapping
-    public PageOf<UserReadDto> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                       @RequestParam(value = "size", defaultValue = "20") Integer size) {
+    public PageOf<UserReadDto> findAll(@RequestParam(defaultValue = "0") Integer page,
+                                       @RequestParam(defaultValue = "20") Integer size) {
 
         return userService.findAll(new PageDto(page, size));
     }
@@ -42,7 +44,6 @@ public class UserController {
     }
 
     @PutMapping("/{uuid}/dt_update/{dt_update}")
-    @ResponseStatus(value = HttpStatus.OK)
     public void update(@PathVariable("uuid") UUID id,
                        @PathVariable("dt_update") Instant dtUpdate,
                        @RequestBody @Validated(UpdateAction.class) UserCreateDto createDto) {

@@ -14,6 +14,8 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class JwtTokenHandler {
 
+    private static final String CLAIM_USER = "user";
+
     private final JwtProperties jwtProperties;
     private final ObjectMapper objectMapper;
 
@@ -27,7 +29,7 @@ public class JwtTokenHandler {
 
     public UserToken getUser(String token) {
         Claims claims = getClaims(token);
-        Object user = claims.get("user");
+        Object user = claims.get(CLAIM_USER);
         return objectMapper.convertValue(user, UserToken.class);
     }
 

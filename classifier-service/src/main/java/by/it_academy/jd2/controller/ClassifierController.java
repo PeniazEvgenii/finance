@@ -28,8 +28,8 @@ public class ClassifierController {
 
     @GetMapping("/currency")
     @ResponseStatus(value = HttpStatus.OK)
-    public PageOf<CurrencyReadDto> findAllCurrency(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                   @RequestParam(value = "size", defaultValue = "20") Integer size) {
+    public PageOf<CurrencyReadDto> findAllCurrency(@RequestParam(defaultValue = "0") Integer page,
+                                                   @RequestParam(defaultValue = "20") Integer size) {
 
         return currencyService.findAll(new PageDto(page, size));
     }
@@ -43,8 +43,8 @@ public class ClassifierController {
 
     @GetMapping("/operation/category")
     @ResponseStatus(value = HttpStatus.OK)
-    public PageOf<OperationCategoryReadDto> findAllOperationCategory(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                                     @RequestParam(value = "size", defaultValue = "20") Integer size) {
+    public PageOf<OperationCategoryReadDto> findAllOperationCategory(@RequestParam(defaultValue = "0") Integer page,
+                                                                     @RequestParam(defaultValue = "20") Integer size) {
 
         return operationCategoryService.findAll(new PageDto(page, size));
     }

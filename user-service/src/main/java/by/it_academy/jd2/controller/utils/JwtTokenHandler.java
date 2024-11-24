@@ -16,13 +16,15 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class JwtTokenHandler {
 
+    private static final String CLAIM_USER = "user";
+
     private final JwtProperties jwtProperties;
     private final IUserMapper userMapper;
 
     public String generateToken(UserSecure user) {
         return Jwts.builder()
                 .setSubject(user.getMail())
-                .claim("user", userMapper.mapToken(user))
+                .claim(CLAIM_USER, userMapper.mapToken(user))
                 .setIssuer(jwtProperties.getIssuer())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(jwtProperties.getExpiration())))

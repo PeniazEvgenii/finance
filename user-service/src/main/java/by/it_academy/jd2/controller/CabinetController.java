@@ -1,5 +1,6 @@
 package by.it_academy.jd2.controller;
 
+import by.it_academy.jd2.commonlib.aop.LoggingAspect;
 import by.it_academy.jd2.service.api.IAuthService;
 import by.it_academy.jd2.service.api.ICabinetService;
 import by.it_academy.jd2.service.dto.*;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@LoggingAspect
 @RestController
 @RequestMapping("/cabinet")
 @RequiredArgsConstructor
@@ -24,8 +26,8 @@ public class CabinetController {
 
     @GetMapping("/verification")
     @ResponseStatus(value = HttpStatus.OK)
-    public void verification(@RequestParam("code") String code,
-                             @RequestParam("mail") String mail) {
+    public void verification(@RequestParam String code,
+                             @RequestParam String mail) {
 
         cabinetService.verify(new VerificationDto(code, mail));
     }

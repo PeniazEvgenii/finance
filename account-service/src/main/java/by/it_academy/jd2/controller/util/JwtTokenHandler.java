@@ -15,7 +15,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class JwtTokenHandler {
 
-    public static final String CLAIM_USER = "user";
+    private static final String CLAIM_USER = "user";
 
     private final JwtProperties jwtProperties;
     private final ObjectMapper objectMapper;

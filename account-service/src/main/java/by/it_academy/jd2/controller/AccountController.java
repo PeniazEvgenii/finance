@@ -30,8 +30,8 @@ public class AccountController {
     }
 
     @GetMapping
-    public PageOf<AccountReadDto> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                          @RequestParam(value = "size", defaultValue = "20") Integer size) {
+    public PageOf<AccountReadDto> findAll(@RequestParam(defaultValue = "0") Integer page,
+                                          @RequestParam(defaultValue = "20") Integer size) {
 
         return accountService.findAll(new PageDto(page, size));
     }
