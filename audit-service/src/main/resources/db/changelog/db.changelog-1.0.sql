@@ -11,8 +11,7 @@ CREATE TABLE IF NOT EXISTS app.users
     role character varying NOT NULL,
     dt_create timestamp(3) without time zone NOT NULL,
     dt_update timestamp(3) without time zone NOT NULL,
-    CONSTRAINT users_pkey PRIMARY KEY (id),
-    CONSTRAINT mail_unique UNIQUE (mail)
+    CONSTRAINT users_pkey PRIMARY KEY (id)
 );
 
 

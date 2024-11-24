@@ -7,7 +7,7 @@ spring:
     password: root
     driver-class-name: org.postgresql.Driver
   liquibase:
-    liquibase-schema: public               #???? ? ?????? ????? ???
+    liquibase-schema: public
   jpa:
     properties.hibernate:
       show_sql: true
@@ -22,7 +22,6 @@ spring:
 logging:
   level:
     root: info
-    #    com.dmdev.spring.database.pool: info
     org.springframework.jdbc.core: trace
   file:
     name: finance.log
