@@ -7,14 +7,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 
-@Entity
 @Data
-@ToString(exclude = "user")
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
+@AllArgsConstructor
+@ToString(exclude = "user")
+@Entity
 @Table(name = "codes")
+@EntityListeners(AuditingEntityListener.class)
 public class CodeEntity {
 
     @Id

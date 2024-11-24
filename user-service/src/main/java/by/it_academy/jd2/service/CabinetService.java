@@ -1,5 +1,6 @@
 package by.it_academy.jd2.service;
 
+import by.it_academy.jd2.commonlib.aop.LoggingAspect;
 import by.it_academy.jd2.repository.entity.EUserStatus;
 import by.it_academy.jd2.service.api.ICabinetService;
 import by.it_academy.jd2.service.api.IUserService;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import static by.it_academy.jd2.commonlib.constant.Actions.AUDIT_USER_VERIFY;
 
+@LoggingAspect
 @Validated
 @Service
 @RequiredArgsConstructor

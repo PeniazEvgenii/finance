@@ -16,9 +16,9 @@ public interface IUserService {
 
     UserReadDto findById(UUID id);
 
-    void create(UserCreateDto userCreateDto);
+    void create(UserCreateDto createDto);
 
-    void update(UserCreateDto createDto, UserUpdateDto userUpdateDt);
+    void update(UserCreateDto createDto, UserUpdateDto updateDto);
 
     Optional<UserReadDto> findByMail(String mail);
 

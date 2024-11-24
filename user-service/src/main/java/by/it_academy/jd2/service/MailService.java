@@ -20,14 +20,16 @@ public class MailService implements IMailService {
     private final JavaMailSender javaMailSender;
 
     @Value("${spring.mail.username}")
-    private final String fromEmail;
+    private final String fromMail;
 
     public void send(MailDto mailDto) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+
         simpleMailMessage.setTo(mailDto.getRecipient());
         simpleMailMessage.setSubject(mailDto.getTitle());
         simpleMailMessage.setText(mailDto.getBody());
-        simpleMailMessage.setFrom(fromEmail);
+        simpleMailMessage.setFrom(fromMail);
+
         try {
             javaMailSender.send(simpleMailMessage);
         } catch (MailAuthenticationException exception) {
