@@ -1,5 +1,6 @@
 package by.it_academy.jd2.service;
 
+import by.it_academy.jd2.commonlib.aop.LoggingAspect;
 import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.commonlib.exception.UpdateTimeMismatchException;
@@ -28,6 +29,7 @@ import java.util.UUID;
 import static by.it_academy.jd2.commonlib.constant.Actions.AUDIT_USER_CREATE;
 import static by.it_academy.jd2.commonlib.constant.Actions.AUDIT_USER_UPDATE;
 
+@LoggingAspect
 @Service
 @Validated
 @RequiredArgsConstructor
@@ -35,8 +37,8 @@ import static by.it_academy.jd2.commonlib.constant.Actions.AUDIT_USER_UPDATE;
 public class UserService implements IUserService {
 
     private final IUserRepository userRepository;
-    private final IUserMapper userMapper;
     private final IAuditService auditService;
+    private final IUserMapper userMapper;
 
     @Override
     public PageOf<UserReadDto> findAll(@Valid PageDto pageDto) {
@@ -61,8 +63,8 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public void create(UserCreateDto userCreateDto) {
-        Optional.of(userCreateDto)
+    public void create(UserCreateDto createDto) {
+        Optional.of(createDto)
                 .map(userMapper::mapCreate)
                 .map(userRepository::saveAndFlush)
                 .map(userMapper::mapRead)
@@ -95,7 +97,7 @@ public class UserService implements IUserService {
                 })
                 .map(userRepository::saveAndFlush)
                 .map(userMapper::mapRead)
-                .orElseThrow(IdNotFoundException::new);
+                .orElseThrow(IdNotFoundException::new);                              //TODO что-то может поменять,
     }
 
     @Override
@@ -131,8 +133,10 @@ public class UserService implements IUserService {
 
         this.findByMail(createDto.getMail())
                 .map(UserReadDto::getId)
-                .filter(id -> id.equals(userEntity.getId()))
-                .orElseThrow(MailNotUniqueException::new);
+                .filter(id -> !id.equals(userEntity.getId()))
+                .ifPresent(id -> {
+                    throw new MailNotUniqueException();
+                });
 
         if (!updateDto.getDtUpdate().equals(userEntity.getDtUpdate())) {
             throw new UpdateTimeMismatchException();

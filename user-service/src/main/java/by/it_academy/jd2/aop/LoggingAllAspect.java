@@ -14,7 +14,8 @@ import java.util.Arrays;
 public class LoggingAllAspect {
 
     @Pointcut("@within(by.it_academy.jd2.commonlib.aop.LoggingAspect) && execution(public * *(..))")
-    public void isLoggingClassLayer(){}
+    public void isLoggingClassLayer() {
+    }
 
     @Before("isLoggingClassLayer()")
     public void logMethodCall(JoinPoint joinPoint) {
@@ -22,8 +23,8 @@ public class LoggingAllAspect {
         Signature signature = joinPoint.getSignature();
         String name = signature.getName();
         String declaringTypeName = signature.getDeclaringTypeName();
-        
-        log.warn("BEFORE - invoke method for class: {}, name of method: {}, arguments: {}", declaringTypeName, name, Arrays.toString(args));
+
+        log.info("BEFORE - invoke method for class: '{}', name of method: '{}', arguments: {}", declaringTypeName, name, Arrays.toString(args));
     }
 
     @After("isLoggingClassLayer()")
@@ -32,7 +33,9 @@ public class LoggingAllAspect {
         String name = signature.getName();
         String declaringTypeName = signature.getDeclaringTypeName();
 
-        log.warn("AFTER - method completed for class: {}, name of method: {}", declaringTypeName, name);
+        if (log.isDebugEnabled()) {
+            log.debug("AFTER - method completed for class: '{}', name of method: '{}'", declaringTypeName, name);
+        }
     }
 
     @AfterReturning(pointcut = "isLoggingClassLayer() && !execution(* findAll*(..))", returning = "result")
@@ -40,7 +43,7 @@ public class LoggingAllAspect {
         String name = joinPoint.getSignature().getName();
         String declaringTypeName = joinPoint.getSignature().getDeclaringTypeName();
 
-        log.warn("AFTER RETURNING - method completed for class: {}, name of method: {}, returned value: {}",
+        log.info("AFTER RETURNING - method completed for class: '{}', name of method: '{}', returned value: {}",              // на дебаг поменять
                 declaringTypeName, name, result);
     }
 
@@ -50,7 +53,7 @@ public class LoggingAllAspect {
         String name = signature.getName();
         String declaringTypeName = signature.getDeclaringTypeName();
 
-        log.error("AFTER THROWING - exception in class: {}, method: {}, exception: {}",
+        log.error("AFTER THROWING - exception in class: '{}', method: '{}', exception: '{}'",
                 declaringTypeName, name, ex.getMessage());
     }
     
