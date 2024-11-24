@@ -6,7 +6,7 @@ import by.it_academy.jd2.auditservice.service.api.IAuditService;
 import by.it_academy.jd2.auditservice.service.dto.AuditCreateDto;
 import by.it_academy.jd2.auditservice.service.dto.AuditReadDto;
 import by.it_academy.jd2.auditservice.service.mapper.api.IAuditMapper;
-import by.it_academy.jd2.commonlib.audit.AuditCreate;
+import by.it_academy.jd2.commonlib.aop.LoggingAspect;
 import by.it_academy.jd2.commonlib.dto.PageDto;
 import by.it_academy.jd2.commonlib.exception.IdNotFoundException;
 import by.it_academy.jd2.commonlib.exception.SaveException;
@@ -23,6 +23,7 @@ import org.springframework.validation.annotation.Validated;
 import java.util.Optional;
 import java.util.UUID;
 
+@LoggingAspect
 @Service
 @Validated
 @RequiredArgsConstructor
@@ -59,10 +60,9 @@ public class AuditService implements IAuditService {
     @Transactional
     @Override
     public void create(AuditCreateDto createDto) {
-        AuditEntity auditEntity = Optional.of(createDto)
+        Optional.of(createDto)
                 .map(auditMapper::mapCreate)
                 .map(auditRepository::saveAndFlush)
                 .orElseThrow(SaveException::new);
-
     }
 }

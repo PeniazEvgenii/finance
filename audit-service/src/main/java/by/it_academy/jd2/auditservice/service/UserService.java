@@ -5,6 +5,7 @@ import by.it_academy.jd2.auditservice.repository.entity.UserEntity;
 import by.it_academy.jd2.auditservice.service.api.IUserService;
 import by.it_academy.jd2.auditservice.service.dto.UserCreateDto;
 import by.it_academy.jd2.auditservice.service.mapper.api.IUserMapper;
+import by.it_academy.jd2.commonlib.aop.LoggingAspect;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
+@LoggingAspect
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

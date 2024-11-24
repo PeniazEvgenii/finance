@@ -1,6 +1,7 @@
 package by.it_academy.jd2.auditservice.configuration;
 
 import by.it_academy.jd2.auditservice.controller.filter.JwtFilter;
+import by.it_academy.jd2.commonlib.dto.EUserRole;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -38,7 +39,7 @@ public class SecurityConfiguration {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/event").permitAll()
-                        .requestMatchers("/audit/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/audit/**").hasAnyRole(EUserRole.ADMIN.name())
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
