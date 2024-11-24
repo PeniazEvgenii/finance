@@ -11,14 +11,13 @@ services:
 
   user-service:
     build: user-service
-    image: user-service:1.0.0
+    image: user-service:1.0.1
     environment:
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
       - finance-db
     networks:
       - finance-network
-    ports:
 
   classifier-service:
     build: classifier-service
@@ -29,7 +28,6 @@ services:
       - finance-db
     networks:
       - finance-network
-    ports:
 
   audit-service:
     build: audit-service
@@ -40,7 +38,6 @@ services:
       - finance-db
     networks:
       - finance-network
-    ports:
 
   account-service:
     build: account-service
@@ -51,11 +48,10 @@ services:
       - finance-db
     networks:
       - finance-network
-    ports:
 
   finance-db:
     build: postgresql
-    image: postgresql-finance:1.0.1
+    image: postgresql-finance:1.0.0
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
