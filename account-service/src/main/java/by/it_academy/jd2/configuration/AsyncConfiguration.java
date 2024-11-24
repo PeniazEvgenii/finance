@@ -23,7 +23,7 @@ public class AsyncConfiguration implements AsyncConfigurer {
         executor.setCorePoolSize(properties.getCorePoolSize());
         executor.setMaxPoolSize(properties.getMaxPoolSize());
         executor.setQueueCapacity(properties.getQueueCapacity());
-        executor.setThreadNamePrefix("AsyncExecutor-");
+        executor.setThreadNamePrefix(properties.getThreadNamePrefix());
         executor.initialize();
         return new DelegatingSecurityContextExecutor(executor);
     }
