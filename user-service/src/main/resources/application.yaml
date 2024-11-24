@@ -46,6 +46,13 @@ logging:
 scheduler:
   period: 1
 
+async:
+  executor:
+    core-pool-size: 3
+    max-pool-size: 5
+    queue-capacity: 50
+    thread-name-prefix: AsyncThread-
+
 app:
   jwt:
     secret: NDQ1ZjAzNjQtMzViZi00MDRjLTljZjQtNjNjYWIyZTU5ZDYw
