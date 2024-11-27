@@ -11,7 +11,7 @@ services:
 
   user-service:
     build: user-service
-    image: user-service:1.0.1
+    image: user-service:1.0.0
     environment:
       SPRING_PROFILES_ACTIVE: docker
     depends_on:

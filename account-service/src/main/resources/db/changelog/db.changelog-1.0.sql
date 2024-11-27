@@ -1,7 +1,8 @@
 --liquibase formatted sql
 
 --changeset Evgenii:1
-CREATE SCHEMA IF NOT EXISTS app;
+CREATE SCHEMA IF NOT EXISTS app
+    AUTHORIZATION postgres;
 
 CREATE TABLE IF NOT EXISTS app.accounts
 (
@@ -17,6 +18,8 @@ CREATE TABLE IF NOT EXISTS app.accounts
     CONSTRAINT accounts_pkey PRIMARY KEY (id)
 );
 
+ALTER TABLE IF EXISTS app.accounts
+    OWNER to postgres;
 
 
 --changeset Evgenii:2
@@ -33,3 +36,6 @@ CREATE TABLE IF NOT EXISTS app.operations
     CONSTRAINT operations_pkey PRIMARY KEY (id),
     CONSTRAINT fk_operations FOREIGN KEY (account_id) REFERENCES app.accounts (id)
 );
+
+ALTER TABLE IF EXISTS app.operations
+    OWNER to postgres;

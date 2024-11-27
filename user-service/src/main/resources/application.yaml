@@ -12,7 +12,8 @@ spring:
       default_schema: app
     open-in-view: false
   liquibase:
-    liquibase-schema: app               #пока в одну схему ???
+    liquibase-schema: app
+
   mail:
     host: ${ENV_MAIL_HOST:smtp.mail.ru}
     port: ${ENV_MAIL_PORT:465}
