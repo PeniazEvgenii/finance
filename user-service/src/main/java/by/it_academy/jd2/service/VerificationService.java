@@ -31,7 +31,7 @@ public class VerificationService implements IVerificationService {
                 .code(verifyCode)
                 .user(user)
                 .build();
-//TODO user.getMail() заменить после теста !!!!!!! "kentuchi2018@gmail.com"
+
         mailService.send(new MailDto(user.getMail(), verifyCode, MAIL_TITLE));
         codeRepository.saveAndFlush(codeEntity);
     }

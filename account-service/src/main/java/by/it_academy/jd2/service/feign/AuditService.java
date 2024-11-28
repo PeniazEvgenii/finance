@@ -28,12 +28,7 @@ public class AuditService implements IAuditService {
     @Async
     @Override
     public void send(String text, UUID id) {
-        try {
-            Thread.sleep(10000L);
-            System.out.println("Thread.currentThread() = " + Thread.currentThread());
-        } catch (InterruptedException e) {
-            log.error(e.getMessage(), e);
-        }
+
         AuditCreate audit = getAudit(text, id);
 
         try {
@@ -54,7 +49,7 @@ public class AuditService implements IAuditService {
         return AuditCreate.builder()
                 .user(userHolder.getUser())
                 .text(text)
-                .type(EEssenceType.REPORT)
+                .type(EEssenceType.ACCOUNT)
                 .essenceId(id)
                 .build();
     }

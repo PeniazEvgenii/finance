@@ -48,7 +48,7 @@ public class AuditService implements IAuditService {
         return AuditCreate.builder()
                 .user(userHolder.getUser())
                 .text(text)
-                .type(EEssenceType.REPORT)
+                .type(EEssenceType.CLASSIFIER)
                 .essenceId(id)
                 .build();
     }

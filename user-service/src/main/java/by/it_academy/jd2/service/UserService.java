@@ -97,7 +97,7 @@ public class UserService implements IUserService {
                 })
                 .map(userRepository::saveAndFlush)
                 .map(userMapper::mapRead)
-                .orElseThrow(IdNotFoundException::new);                              //TODO что-то может поменять,
+                .orElseThrow(IdNotFoundException::new);
     }
 
     @Override

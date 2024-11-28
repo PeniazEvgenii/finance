@@ -31,12 +31,6 @@ public class AuditService implements IAuditService {
     @Async
     @Override
     public void send(String text, UserReadDto userRead) {
-        try {
-            Thread.sleep(15000L);                                                     //todo delete
-            System.out.println("Thread.currentThread() = " + Thread.currentThread());
-        } catch (InterruptedException e) {
-            log.error(e.getMessage(), e);
-        }
 
         UserReadDto currentUser = userHolder.getUser();
         currentUser = (currentUser == null) ? userRead : currentUser;
