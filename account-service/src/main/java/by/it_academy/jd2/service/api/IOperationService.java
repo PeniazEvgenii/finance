@@ -21,4 +21,5 @@ public interface IOperationService {
 
     void delete(@Valid OperationUpdateDto updateDto);
 
+    Optional<OperationReadDto> saveSchedule(OperationCreateDto createDto, UUID accountId);
 }

@@ -8,6 +8,7 @@ import by.it_academy.jd2.service.dto.AccountReadDto;
 import by.it_academy.jd2.service.dto.AccountUpdateDto;
 import jakarta.validation.Valid;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface IAccountService {
@@ -21,4 +22,8 @@ public interface IAccountService {
     void update(@Valid AccountCreateDto createDto, @Valid AccountUpdateDto updateDto);
 
     AccountEntity findByIdAndUserId(UUID id);
+
+    Optional<AccountReadDto> findByIdAndUserId(UUID id, UUID userId);
+
+    AccountEntity findEntityById(UUID id);
 }

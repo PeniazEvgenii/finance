@@ -17,6 +17,7 @@ public final class Actions {
     public static final String AUDIT_ACCOUNT_CREATE = "Добавлен новый счет";
     public static final String AUDIT_ACCOUNT_UPDATE = "Счет обновлен";
     public static final String AUDIT_OPERATION_CREATE = "Создана новая операция";
+    public static final String AUDIT_OPERATION_SHED_CREATE = "Создана новая операция по расписанию";
     public static final String AUDIT_OPERATION_UPDATE = "Обновлена операция";
     public static final String AUDIT_OPERATION_DELETE = "Удалена операция";
 

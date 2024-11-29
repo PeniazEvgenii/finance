@@ -127,4 +127,14 @@ public class OperationService implements IOperationService {
         accountEntity.setBalance(newBalance);
     }
 
+    @Transactional
+    @Override
+    public Optional<OperationReadDto> saveSchedule(OperationCreateDto createDto, UUID accountId) {
+        AccountEntity account = accountService.findEntityById(accountId);
+        return Optional.of(createDto)
+                .map(dto -> operationMapper.mapCreate(dto, account))
+                .map(operationRepository::saveAndFlush)
+                .map(operationMapper::mapRead);
+    }
+
 }

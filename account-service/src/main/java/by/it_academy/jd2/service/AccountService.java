@@ -100,4 +100,16 @@ public class AccountService implements IAccountService {
         return accountRepository.findByIdAndUserId(id, currentUserId)
                 .orElseThrow(IdNotFoundException::new);
     }
+
+    @Override
+    public Optional<AccountReadDto> findByIdAndUserId(UUID id, UUID userId) {
+        return accountRepository.findByIdAndUserId(id, userId)
+                .map(accountMapper::mapRead);
+    }
+
+    @Override
+    public AccountEntity findEntityById(UUID id) {
+        return accountRepository.findById(id)
+                .orElseThrow(IdNotFoundException::new);
+    }
 }
