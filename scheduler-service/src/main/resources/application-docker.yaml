@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://finance-db:5432/scheduler
+    username: postgres
+    password: root
+  liquibase:
+    liquibase-schema: app
+
+service:
+  classifier: classifier-service:8080
+  audit: audit-service:8080
+  account: account-service:8080

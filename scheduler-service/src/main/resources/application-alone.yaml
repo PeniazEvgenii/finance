@@ -1,0 +1,7 @@
+server:
+  port: 8084
+
+service:
+  classifier: localhost:8081
+  audit: localhost:8083
+  account: localhost:8082
