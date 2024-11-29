@@ -32,6 +32,9 @@ import org.springframework.validation.annotation.Validated;
 import java.time.Instant;
 import java.util.UUID;
 
+import static by.it_academy.jd2.commonlib.constant.Actions.AUDIT_OPERATION_SCHEDULE_CREATE;
+import static by.it_academy.jd2.commonlib.constant.Actions.AUDIT_OPERATION_SCHEDULE_UPDATE;
+
 @LoggingAspect
 @Validated
 @Service
@@ -70,7 +73,7 @@ public class ScheduleOperationService implements IScheduleOperationService {
         } catch (SchedulerException e) {
             throw new RuntimeException("error in quartzJobService", e);
         }
-        auditService.send("Создана запланированная операция", scheduledOperationRead.getId());
+        auditService.send(AUDIT_OPERATION_SCHEDULE_CREATE, scheduledOperationRead.getId());
     }
 
     @Override
@@ -118,7 +121,7 @@ public class ScheduleOperationService implements IScheduleOperationService {
             throw new RuntimeException("Error while updating job in Quartz", e);
         }
 
-        auditService.send("Запланированная операция обновлена", id);
+        auditService.send(AUDIT_OPERATION_SCHEDULE_UPDATE, id);
 
     }
 

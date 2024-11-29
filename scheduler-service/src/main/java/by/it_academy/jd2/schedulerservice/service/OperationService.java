@@ -30,7 +30,6 @@ public class OperationService implements IOperationService {
                 .orElseThrow(SaveException::new);
     }
 
-
     public Operation findById(UUID id) {
         return operationRepository
                 .findById(id)

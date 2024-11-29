@@ -16,19 +16,23 @@ import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 @RequiredArgsConstructor
 public class QuartzJobService {
 
+    private static final String WEEK_UNIT = "WEEK";
+
     private final Scheduler scheduler;
 
     public void scheduleJob(ScheduledOperationRead operation) throws SchedulerException {
         ScheduleDto schedule = operation.getSchedule();
 
         JobDetail jobDetail = buildJobDetail(operation);
-        Trigger trigger = buildTrigger(operation, jobDetail);
+        Trigger trigger;
+
+        if (WEEK_UNIT.equalsIgnoreCase(schedule.getTimeUnit().name())) {
+            trigger = buildTrigger(operation, jobDetail);
+        } else {
+            trigger = buildTriggerCron(operation, jobDetail);
+        }
 
         scheduler.scheduleJob(jobDetail, trigger);
-
-        //todo: поменять simpleSchedule() на cronSchedule()
-        //можно для недели использовать simple, а для остальных cron, будет точнее
-        Trigger triggerCron = buildTriggerCron(operation, jobDetail);
     }
 
     private Trigger buildTriggerCron(ScheduledOperationRead operation, JobDetail jobDetail) {
@@ -114,25 +118,25 @@ public class QuartzJobService {
             case "SECOND" -> "*/" + interval + " * * * * ?";
             case "MINUTE" -> "0 */" + interval + " * * * ?";
             case "HOUR" -> "0 0 */" + interval + " * * ?";
-            case "DAY" -> "0 0 0 */" + interval + " * ?";                   // неделя непонятна
+            case "DAY" -> "0 0 0 */" + interval + " * ?";
             case "MONTH" -> "0 0 0 1 */" + interval + " ?";
             case "YEAR" -> "0 0 0 1 1 ? */" + interval;
-            default -> throw new IllegalArgumentException("Unsupported time unit: " + unit);
+            default -> throw new IllegalArgumentException("Invalid time unit: " + unit);
         };
 
     }
 
+    //все удалить и оставить только конвертер в WEEK!!!
     private long convertToMilliseconds(long interval, String timeUnit) {
         return switch (timeUnit.toUpperCase()) {
             case "SECOND" -> interval * 1000;
             case "MINUTE" -> interval * 60 * 1000;
             case "HOUR" -> interval * 60 * 60 * 1000;
             case "DAY" -> interval * 24 * 60 * 60 * 1000;
-            case "WEEK" -> interval * 7 * 24 * 60 * 60 * 1000;                                  // причина что крон надо!!!
-            case "MONTH" -> interval * 30 * 24 * 60 * 60 * 1000;                               // 30 дней на месяц
-            case "YEAR" -> interval * 365 * 24 * 60 * 60 * 1000;                              // 365 дней на год
+            case "WEEK" -> interval * 7 * 24 * 60 * 60 * 1000;
+            case "MONTH" -> interval * 30 * 24 * 60 * 60 * 1000;
+            case "YEAR" -> interval * 365 * 24 * 60 * 60 * 1000;
             default -> throw new IllegalArgumentException("Invalid time unit: " + timeUnit);
         };
     }
-
 }
