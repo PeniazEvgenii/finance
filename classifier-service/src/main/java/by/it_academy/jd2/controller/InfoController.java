@@ -4,12 +4,12 @@ import by.it_academy.jd2.service.api.ICurrencyService;
 import by.it_academy.jd2.service.api.IOperationCategoryService;
 import by.it_academy.jd2.service.dto.CurrencyReadDto;
 import by.it_academy.jd2.service.dto.OperationCategoryReadDto;
+import by.it_academy.jd2.service.exchange.api.IExchangeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -18,6 +18,7 @@ import java.util.UUID;
 public class InfoController {
 
     private final ICurrencyService currencyService;
+    private final IExchangeService exchangeService;
     private final IOperationCategoryService operationCategoryService;
 
     @GetMapping("/currency/{uuid}")
@@ -32,5 +33,12 @@ public class InfoController {
         return operationCategoryService.findById(id)
                 .map(category -> ResponseEntity.ok().body(category))
                 .orElseGet(() -> ResponseEntity.ok().body(null));
+    }
+
+    @GetMapping("/exchange_rate")
+    public BigDecimal getExchangeRate(@RequestParam String base,
+                                      @RequestParam String target) {
+
+        return exchangeService.getCurrencyConversionRate(base, target);
     }
 }

@@ -31,3 +31,8 @@ logging:
 app:
   jwt:
     secret: NDQ1ZjAzNjQtMzViZi00MDRjLTljZjQtNjNjYWIyZTU5ZDYw
+
+api:
+  access:
+    key: 3abfa1ddd7a647cd88d13c645584d0a4
+    url: https://api.exchangerate.host
