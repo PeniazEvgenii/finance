@@ -14,7 +14,7 @@ public class OperationCategoryCreateDto {
 
     @UniqueCategory
     @NotNull(message = "Название категории обязателено")
-    @NotBlank(message = "Название категории не должно быть пустым")
+    @NotBlank(message = "Название категории должно быть заполнено и не может быть пустым")
     private String title;
 
 }

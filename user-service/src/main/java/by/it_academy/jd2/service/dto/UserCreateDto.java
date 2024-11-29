@@ -13,12 +13,12 @@ import org.hibernate.validator.constraints.Length;
 @AllArgsConstructor
 public class UserCreateDto {
     @UniqueMail(groups = {CreateAction.class})
-    @Email(message = "Некорректный формат электронной почты. Email должен иметь формат user@example.com")
+    @Email(message = "Некорректный формат электронной почты. Mail должен иметь формат user@example.com")
     @NotBlank(message = "Электронная почта обязательна")
     private final String mail;
 
     @NotNull(message = "ФИО обязателен")
-    @NotBlank(message = "ФИО должен быть не пустой")
+    @NotBlank(message = "ФИО обязательно к заполнению и не должно быть пустым")
     private final String fio;
 
     @NotNull(message = "Роль пользователя обязательна")
@@ -28,7 +28,7 @@ public class UserCreateDto {
     private final EUserStatus status;
 
     @NotNull(message = "Пароль обязателен")
-    @NotBlank(message = "Пароль должен быть не пустой")
+    @NotBlank(message = "Пароль должен содержать не менее 4 символов")
     @Length(min = 4, message = "Длина пароля должна быть не менее 4 символов")
     private final String password;
 }

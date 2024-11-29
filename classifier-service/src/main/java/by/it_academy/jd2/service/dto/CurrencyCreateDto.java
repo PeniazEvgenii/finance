@@ -10,10 +10,10 @@ public class CurrencyCreateDto {
 
     @UniqueCurrency
     @NotNull(message = "Название валюты обязателено")
-    @NotBlank(message = "Название валюты не должно быть пустым")
+    @NotBlank(message = "Название валюты должно быть заполнено и не может быть пустым")
     private final String title;
 
     @NotNull(message = "Описание валюты обязателено")
-    @NotBlank(message = "Описание валюты не должно быть пустым")
+    @NotBlank(message = "Описание валюты должно быть заполнено и не может быть пустым")
     private final String description;
 }

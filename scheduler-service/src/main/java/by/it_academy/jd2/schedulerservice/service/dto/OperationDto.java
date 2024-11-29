@@ -23,7 +23,7 @@ public class OperationDto {
     private final UUID categoryId;
 
     @NotNull(message = "Описание операции обязателено")
-    @NotBlank(message = "Описание операции не должно быть пустым")
+    @NotBlank(message = "Описание операции должно быть заполнено и не может быть пустым")
     private final String description;
 
     @NotZero

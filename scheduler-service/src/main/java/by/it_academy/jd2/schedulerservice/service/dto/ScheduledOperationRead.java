@@ -13,7 +13,6 @@ import java.util.UUID;
 @Data
 public class ScheduledOperationRead {
 
-
     @JsonProperty(value = "uuid")
     private final UUID id;
 
