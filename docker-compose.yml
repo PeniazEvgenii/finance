@@ -3,7 +3,7 @@ name: finance-app
 services:
   proxy:
     build: proxy
-    image: proxy-finance:1.0.0
+    image: proxy-finance:1.0.1
     ports:
       - 80:80
     networks:
@@ -42,6 +42,16 @@ services:
   account-service:
     build: account-service
     image: account-service:1.0.0
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - finance-db
+    networks:
+      - finance-network
+
+  scheduler-service:
+    build: scheduler-service
+    image: scheduler-service:1.0.0
     environment:
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
