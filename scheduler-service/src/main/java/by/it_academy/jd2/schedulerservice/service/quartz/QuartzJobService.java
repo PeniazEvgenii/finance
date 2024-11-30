@@ -56,8 +56,7 @@ public class QuartzJobService {
                 .withIdentity(operation.getId().toString())
                 .startAt(Date.from(schedule.getStartTime()))
                 .withSchedule(simpleSchedule()
-                        .withIntervalInMilliseconds(convertToMilliseconds(
-                                schedule.getInterval(), schedule.getTimeUnit().name()))
+                        .withIntervalInMilliseconds(convertWeekToMilliseconds(schedule.getInterval()))
                         .repeatForever()
                 )
                 .endAt(Date.from(schedule.getStopTime()))
@@ -102,12 +101,12 @@ public class QuartzJobService {
     День недели	1–7 (1 = Воскресенье)	2
     Год (опцион.)	1970–2099	2023
 
-Символы для выражений:
-* — любое значение.
-? — используется в полях "День месяца" или "День недели", если значение не указано.
-- — диапазон (например, 1-5 означает с Понедельника по Пятницу).
-, — список значений (например, 1,3,5).
-   */
+    Символы для выражений:
+      * — любое значение.
+      ? — используется в полях "День месяца" или "День недели", если значение не указано.
+      - — диапазон (например, 1-5 означает с Понедельника по Пятницу).
+      , — список значений (например, 1,3,5).
+    */
 
     private String buildCron(ScheduleDto schedule) {
         Long interval = schedule.getInterval();
@@ -126,17 +125,7 @@ public class QuartzJobService {
 
     }
 
-    //все удалить и оставить только конвертер в WEEK!!!
-    private long convertToMilliseconds(long interval, String timeUnit) {
-        return switch (timeUnit.toUpperCase()) {
-            case "SECOND" -> interval * 1000;
-            case "MINUTE" -> interval * 60 * 1000;
-            case "HOUR" -> interval * 60 * 60 * 1000;
-            case "DAY" -> interval * 24 * 60 * 60 * 1000;
-            case "WEEK" -> interval * 7 * 24 * 60 * 60 * 1000;
-            case "MONTH" -> interval * 30 * 24 * 60 * 60 * 1000;
-            case "YEAR" -> interval * 365 * 24 * 60 * 60 * 1000;
-            default -> throw new IllegalArgumentException("Invalid time unit: " + timeUnit);
-        };
+    private long convertWeekToMilliseconds(long interval) {
+        return interval * (7 * 24 * 60 * 60 * 1000);
     }
 }
