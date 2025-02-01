@@ -16,6 +16,7 @@
         <module>account-service</module>
         <module>audit-service</module>
         <module>scheduler-service</module>
+        <module>admin-server</module>
     </modules>
 
     <properties>
