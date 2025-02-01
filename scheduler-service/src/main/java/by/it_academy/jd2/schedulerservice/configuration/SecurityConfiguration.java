@@ -37,6 +37,7 @@ public class SecurityConfiguration {
                                         response.setStatus(HttpServletResponse.SC_FORBIDDEN))
                 )
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/scheduler/operation/**").authenticated()
                         .anyRequest().authenticated()
                 )

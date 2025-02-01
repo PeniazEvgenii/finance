@@ -38,6 +38,7 @@ public class SecurityConfiguration {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/users/**").hasRole(EUserRole.ADMIN.name())
+                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/cabinet/registration").permitAll()
                         .requestMatchers("/cabinet/login").permitAll()
                         .requestMatchers("/cabinet/verification").permitAll()

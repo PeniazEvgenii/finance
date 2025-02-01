@@ -38,6 +38,7 @@ public class SecurityConfiguration {
                                         response.setStatus(HttpServletResponse.SC_FORBIDDEN))
                 )
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/info/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/classifier/currency").permitAll()
                         .requestMatchers(HttpMethod.GET, "/classifier/operation/category").permitAll()
