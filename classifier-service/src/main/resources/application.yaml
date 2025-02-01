@@ -1,6 +1,26 @@
 spring:
   application:
     name: classifier-service
+  boot:
+    admin:
+      client:
+        #        username: admin
+        #        password: admin
+        url: http://localhost:8080
+        instance:
+          service-base-url: http://localhost:8081
+#  cloud:
+#    vault:
+#      uri: http://192.168.100.42:32768
+#      token: root
+#      config:
+#        lifecycle:
+#          enabled: true
+#      kv:
+#        enabled: true
+#        backend: secret
+#  config:
+#    import: vault://, optional:file:.env
   datasource:
     url: jdbc:postgresql://192.168.100.13:5432/classifier
     username: postgres

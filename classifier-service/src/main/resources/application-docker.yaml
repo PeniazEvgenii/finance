@@ -1,4 +1,20 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    health:
+      show-details: always
+  metrics:
+    enable:
+      all: true
 spring:
+  boot:
+    admin:
+      client:
+        url: http://admin-server:8080
+        instance:
+          service-base-url: http://classifier-service:8080
   datasource:
     url: jdbc:postgresql://finance-db:5432/classifier
     username: postgres
