@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 15s # Интервал сбора метрик
+
+scrape_configs:
+  - job_name: 'spring-boot'
+    metrics_path:  /actuator/prometheus
+    static_configs:
+      - targets: ["admin-server:8080", "account-service:8080", "audit-service:8080", "classifier-service:8080", "scheduler-service:8080", "user-service:8080"]
+
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ["prometheus:9090"]
+
+  - job_name: 'postgresql'
+    static_configs:
+      - targets: ["postgres-exporter:9187"]

@@ -1,4 +1,21 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    health:
+      show-details: always
+  metrics:
+    enable:
+      all: true
+
 spring:
+  boot:
+    admin:
+      client:
+        url: http://admin-server:8080
+        instance:
+          service-base-url: http://scheduler-service:8080
   datasource:
     url: jdbc:postgresql://finance-db:5432/scheduler
     username: postgres

@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: admin-server
+  security:
+    user:
+      name: admin
+      password: ${SERVER_PASSWORD:admin}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    enable:
+      all: true

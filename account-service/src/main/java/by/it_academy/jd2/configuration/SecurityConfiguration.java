@@ -35,6 +35,7 @@ public class SecurityConfiguration {
                                 response.setStatus(HttpServletResponse.SC_FORBIDDEN))
                 )
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/info/account/**").permitAll()
                         .requestMatchers("/account/**").authenticated()
                         .anyRequest().authenticated()
