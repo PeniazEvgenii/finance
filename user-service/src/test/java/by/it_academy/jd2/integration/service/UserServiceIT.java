@@ -16,7 +16,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RequiredArgsConstructor
-class UserServiceTest extends IntegrationTestBase {
+class UserServiceIT extends IntegrationTestBase {
 
     private static final String USER_ID = "0ecf84a4-7c70-4b36-b3a0-f0280be8ed0c";
     private static final String USER_MAIL = "user@example1233334.com";
@@ -26,6 +26,7 @@ class UserServiceTest extends IntegrationTestBase {
     @Test
     void findAll() {
         PageOf<UserReadDto> users = userService.findAll(new PageDto(0, 3));
+
         assertEquals(0, users.getNumber());
         assertEquals(3, users.getSize());
         assertTrue(users.isFirst());
@@ -35,6 +36,7 @@ class UserServiceTest extends IntegrationTestBase {
     @Test
     void findById() {
         UserReadDto user = userService.findById(UUID.fromString(USER_ID));
+
         assertNotNull(user);
         assertEquals(USER_MAIL, user.getMail());
     }
@@ -42,18 +44,17 @@ class UserServiceTest extends IntegrationTestBase {
     @Test
     void create() {
         UserCreateDto userCreateDto = new UserCreateDto("test@mail.ru", "test", EUserRole.ADMIN, EUserStatus.ACTIVATED, "test");
+
         userService.create(userCreateDto);
         Optional<UserReadDto> expectUser = userService.findByMail("test@mail.ru");
+
         assertTrue(expectUser.isPresent());
     }
 
     @Test
     void update() {
         UserReadDto userReadDto = userService.findById(UUID.fromString(USER_ID));
-
-
         UserUpdateDto updateDto = new UserUpdateDto(userReadDto.getId(), userReadDto.getDtUpdate());
-
         UserCreateDto createDto = UserCreateDto.builder()
                 .mail(userReadDto.getMail())
                 .role(EUserRole.ADMIN)
@@ -61,8 +62,10 @@ class UserServiceTest extends IntegrationTestBase {
                 .fio("update")
                 .password("update")
                 .build();
+
         userService.update(createDto, updateDto);
         UserReadDto userUpdate = userService.findById(UUID.fromString(USER_ID));
+
         assertNotNull(userUpdate);
         assertEquals("update", userUpdate.getFio());
     }
@@ -70,8 +73,8 @@ class UserServiceTest extends IntegrationTestBase {
     @Test
     void findByMail() {
         Optional<UserReadDto> user = userService.findByMail(USER_MAIL);
+
         assertTrue(user.isPresent());
         user.ifPresent(usr -> assertEquals(UUID.fromString(USER_ID), usr.getId()));
     }
-
 }

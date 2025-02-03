@@ -11,7 +11,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RequiredArgsConstructor
-class ICodeRepositoryTest extends IntegrationTestBase {
+class ICodeRepositoryIT extends IntegrationTestBase {
 
     private static final String MAIL = "user111@example.com";
     private static final String CODE = "5331924";
@@ -21,7 +21,8 @@ class ICodeRepositoryTest extends IntegrationTestBase {
     @Test
     void findByMail() {
         Optional<CodeEntity> codeEntity = repository.findByMail(MAIL);
+
         assertTrue(codeEntity .isPresent());
-        codeEntity .ifPresent(code -> assertEquals(CODE, code.getCode()));
+        codeEntity.ifPresent(code -> assertEquals(CODE, code.getCode()));
     }
 }

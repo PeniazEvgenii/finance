@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RequiredArgsConstructor
-class IUserRepositoryTest extends IntegrationTestBase {
+class IUserRepositoryIT extends IntegrationTestBase {
 
     private static final String USER_ID = "ebf13772-c7b2-47dd-983b-a95989372e47";
     private static final String USER_MAIL = "string@mail";
@@ -26,17 +26,23 @@ class IUserRepositoryTest extends IntegrationTestBase {
     @Test
     void findByMailIgnoreCase() {
         Optional<UserEntity> user = userRepository.findByMailIgnoreCase(USER_MAIL);
+
         assertTrue(user.isPresent());
         user.ifPresent(usr -> assertEquals(UUID.fromString(USER_ID), usr.getId()));
+    }
 
+    @Test
+    void findByMailIgnoreCaseUpperCase() {
         Optional<UserEntity> userUpper = userRepository.findByMailIgnoreCase(USER_MAIL_UPPER_CASE);
+
         assertTrue(userUpper.isPresent());
-        user.ifPresent(usr -> assertEquals(UUID.fromString(USER_ID), usr.getId()));
+        userUpper.ifPresent(usr -> assertEquals(UUID.fromString(USER_ID), usr.getId()));
     }
 
     @Test
     void findByStatusWithoutCode() {
         List<UserEntity> users = userRepository.findByStatusWithoutCode(EUserStatus.WAITING_ACTIVATION);
+
         assertThat(users).hasSize(2);
     }
 }
