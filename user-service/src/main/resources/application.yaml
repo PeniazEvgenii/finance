@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://192.168.100.13/user
+    url: jdbc:postgresql://localhost:5432/user
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
@@ -14,18 +14,18 @@ spring:
   liquibase:
     liquibase-schema: app
 
-  mail:
-    host: ${ENV_MAIL_HOST:smtp.mail.ru}
-    port: ${ENV_MAIL_PORT:465}
-    username: ${ENV_MAIL_USERNAME:genia-genius-91@mail.ru}
-    password: ${ENV_MAIL_PASSWORD:6Pp2xaceETZ57gM9hkx8}
-    test-connection: true
-    properties:
-      mail:
-        smtp:
-          auth: true
-          ssl:
-            enable: true
+#  mail:
+#    host: ${ENV_MAIL_HOST:smtp.mail.ru}
+#    port: ${ENV_MAIL_PORT:465}
+#    username: ${ENV_MAIL_USERNAME:genia-genius-91@mail.ru}
+#    password: ${ENV_MAIL_PASSWORD:6Pp2xaceETZ57gM9hkx8}
+#    test-connection: true
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          ssl:
+#            enable: true
   task:
     scheduling:
       pool:
@@ -35,8 +35,41 @@ spring:
       read-date-timestamps-as-nanoseconds: false
     property-naming-strategy: SNAKE_CASE
 
+  kafka:
+    producer:
+      acks: all
+      transaction-id-prefix: user-service-${random.value}-
+      properties:
+        enable:
+          idempotence: true
+        max:
+          in:
+            flight:
+              requests:
+                per:
+                  connection: 5
+        delivery:
+          timeout:
+            ms: 120000
+        linger:
+          ms: 0
+        request:
+          timeout:
+            ms: 30000
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+topic:
+  name:
+    code-created-topic: code-created-topic
+    register-completed-topic: register-completed-topic
+
 logging:
   level:
+    org.springframework.kafka.transaction.KafkaAwareTransactionManager: DEBUG
+    org.springframework.kafka.transaction.transaction: DEBUG
+    org.springframework.orm.jpa.JpaTransactionManager: DEBUG
+    org.apache.kafka.clients.producer.internals.TransactionManager: DEBUG
+
     root: info
     #    by.it_academy.jd2: debug
     org.springframework.jdbc.core: trace
@@ -59,3 +92,4 @@ app:
     secret: NDQ1ZjAzNjQtMzViZi00MDRjLTljZjQtNjNjYWIyZTU5ZDYw
     issuer: ITAcademy
     expiration: 7
+

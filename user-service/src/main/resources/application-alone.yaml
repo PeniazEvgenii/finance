@@ -3,3 +3,7 @@ server:
 
 service:
   audit: localhost:8083
+
+spring:
+  kafka:
+    bootstrap-servers:  localhost:9092, localhost:9094, localhost:9096

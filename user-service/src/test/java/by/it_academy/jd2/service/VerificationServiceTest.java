@@ -1,6 +1,7 @@
 package by.it_academy.jd2.service;
 
 import by.it_academy.jd2.commonlib.dto.EUserRole;
+import by.it_academy.jd2.configuration.properties.KafkaTopicNameProperties;
 import by.it_academy.jd2.repository.ICodeRepository;
 import by.it_academy.jd2.repository.entity.CodeEntity;
 import by.it_academy.jd2.repository.entity.EUserStatus;
@@ -15,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.kafka.core.KafkaTemplate;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -29,15 +31,21 @@ class VerificationServiceTest {
     @Mock
     private ICodeRepository codeRepository;
     @Mock
+    private KafkaTopicNameProperties topicNames;
+    @Mock
+    private KafkaTemplate<String, Object> kafkaTemplate;
+    @Mock
     private IMailService mailService;
     @InjectMocks
     VerificationService verificationService;
 
     @Test
     void sendCode() {
+        when(topicNames.getCodeCreatedTopic()).thenReturn("code-created-topic");
+
         verificationService.sendCode(getUser());
 
-        verify(mailService).send(any(MailDto.class));
+//        verify(mailService).send(any(MailDto.class));
         verify(codeRepository).saveAndFlush(any(CodeEntity.class));
     }
 
@@ -64,7 +72,7 @@ class VerificationServiceTest {
                 .build();
         when(codeRepository.findByMail("test@example.com")).thenReturn(Optional.of(codeEntity));
 
-        VerificationDto invalidDto = new VerificationDto( "000000", "test@example.com");
+        VerificationDto invalidDto = new VerificationDto("000000", "test@example.com");
 
         assertThatThrownBy(() -> verificationService.checkCode(invalidDto))
                 .isInstanceOf(VerificationException.class);

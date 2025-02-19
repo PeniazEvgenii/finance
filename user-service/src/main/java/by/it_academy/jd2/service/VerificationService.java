@@ -1,5 +1,7 @@
 package by.it_academy.jd2.service;
 
+import by.it_academy.jd2.commonlib.event.CodeCreatedEvent;
+import by.it_academy.jd2.configuration.properties.KafkaTopicNameProperties;
 import by.it_academy.jd2.repository.ICodeRepository;
 import by.it_academy.jd2.repository.entity.CodeEntity;
 import by.it_academy.jd2.repository.entity.UserEntity;
@@ -10,9 +12,12 @@ import by.it_academy.jd2.service.dto.VerificationDto;
 import by.it_academy.jd2.service.exception.VerificationException;
 import by.it_academy.jd2.service.util.CodeGenerator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 @Component
@@ -22,7 +27,8 @@ public class VerificationService implements IVerificationService {
     private static final String MAIL_TITLE = "Код для верификации";
 
     private final ICodeRepository codeRepository;
-    private final IMailService mailService;
+    private final KafkaTemplate<String, Object> kafkaTemplate2;
+    private final KafkaTopicNameProperties topicNames;
 
     @Transactional
     public void sendCode(UserEntity user) {
@@ -32,8 +38,20 @@ public class VerificationService implements IVerificationService {
                 .user(user)
                 .build();
 
-        mailService.send(new MailDto(user.getMail(), verifyCode, MAIL_TITLE));
+        CodeCreatedEvent codeCreatedEvent = CodeCreatedEvent.builder()
+                .userId(user.getId())
+                .mail(user.getMail())
+                .fio(user.getFio())
+                .code(verifyCode)
+                .title(MAIL_TITLE)
+                .build();
+
         codeRepository.saveAndFlush(codeEntity);
+
+        kafkaTemplate2.send(
+                topicNames.getCodeCreatedTopic(),
+                UUID.randomUUID().toString(),
+                codeCreatedEvent);
     }
 
     @Transactional

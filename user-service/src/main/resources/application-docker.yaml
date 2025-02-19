@@ -10,6 +10,9 @@ management:
       all: true
 
 spring:
+  kafka:
+    bootstrap-servers: kafka-1:9090, kafka-2:9090, kafka-3:9090
+
   boot:
     admin:
       client:
@@ -17,7 +20,7 @@ spring:
         instance:
           service-base-url: http://user-service:8080
   datasource:
-    url: jdbc:postgresql://finance-db/user
+    url: jdbc:postgresql://finance-db:5432/user
     username: postgres
     password: root
   liquibase:
