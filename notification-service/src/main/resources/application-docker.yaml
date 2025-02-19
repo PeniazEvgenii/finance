@@ -1,0 +1,28 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    health:
+      show-details: always
+  metrics:
+    enable:
+      all: true
+
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: kafka-1:9090, kafka-2:9090
+  boot:
+    admin:
+      client:
+        url: http://admin-server:8080
+        instance:
+          service-base-url: http://notification-service:8080
+
+  datasource:
+    url: jdbc:postgresql://finance-db:5432/mail
+    username: user_app_notification
+    password: 12345
+  liquibase:
+    liquibase-schema: app
