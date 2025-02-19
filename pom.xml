@@ -17,6 +17,7 @@
         <module>audit-service</module>
         <module>scheduler-service</module>
         <module>admin-server</module>
+        <module>notification-service</module>
     </modules>
 
     <properties>
