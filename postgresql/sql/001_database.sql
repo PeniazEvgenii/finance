@@ -37,3 +37,13 @@ CREATE DATABASE scheduler
     LOCALE_PROVIDER = 'libc'
     CONNECTION LIMIT = -1
     IS_TEMPLATE = False;
+
+CREATE USER user_app_notification PASSWORD '12345';
+
+CREATE DATABASE mail
+    WITH
+    OWNER = user_app_notification
+    ENCODING = 'UTF8'
+    LOCALE_PROVIDER = 'libc'
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;

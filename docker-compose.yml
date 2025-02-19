@@ -1,9 +1,9 @@
-name: finance-app
+name: finance-app-3
 
 services:
   proxy:
     build: proxy
-    image: proxy-finance:1.0.1
+    image: proxy-finance:1.1.1
     ports:
       - 80:80
     networks:
@@ -11,17 +11,18 @@ services:
 
   user-service:
     build: user-service
-    image: user-service:1.0.1
+    image: user-service:1.1.2
     environment:
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
       - finance-db
+      - kafka-1
     networks:
       - finance-network
 
   classifier-service:
     build: classifier-service
-    image: classifier-service:1.0.1
+    image: classifier-service:1.1.1
     environment:
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
@@ -31,7 +32,7 @@ services:
 
   audit-service:
     build: audit-service
-    image: audit-service:1.0.1
+    image: audit-service:1.1.1
     environment:
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
@@ -41,7 +42,7 @@ services:
 
   account-service:
     build: account-service
-    image: account-service:1.0.1
+    image: account-service:1.1.1
     environment:
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
@@ -51,11 +52,22 @@ services:
 
   scheduler-service:
     build: scheduler-service
-    image: scheduler-service:1.0.1
+    image: scheduler-service:1.1.1
     environment:
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
       - finance-db
+    networks:
+      - finance-network
+
+  notification-service:
+    build: notification-service
+    image: notification-service:1.1.2
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - finance-db
+      - kafka-1
     networks:
       - finance-network
 
@@ -71,7 +83,7 @@ services:
 
   finance-db:
     build: postgresql
-    image: postgresql-finance:1.0.1
+    image: postgresql-finance:1.1.2
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -135,10 +147,82 @@ services:
     depends_on:
       - finance-db
 
+  kafka-1:
+    image: bitnami/kafka:latest
+    ports:
+      - "9092:9092"
+    environment:
+      - KAFKA_CFG_NODE_ID=1
+      - KAFKA_KRAFT_CLUSTER_ID=PVjHlx7ESeesq55jeB6Efw
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9091,2@kafka-2:9091,3@kafka-3:9091
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9090,CONTROLLER://:9091,EXTERNAL://:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-1:9090,EXTERNAL://${HOSTNAME:-localhost}:9092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+    volumes:
+      - kafka_data-1:/bitnami/kafka
+    networks:
+      - finance-network
+
+  kafka-2:
+    image: bitnami/kafka:latest
+    ports:
+      - "9094:9094"
+    environment:
+      - KAFKA_CFG_NODE_ID=2
+      - KAFKA_KRAFT_CLUSTER_ID=PVjHlx7ESeesq55jeB6Efw
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9091,2@kafka-2:9091,3@kafka-3:9091
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9090,CONTROLLER://:9091,EXTERNAL://:9094
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-2:9090,EXTERNAL://${HOSTNAME:-localhost}:9094
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+    volumes:
+      - kafka_data-2:/bitnami/kafka
+    networks:
+      - finance-network
+
+  kafka-3:
+    image: bitnami/kafka:latest
+    ports:
+      - "9096:9096"
+    environment:
+      - KAFKA_CFG_NODE_ID=3
+      - KAFKA_KRAFT_CLUSTER_ID=PVjHlx7ESeesq55jeB6Efw
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9091,2@kafka-2:9091,3@kafka-3:9091
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9090,CONTROLLER://:9091,EXTERNAL://:9096
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-3:9090,EXTERNAL://${HOSTNAME:-localhost}:9096
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+    volumes:
+      - kafka_data-3:/bitnami/kafka
+    networks:
+      - finance-network
+
+  kafkaui:
+    image: provectuslabs/kafka-ui:v0.7.2
+    restart: "no"
+    ports:
+      - "8989:8080"
+    environment:
+      DYNAMIC_CONFIG_ENABLED: "true"
+      KAFKA_CLUSTERS_0_NAME: PVjHlx7ESeesq55jeB6Efw
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:9090, kafka-2:9090, kafka-3:9090
+    networks:
+      - finance-network
+
 networks:
   finance-network:
 
 volumes:
+  kafka_data-1:
+  kafka_data-2:
+  kafka_data-3:
   grafana-data:
   db-data:
   pgadmin_data:
