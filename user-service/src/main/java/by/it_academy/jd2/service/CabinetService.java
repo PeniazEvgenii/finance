@@ -50,16 +50,10 @@ public class CabinetService implements ICabinetService {
         UserReadDto user = userService.updateStatus(verificationDto.getMail(),
                                                     EUserStatus.ACTIVATED);
 
-        try {
-            SendResult<String, Object> stringObjectSendResult = kafkaTemplate2.send(
-                    topicNames.getRegisterCompletedTopic(),
-                    user.getId().toString(),
-                    new RegisterCompletedEvent(user.getId(), user.getMail(), user.getFio())).get();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        }
+        kafkaTemplate2.send(
+                topicNames.getRegisterCompletedTopic(),
+                user.getId().toString(),
+                new RegisterCompletedEvent(user.getId(), user.getMail(), user.getFio()));
 
         auditService.send(AUDIT_USER_VERIFY, user);
     }
