@@ -16,12 +16,9 @@ import by.it_academy.jd2.service.mapper.api.IUserMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-
-import java.util.concurrent.ExecutionException;
 
 import static by.it_academy.jd2.commonlib.constant.Actions.AUDIT_USER_VERIFY;
 
